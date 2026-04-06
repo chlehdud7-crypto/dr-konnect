@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:vgprs.com)",
+      "Bash(open -a Safari \"/Users/doyouongchoieric/DR.KONNECT WEB PAGE/DR_KONNECT.html\")",
+      "Bash(git -C \"/Users/doyouongchoieric/DR.KONNECT WEB PAGE\" status)"
+    ]
+  }
+}

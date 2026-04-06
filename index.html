@@ -1,0 +1,2233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' unpkg.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://images.unsplash.com https://unpkg.com; connect-src 'self' https://api.exchangerate-api.com; frame-ancestors 'none';">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+<title>DR.KONNECT — Philippine Medical Tourism to Korea</title>
+<script src="https://unpkg.com/react@18.2.0/umd/react.production.min.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.23.10/babel.min.js" crossorigin="anonymous"></script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#F4F9FD;}
+  input,select,textarea,button{font-family:inherit;}
+  button:hover{opacity:0.92;}
+  ::-webkit-scrollbar{width:6px;}
+  ::-webkit-scrollbar-track{background:#EBF6FC;}
+  ::-webkit-scrollbar-thumb{background:#8EC5E6;border-radius:3px;}
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const {useState,useEffect}=React;
+
+const WA_NUMBER="639171603020";
+
+const T={
+  sky:"#8EC5E6",skyLight:"#C8E4F4",skyPale:"#EBF6FC",skyDeep:"#4A9DC8",skyDark:"#2370A0",
+  navy:"#0D1B2A",navyMid:"#1A2E42",navyLight:"#243850",
+  white:"#FFFFFF",offWhite:"#F4F9FD",grayLine:"#D0E2EE",grayText:"#6B8AA4",textMid:"#2D4A5E",
+};
+
+const hospitals=[
+  {id:1,name:"Very Good Plastic Surgery",nameKo:"베리굿성형외과",location:"Gangnam-gu, Seoul",
+   specialties:["Plastic Surgery","Facial Contouring","Anti-Aging"],jci:false,
+   desc:"A trusted Gangnam aesthetic clinic specializing in eye & nose surgery, facial contouring, breast augmentation, and anti-aging treatments — with multilingual coordinators fluent in 8 languages including English.",
+   intro:"Very Good Plastic Surgery is home to a team of board-certified specialists in eyes, nose, breast augmentation, facial contouring, and anti-aging. Each physician brings a rigorous academic background combined with extensive surgical experience, consistently delivering results that exceed patient expectations. At Very Good Plastic Surgery, we are committed to your safety and your trust.\n\nOur clinic is equipped with state-of-the-art operating theatres, dedicated recovery rooms, and a dedicated VG International Lounge for international patients. Every detail of the facility has been designed with patient comfort and safety in mind.",
+   img:"https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800&q=80",
+   clinicPhotos:[
+     "1.jpg","2.jpg","3.jpg","4.jpg","5.jpg","6.jpg",
+     "8.jpg","9.jpg","10.jpg","11.jpg","12.jpg","14.jpg","15.jpg","16.jpg",
+   ],
+   info:{
+     address:"Gangnam-gu, Seoul, South Korea  (exact address to be updated)",
+     hours:"Mon – Sat  10:00 AM – 7:00 PM",
+     website:"https://vgprs.com",
+     languages:"English · Korean · Chinese · Japanese · Vietnamese · Thai · Indonesian · Mongolian · Russian",
+   },
+   procedures:[
+     {name:"Double Eyelid Surgery",price:"Contact for Quote",days:"1–2 days"},
+     {name:"Revision Eye Surgery",price:"Contact for Quote",days:"1–2 days"},
+     {name:"Rhinoplasty (Nose Reshaping)",price:"Contact for Quote",days:"2–3 days"},
+     {name:"Revision Rhinoplasty",price:"Contact for Quote",days:"2–3 days"},
+     {name:"Breast Augmentation (Motiva)",price:"Contact for Quote",days:"3–5 days"},
+     {name:"Facelift / Mini Lift",price:"Contact for Quote",days:"5–7 days"},
+     {name:"Facial Contouring (V-Line / Jaw)",price:"Contact for Quote",days:"5–7 days"},
+     {name:"Body Contouring / Liposuction",price:"Contact for Quote",days:"3–5 days"},
+     {name:"Stem Cell Anti-Aging Treatment",price:"Contact for Quote",days:"1–3 days"},
+   ],
+   ba:[
+     {label:"Rhinoplasty",tag:"Nose Reshaping",b:"#C4A882",a:"#D8C0A0"},
+     {label:"Double Eyelid",tag:"Eye Surgery",b:"#A09080",a:"#C0B0A0"},
+     {label:"Facelift",tag:"Anti-Aging",b:"#B8A898",a:"#CFC0B0"},
+     {label:"Facial Contouring",tag:"V-Line / Jaw",b:"#9A8878",a:"#BAA898"},
+   ],
+   doctors:[
+     {
+       name:"Youngmin Im",
+       title:"Chief Director",
+       credentials:[
+         "MD (Doctor of Medicine)",
+         "Internship & residency, Seoul St. Mary's Hospital",
+         "Board-certified Plastic Surgeon, Seoul St. Mary's Hospital",
+         "Clinical Professor, Dept. of Plastic Surgery, Seoul St. Mary's Hospital",
+         "Former Director, Top Face Plastic Surgery",
+         "Former Director, JK Plastic Surgery",
+         "Clinical Assistant Professor, Seoul St. Mary's Hospital",
+         "Member, Korean Society of Plastic & Reconstructive Surgeons",
+         "Member, Korean Society for Aesthetic Plastic Surgery",
+         "Member, American Society for Aesthetic Plastic Surgery (ASAPS)",
+       ],
+     },
+     {
+       name:"Sangwook Park",
+       title:"Deputy Director",
+       credentials:[
+         "Board-certified Plastic Surgeon",
+         "Residency, Dept. of Plastic Surgery, Seoul St. Mary's Hospital, Catholic University of Korea",
+         "Former Director, DA Plastic Surgery",
+         "Member, Korean Cleft Palate–Craniofacial Association",
+         "Member, Korean Society of Plastic & Reconstructive Surgeons",
+         "Member, Korean Society for Aesthetic Plastic Surgery",
+         "Facial Contouring Research Group",
+         "Member, Korean Society for the Study of Obesity",
+         "Minimally Invasive Surgery Research Group",
+       ],
+     },
+     {
+       name:"Junghue Kim",
+       title:"Director",
+       credentials:[
+         "Board-certified Plastic Surgeon",
+         "Graduate, Catholic University of Korea",
+         "Residency, Dept. of Plastic Surgery, Seoul St. Mary's Hospital, Catholic University of Korea",
+         "Former Director, Pop Plastic Surgery",
+         "Member, Korean Society of Plastic & Reconstructive Surgeons",
+         "Member, Korean Society for Aesthetic Plastic Surgery",
+       ],
+     },
+   ],
+  },
+];
+
+const treatments=[
+  {icon:"✨",label:"Dermatology",desc:"Botox, fillers, laser lifting & more"},
+  {icon:"💆",label:"Plastic Surgery",desc:"Rhinoplasty, eye surgery, facelift, breast augmentation & more"},
+  {icon:"👁️",label:"Ophthalmology",desc:"LASIK, LASEK & vision correction"},
+  {icon:"🦷",label:"Dental",desc:"Orthodontics, implants & more"},
+  {icon:"🌿",label:"Korean Traditional Medicine",desc:"Acupuncture, herbal therapy & more"},
+  {icon:"🏥",label:"Comprehensive Health Check-Up",desc:"Full-body screening, cancer detection & preventive diagnostics"},
+];
+
+const steps=[
+  {n:"01",title:"Submit Inquiry",desc:"Fill our simple form — condition, budget, preferred dates."},
+  {n:"02",title:"Free Consultation",desc:"Our coordinator reviews your case and matches you to top hospitals."},
+  {n:"03",title:"Treatment Plan",desc:"Receive detailed cost estimate and schedule from partner hospitals."},
+  {n:"04",title:"Travel Support",desc:"We handle visa, flights, airport transfer & accommodation."},
+  {n:"05",title:"Treatment",desc:"Receive care with our on-ground coordinator by your side in Korea."},
+  {n:"06",title:"Aftercare",desc:"Telemedicine follow-up & coordination with your home physician."},
+];
+
+const testimonials=[
+  {name:"Maria Santos",city:"Quezon City",tx:"Cancer Screening",
+   text:"DR.KONNECT handled everything — visa, hotel, translator. Samsung found my early-stage cancer that local hospitals missed. Forever grateful.",
+   img:"https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=80&q=80"},
+  {name:"Roberto Dela Cruz",city:"Cebu City",tx:"Rhinoplasty",
+   text:"Still cheaper than local clinics, with far better results. The coordinator stayed with me every step. Life-changing experience!",
+   img:"https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=80&q=80"},
+  {name:"Jennifer Reyes",city:"Manila",tx:"Knee Replacement",
+   text:"At 58 I needed surgery. DR.KONNECT arranged Asan Medical for a fraction of Singapore's cost. I'm walking pain-free now.",
+   img:"https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&q=80"},
+];
+
+const faqs=[
+  {q:"Does DR.KONNECT charge consultation fees?",a:"No — both online and in-person consultations are completely free. Always."},
+  {q:"How is DR.KONNECT different from other medical tourism services?",a:"Unlike services that operate purely online, we meet you face-to-face in the Philippines — building real trust before you travel. We personally vet every partner hospital on medical safety records, physician credentials, English support, and operational stability. We then stay by your side from the first inquiry through post-treatment follow-up."},
+  {q:"Do Korean doctors speak English?",a:"All DR.KONNECT partner hospitals have English-speaking coordinators on staff. We also assign a personal bilingual interpreter for your entire stay in Korea, so communication is never a concern."},
+  {q:"How do I get a medical visa to Korea?",a:"We handle the full medical visa (C-3-M) application for you and your companion — typically approved within 3–5 business days."},
+  {q:"Is a deposit required?",a:"Yes. To secure your preferred treatment date, a booking deposit equivalent to 10% of the procedure cost is required. This ensures your schedule is reserved and confirmed with the clinic."},
+  {q:"What if complications arise after I return home?",a:"You can reach out to us anytime — even after you're back in the Philippines. We'll coordinate directly with the clinic on your behalf and make sure you receive prompt, appropriate follow-up care."},
+  {q:"How do I pay the clinics?",a:"Payment is handled directly with your chosen clinic. Most accept bank transfers and major credit cards, and some clinics offer flexible installment options. We'll guide you through the process every step of the way."},
+  {q:"Do you help with travel arrangements?",a:"Yes — through our Add-On services, you can arrange visa assistance, a personal interpreter, hotel accommodation, and airport pickup and drop-off, all coordinated in one place alongside your treatment."},
+];
+
+// ── Chip ──────────────────────────────────────────────────────
+const Chip=({children,s={}})=>(
+  <span style={{background:T.skyPale,color:T.skyDark,fontSize:11,fontWeight:700,
+    letterSpacing:"0.06em",padding:"4px 12px",borderRadius:20,...s}}>{children}</span>
+);
+
+// ── Logo Icon SVG ───────────────────────────────────────────────
+const LogoIcon=()=>(
+  <svg width="38" height="38" viewBox="0 0 60 60" style={{display:"block",flexShrink:0}}>
+    <ellipse cx="23" cy="30" rx="19" ry="24" fill="#0D1B2A"/>
+    <ellipse cx="37" cy="30" rx="19" ry="24" fill="#8EC5E6"/>
+    <rect x="26.5" y="20" width="7" height="20" rx="2.5" fill="#0D1B2A"/>
+    <rect x="20" y="26.5" width="20" height="7" rx="2.5" fill="#0D1B2A"/>
+  </svg>
+);
+
+// ── Navbar ─────────────────────────────────────────────────────
+function Navbar({page,setPage,setSel}){
+  const links=["Home","About","Hospitals","Treatments","How It Works","Contact"];
+  return(
+    <nav style={{position:"sticky",top:0,zIndex:200,background:"rgba(255,255,255,0.97)",
+      backdropFilter:"blur(14px)",borderBottom:`1px solid ${T.grayLine}`,
+      boxShadow:"0 2px 16px rgba(13,27,42,0.06)"}}>
+      <div style={{maxWidth:1200,margin:"0 auto",padding:"0 32px",height:68,
+        display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+        <div onClick={()=>{setPage("home");setSel(null);}}
+          style={{cursor:"pointer",display:"flex",alignItems:"center",gap:10}}>
+          <span style={{fontWeight:900,fontSize:19,letterSpacing:"0.05em",lineHeight:1}}>
+            <span style={{color:"#000000"}}>DR</span>
+            <span style={{color:"#000000",fontSize:10,display:"inline-block",verticalAlign:"bottom",fontWeight:900,letterSpacing:0,marginBottom:"1px"}}>+</span>
+            <span style={{color:"#000000"}}>K</span>
+            <span style={{color:T.sky}}>ONNECT</span>
+          </span>
+        </div>
+        <div style={{display:"flex",gap:2}}>
+          {links.map(l=>{
+            const k=l.toLowerCase().replace(/ /g,"-");
+            const on=page===k;
+            return(
+              <button key={l} onClick={()=>{setPage(k);setSel(null);}}
+                style={{background:on?T.skyPale:"none",border:"none",
+                  color:on?T.skyDark:T.grayText,fontWeight:on?700:500,
+                  fontSize:14,padding:"8px 16px",borderRadius:30,cursor:"pointer"}}>
+                {l}
+              </button>
+            );
+          })}
+        </div>
+        <div style={{display:"flex",gap:12,alignItems:"center"}}>
+          <button onClick={()=>setPage("contact")} style={{background:T.sky,color:T.navy,
+            border:"none",borderRadius:30,padding:"10px 24px",fontWeight:800,
+            fontSize:14,cursor:"pointer"}}>Free Consultation</button>
+        </div>
+      </div>
+    </nav>
+  );
+}
+
+// ── Hero ───────────────────────────────────────────────────────
+function Hero({setPage}){
+  const [idx,setIdx]=useState(0);
+  const slides=[
+    {img:"https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=1800&q=80",cap:"Premium Aesthetic Care"},
+    {img:"https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=1800&q=80",cap:"World-class hospital facilities"},
+    {img:"https://images.unsplash.com/photo-1559757175-5700dde675bc?w=1800&q=80",cap:"Precision medical care"},
+  ];
+  useEffect(()=>{
+    const t=setInterval(()=>setIdx(i=>(i+1)%slides.length),5000);
+    return()=>clearInterval(t);
+  },[]);
+
+  return(
+    <section style={{position:"relative",height:"93vh",minHeight:640,overflow:"hidden"}}>
+      {slides.map((s,i)=>(
+        <div key={i} style={{position:"absolute",inset:0,
+          backgroundImage:`url(${s.img})`,backgroundSize:"cover",backgroundPosition:"center",
+          transition:"opacity 1.4s ease",opacity:i===idx?1:0}}/>
+      ))}
+      <div style={{position:"absolute",inset:0,
+        background:`linear-gradient(125deg,${T.navy}E8 0%,${T.skyDark}B0 45%,${T.sky}55 100%)`}}/>
+
+      <div style={{position:"relative",zIndex:2,height:"100%",
+        display:"flex",flexDirection:"column",justifyContent:"center",
+        padding:"0 88px",maxWidth:1200,margin:"0 auto"}}>
+        <Chip s={{background:"rgba(142,197,230,0.22)",color:T.skyLight,
+          border:"1px solid rgba(142,197,230,0.4)",marginBottom:26,display:"inline-block",
+          width:"fit-content",alignSelf:"flex-start"}}>
+          🇵🇭 Philippines → 🇰🇷 Korea
+        </Chip>
+        <h1 style={{color:T.white,fontSize:64,fontWeight:900,lineHeight:1.06,
+          letterSpacing:"-0.03em",marginBottom:24,maxWidth:700}}>
+          World-Class<br/>
+          <span style={{color:T.sky}}>Korean Medical Services</span><br/>
+          Within Your Reach
+        </h1>
+        <p style={{color:"rgba(255,255,255,0.82)",fontSize:20,lineHeight:1.7,
+          marginBottom:44,maxWidth:520}}>
+          In healthcare, a single decision can change everything. We want every patient to find the best possible outcome — with superior medical technology and structured support behind them. DR.KONNECT is here to help you take that first step.
+        </p>
+        <div style={{display:"flex",gap:18}}>
+          <button onClick={()=>setPage("contact")} style={{background:T.sky,color:T.navy,
+            border:"none",borderRadius:50,padding:"17px 42px",fontWeight:800,
+            fontSize:16,cursor:"pointer"}}>
+            Get Free Consultation
+          </button>
+          <button onClick={()=>setPage("hospitals")} style={{background:"transparent",color:T.white,
+            border:"2px solid rgba(255,255,255,0.55)",borderRadius:50,
+            padding:"17px 42px",fontWeight:700,fontSize:16,cursor:"pointer"}}>
+            Browse Hospitals →
+          </button>
+        </div>
+        <div style={{display:"flex",gap:8,marginTop:44}}>
+          {slides.map((_,i)=>(
+            <button key={i} onClick={()=>setIdx(i)} style={{
+              width:i===idx?30:8,height:8,borderRadius:4,
+              background:i===idx?T.sky:"rgba(255,255,255,0.3)",
+              border:"none",cursor:"pointer",transition:"all 0.35s",padding:0}}/>
+          ))}
+        </div>
+      </div>
+
+    </section>
+  );
+}
+
+// ── Treatments ─────────────────────────────────────────────────
+function TreatmentsSection({setPage}){
+  return(
+    <section style={{padding:"92px 32px",background:T.offWhite}}>
+      <div style={{maxWidth:1200,margin:"0 auto"}}>
+        <div style={{textAlign:"center",marginBottom:58}}>
+          <Chip s={{marginBottom:16,display:"inline-block"}}>SPECIALTIES</Chip>
+          <h2 style={{fontSize:44,fontWeight:900,color:T.navy,letterSpacing:"-0.02em",marginBottom:14}}>
+            Treatment Specialties
+          </h2>
+          <p style={{color:T.grayText,fontSize:18,maxWidth:520,margin:"0 auto"}}>
+            Experience everything from aesthetic treatments to specialized medical services
+          </p>
+        </div>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(160px,1fr))",gap:18}}>
+          {treatments.map(t=>(
+            <div key={t.label} onClick={()=>setPage("hospitals")}
+              style={{background:T.white,borderRadius:20,padding:"30px 22px",
+                border:`1.5px solid ${T.grayLine}`,cursor:"pointer",textAlign:"center",
+                transition:"all 0.22s"}}
+              onMouseEnter={e=>{e.currentTarget.style.borderColor=T.sky;e.currentTarget.style.transform="translateY(-4px)";e.currentTarget.style.boxShadow=`0 14px 36px ${T.sky}38`;}}
+              onMouseLeave={e=>{e.currentTarget.style.borderColor=T.grayLine;e.currentTarget.style.transform="";e.currentTarget.style.boxShadow="";}}>
+              <div style={{fontSize:30,background:T.skyPale,width:64,height:64,borderRadius:16,
+                display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 14px"}}>
+                {t.icon}
+              </div>
+              <div style={{fontWeight:800,color:T.navy,fontSize:15,marginBottom:6}}>{t.label}</div>
+              <div style={{color:T.grayText,fontSize:13}}>{t.desc}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── How It Works ───────────────────────────────────────────────
+function HowSection(){
+  return(
+    <section style={{padding:"92px 32px",background:T.sky}}>
+      <div style={{maxWidth:1100,margin:"0 auto"}}>
+        <div style={{textAlign:"center",marginBottom:58}}>
+          <h2 style={{fontSize:44,fontWeight:900,color:T.navy,letterSpacing:"-0.02em",marginBottom:14}}>
+            How It Works
+          </h2>
+          <p style={{color:T.navyMid,fontSize:18}}>From your first inquiry to full recovery</p>
+        </div>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:24}}>
+          {steps.map(s=>(
+            <div key={s.n} style={{background:"rgba(255,255,255,0.88)",borderRadius:22,padding:30,
+              border:"1.5px solid rgba(255,255,255,0.95)"}}>
+              <div style={{background:T.navy,color:T.sky,width:50,height:50,borderRadius:14,
+                display:"flex",alignItems:"center",justifyContent:"center",
+                fontWeight:900,fontSize:13,letterSpacing:"0.05em",marginBottom:18}}>
+                {s.n}
+              </div>
+              <div style={{fontWeight:800,color:T.navy,fontSize:17,marginBottom:10}}>{s.title}</div>
+              <div style={{color:T.textMid,fontSize:14,lineHeight:1.65}}>{s.desc}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── Hospital Card ──────────────────────────────────────────────
+function HCard({h,setSel,setPage}){
+  return(
+    <div style={{background:T.white,borderRadius:22,overflow:"hidden",
+      border:`1.5px solid ${T.grayLine}`,transition:"all 0.22s"}}
+      onMouseEnter={e=>{e.currentTarget.style.boxShadow=`0 18px 50px ${T.sky}40`;e.currentTarget.style.borderColor=T.sky;}}
+      onMouseLeave={e=>{e.currentTarget.style.boxShadow="";e.currentTarget.style.borderColor=T.grayLine;}}>
+      <div style={{position:"relative",height:190,overflow:"hidden"}}>
+        <img src={h.img} alt={h.name} style={{width:"100%",height:"100%",objectFit:"cover"}}/>
+        <div style={{position:"absolute",inset:0,
+          background:"linear-gradient(to top,rgba(13,27,42,0.74) 0%,transparent 60%)"}}/>
+        {h.jci&&(
+          <div style={{position:"absolute",top:14,right:14,background:T.sky,color:T.navy,
+            fontSize:10,fontWeight:800,padding:"4px 11px",borderRadius:20,letterSpacing:"0.06em"}}>
+            JCI ACCREDITED
+          </div>
+        )}
+        <div style={{position:"absolute",bottom:14,left:18}}>
+          <h3 style={{color:T.white,fontWeight:900,fontSize:17,margin:0}}>{h.name}</h3>
+          <p style={{color:"rgba(255,255,255,0.72)",fontSize:12,margin:"3px 0 0"}}>{h.nameKo} · {h.location}</p>
+        </div>
+      </div>
+      <div style={{padding:"18px 22px"}}>
+        <div style={{display:"flex",gap:6,flexWrap:"wrap",marginBottom:12}}>
+          {h.specialties.map(s=><Chip key={s}>{s}</Chip>)}
+        </div>
+        <p style={{color:T.grayText,fontSize:13,lineHeight:1.6,marginBottom:18}}>{h.desc}</p>
+        <button onClick={()=>{setSel(h);setPage("detail");}}
+          style={{width:"100%",background:T.navy,color:T.white,
+          border:`1.5px solid ${T.navy}`,
+          borderRadius:12,padding:"12px",cursor:"pointer",fontWeight:700,fontSize:14}}>
+          View Details →
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ── Hospitals Page ──────────────────────────────────────────────
+function HospitalsPage({setSel,setPage}){
+  const [q,setQ]=useState("");
+  const [f,setF]=useState("All");
+  const filters=["All","Plastic Surgery","Facial Contouring","Anti-Aging"];
+  const list=hospitals.filter(h=>{
+    const ms=h.name.toLowerCase().includes(q.toLowerCase())||h.specialties.some(s=>s.toLowerCase().includes(q.toLowerCase()));
+    const mf=f==="All"||h.specialties.some(s=>s.toLowerCase().includes(f.toLowerCase()));
+    return ms&&mf;
+  });
+  return(
+    <div style={{minHeight:"100vh",background:T.offWhite}}>
+      <div style={{position:"relative",backgroundImage:"url(https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=1400&q=80)",
+        backgroundSize:"cover",backgroundPosition:"center",padding:"64px 32px 52px"}}>
+        <div style={{position:"absolute",inset:0,background:`${T.navy}D8`}}/>
+        <div style={{position:"relative",maxWidth:1200,margin:"0 auto"}}>
+          <Chip s={{background:"rgba(142,197,230,0.2)",color:T.skyLight,
+            border:"1px solid rgba(142,197,230,0.35)",marginBottom:16,display:"inline-block"}}>
+            PARTNER HOSPITALS
+          </Chip>
+          <h2 style={{fontSize:46,fontWeight:900,color:T.white,marginBottom:10,letterSpacing:"-0.02em"}}>
+            Korea's Finest Hospitals
+          </h2>
+          <p style={{color:"rgba(255,255,255,0.64)",fontSize:17}}>
+            Click any hospital to view pricing and before/after galleries.
+          </p>
+        </div>
+      </div>
+      <div style={{maxWidth:1200,margin:"0 auto",padding:"42px 32px"}}>
+        <div style={{display:"flex",gap:14,marginBottom:38,flexWrap:"wrap",alignItems:"center"}}>
+          <input value={q} onChange={e=>setQ(e.target.value)}
+            placeholder="Search hospitals or specialties..."
+            style={{flex:1,minWidth:240,padding:"12px 20px",borderRadius:30,
+              border:`1.5px solid ${T.grayLine}`,fontSize:14,background:T.white,color:T.navy,outline:"none"}}/>
+          <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
+            {filters.map(fi=>(
+              <button key={fi} onClick={()=>setF(fi)} style={{padding:"9px 18px",borderRadius:30,
+                cursor:"pointer",fontSize:13,fontWeight:600,
+                background:f===fi?T.sky:T.white,
+                color:f===fi?T.navy:T.grayText,
+                border:`1.5px solid ${f===fi?T.sky:T.grayLine}`}}>{fi}</button>
+            ))}
+          </div>
+        </div>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:26}}>
+          {list.map(h=>(
+            <HCard key={h.id} h={h} setSel={setSel} setPage={setPage}/>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Hospital Detail ─────────────────────────────────────────────
+function Detail({h,setPage}){
+  const [tab,setTab]=useState("intro");
+  const photoRef=React.useRef();
+
+  const scrollPhotos=(dir)=>{
+    if(photoRef.current) photoRef.current.scrollBy({left:dir*340,behavior:"smooth"});
+  };
+
+  const tabs=[
+    ["intro","🏥 Introduction"],
+    ["pricing","💰 Pricing"],
+    ["clinic","📷 Clinic Photos"],
+    ["ba","📸 Before & After"],
+    ["doctors","👨‍⚕️ Doctors"],
+  ];
+
+  return(
+    <div style={{minHeight:"100vh",background:T.offWhite}}>
+      {/* Hero */}
+      <div style={{position:"relative",height:380,overflow:"hidden"}}>
+        <img src={h.img} alt={h.name} style={{width:"100%",height:"100%",objectFit:"cover"}}/>
+        <div style={{position:"absolute",inset:0,
+          background:"linear-gradient(to top,rgba(13,27,42,0.92) 30%,rgba(13,27,42,0.2) 100%)"}}/>
+        <div style={{position:"absolute",bottom:0,left:0,right:0,padding:"28px 44px"}}>
+          <button onClick={()=>setPage("hospitals")} style={{background:"rgba(142,197,230,0.18)",
+            border:"1px solid rgba(142,197,230,0.35)",color:T.skyLight,borderRadius:8,
+            padding:"8px 16px",cursor:"pointer",fontSize:13,marginBottom:16}}>← Back to Hospitals</button>
+          <div>
+            {h.jci&&<Chip s={{background:"rgba(142,197,230,0.25)",color:T.skyLight,
+              border:"1px solid rgba(142,197,230,0.4)",marginBottom:10,display:"inline-block"}}>
+              JCI ACCREDITED
+            </Chip>}
+            <h1 style={{color:T.white,fontSize:38,fontWeight:900,margin:0,letterSpacing:"-0.02em"}}>{h.name}</h1>
+            <p style={{color:"rgba(255,255,255,0.62)",fontSize:15,margin:"6px 0 0"}}>{h.nameKo} · {h.location}</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Info strip */}
+      {h.info&&(
+        <div style={{background:T.skyPale,borderBottom:`1.5px solid ${T.skyLight}`}}>
+          <div style={{maxWidth:1100,margin:"0 auto",padding:"14px 44px",
+            display:"flex",gap:32,flexWrap:"wrap",alignItems:"flex-start"}}>
+            {[{icon:"📍",text:h.info.address},{icon:"🕐",text:h.info.hours},{icon:"💬",text:h.info.languages}]
+              .map((item,i)=>(
+                <div key={i} style={{display:"flex",gap:8,alignItems:"flex-start",flex:1,minWidth:200}}>
+                  <span style={{fontSize:14,flexShrink:0}}>{item.icon}</span>
+                  <span style={{fontSize:12,color:T.textMid,lineHeight:1.55}}>{item.text}</span>
+                </div>
+              ))}
+            <a href={h.info.website} target="_blank" rel="noopener noreferrer"
+              style={{display:"flex",gap:8,alignItems:"center",color:T.skyDark,
+                textDecoration:"none",fontSize:12,fontWeight:700,flexShrink:0}}>
+              🌐 Official Website ↗
+            </a>
+          </div>
+        </div>
+      )}
+
+      {/* Tabs */}
+      <div style={{background:T.white,borderBottom:`1.5px solid ${T.grayLine}`,
+        position:"sticky",top:68,zIndex:100}}>
+        <div style={{maxWidth:1100,margin:"0 auto",padding:"0 44px",display:"flex",overflowX:"auto"}}>
+          {tabs.map(([k,l])=>(
+            <button key={k} onClick={()=>setTab(k)} style={{padding:"16px 22px",background:"none",
+              border:"none",borderBottom:`3px solid ${tab===k?T.sky:"transparent"}`,
+              color:tab===k?T.skyDark:T.grayText,fontWeight:tab===k?800:500,
+              cursor:"pointer",fontSize:14,whiteSpace:"nowrap",flexShrink:0}}>
+              {l}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div style={{maxWidth:1100,margin:"0 auto",padding:"44px"}}>
+
+        {/* ── Tab 1: Introduction ── */}
+        {tab==="intro"&&(
+          <>
+            <h2 style={{fontSize:26,fontWeight:900,color:T.navy,marginBottom:22}}>About {h.name}</h2>
+            <div style={{background:T.white,borderRadius:20,padding:"36px 40px",
+              border:`1.5px solid ${T.grayLine}`,marginBottom:28}}>
+              {h.intro.split("\n\n").map((para,i)=>(
+                <p key={i} style={{color:T.textMid,fontSize:15,lineHeight:1.9,
+                  marginBottom:i<h.intro.split("\n\n").length-1?18:0}}>{para}</p>
+              ))}
+            </div>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:18}}>
+              {h.specialties.map(s=>(
+                <div key={s} style={{background:T.skyPale,borderRadius:16,padding:"20px 22px",
+                  border:`1.5px solid ${T.skyLight}`,textAlign:"center"}}>
+                  <div style={{fontWeight:800,color:T.skyDark,fontSize:14}}>{s}</div>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+
+        {/* ── Tab 2: Pricing ── */}
+        {tab==="pricing"&&(
+          <>
+            <h2 style={{fontSize:26,fontWeight:900,color:T.navy,marginBottom:6}}>Procedure Pricing</h2>
+            <p style={{color:T.grayText,fontSize:15,marginBottom:24}}>Estimated KRW ranges. Final quotes provided after medical review. Hospital fees only.</p>
+            <div style={{background:T.white,borderRadius:18,border:`1.5px solid ${T.grayLine}`,overflow:"hidden"}}>
+              <table style={{width:"100%",borderCollapse:"collapse"}}>
+                <thead>
+                  <tr style={{background:T.navy}}>
+                    {["Procedure","Estimated Cost (KRW)","Avg. Stay"].map(c=>(
+                      <th key={c} style={{padding:"15px 22px",textAlign:"left",
+                        color:T.sky,fontSize:11,fontWeight:800,letterSpacing:"0.08em"}}>{c.toUpperCase()}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {h.procedures.map((p,i)=>(
+                    <tr key={p.name} style={{background:i%2===0?T.white:T.offWhite}}>
+                      <td style={{padding:"16px 22px",color:T.navy,fontWeight:600,fontSize:15}}>{p.name}</td>
+                      <td style={{padding:"16px 22px",color:T.skyDark,fontWeight:800,fontSize:15}}>{p.price}</td>
+                      <td style={{padding:"16px 22px",color:T.grayText,fontSize:14}}>{p.days}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div style={{marginTop:22,background:T.skyPale,borderRadius:14,padding:"16px 22px",
+              border:`1.5px solid ${T.skyLight}`,display:"flex",gap:12}}>
+              <span>💡</span>
+              <p style={{margin:0,color:T.skyDark,fontSize:14,lineHeight:1.6}}>
+                <strong>DR.KONNECT Advantage:</strong> We request personalized quotes after reviewing your medical records — ensuring the most accurate pricing for your specific case.
+              </p>
+            </div>
+          </>
+        )}
+
+        {/* ── Tab 3: Clinic Photos ── */}
+        {tab==="clinic"&&(
+          <>
+            <h2 style={{fontSize:26,fontWeight:900,color:T.navy,marginBottom:6}}>Clinic Interior</h2>
+            <p style={{color:T.grayText,fontSize:15,marginBottom:24}}>A look inside {h.name}.</p>
+            <div style={{position:"relative"}}>
+              <div ref={photoRef} style={{display:"flex",gap:16,overflowX:"auto",
+                scrollSnapType:"x mandatory",paddingBottom:12,
+                scrollbarWidth:"thin",scrollbarColor:`${T.sky} ${T.grayLine}`}}>
+                {(h.clinicPhotos||[]).map((src,i)=>(
+                  <div key={i} style={{flexShrink:0,width:560,height:360,borderRadius:18,
+                    overflow:"hidden",border:`1.5px solid ${T.grayLine}`,
+                    scrollSnapAlign:"start",background:T.offWhite,
+                    display:"flex",alignItems:"center",justifyContent:"center"}}>
+                    {src?(
+                      <img src={src} alt={`${h.name} interior ${i+1}`}
+                        style={{width:"100%",height:"100%",objectFit:"cover"}}/>
+                    ):(
+                      <div style={{textAlign:"center",padding:20}}>
+                        <div style={{fontSize:32,marginBottom:10}}>📷</div>
+                        <div style={{color:T.grayText,fontSize:13,fontWeight:600}}>Photo {i+1}</div>
+                        <div style={{color:"#A8B8C8",fontSize:11,marginTop:4}}>
+                          Replace clinicPhotos[{i}] with image path
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+              {/* Scroll arrows */}
+              {[[-1,"←"],[1,"→"]].map(([dir,lbl])=>(
+                <button key={dir} onClick={()=>scrollPhotos(dir)}
+                  style={{position:"absolute",top:"50%",transform:"translateY(-50%)",
+                    [dir===-1?"left":"right"]:-20,
+                    width:42,height:42,borderRadius:"50%",
+                    background:T.navy,color:T.white,border:"none",
+                    fontSize:18,cursor:"pointer",
+                    boxShadow:"0 4px 14px rgba(0,0,0,0.22)",
+                    display:"flex",alignItems:"center",justifyContent:"center"}}>
+                  {lbl}
+                </button>
+              ))}
+            </div>
+            <p style={{textAlign:"center",color:T.grayText,fontSize:12,marginTop:14}}>
+              Swipe or use arrows to browse all photos
+            </p>
+          </>
+        )}
+
+        {/* ── Tab 4: Before & After ── */}
+        {tab==="ba"&&(
+          <>
+            <h2 style={{fontSize:26,fontWeight:900,color:T.navy,marginBottom:6}}>Before & After Gallery</h2>
+            <p style={{color:T.grayText,fontSize:15,marginBottom:10}}>Real patient results. Shared with full patient consent.</p>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:26}}>
+              {h.ba.map((ba,i)=>(
+                <div key={i} style={{background:T.white,borderRadius:20,overflow:"hidden",
+                  border:`1.5px solid ${T.grayLine}`}}>
+                  <div style={{display:"grid",gridTemplateColumns:"1fr 1fr"}}>
+                    {/* BEFORE */}
+                    <div style={{height:240,background:ba.b,position:"relative",
+                      display:"flex",alignItems:"flex-end",justifyContent:"flex-start",padding:12}}>
+                      <span style={{background:"rgba(0,0,0,0.45)",color:"#fff",
+                        fontSize:11,fontWeight:800,padding:"4px 12px",borderRadius:6,
+                        letterSpacing:"0.08em"}}>BEFORE</span>
+                    </div>
+                    {/* AFTER */}
+                    <div style={{height:240,background:ba.a,position:"relative",
+                      display:"flex",alignItems:"flex-end",justifyContent:"flex-end",padding:12}}>
+                      <span style={{background:"rgba(0,0,0,0.45)",color:"#fff",
+                        fontSize:11,fontWeight:800,padding:"4px 12px",borderRadius:6,
+                        letterSpacing:"0.08em"}}>AFTER</span>
+                    </div>
+                  </div>
+                  <div style={{padding:"14px 20px",display:"flex",
+                    justifyContent:"space-between",alignItems:"center"}}>
+                    <span style={{fontWeight:800,color:T.navy,fontSize:15}}>{ba.label}</span>
+                    <Chip>{ba.tag}</Chip>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+
+        {/* ── Tab 5: Doctors ── */}
+        {tab==="doctors"&&(
+          <>
+            <h2 style={{fontSize:26,fontWeight:900,color:T.navy,marginBottom:28}}>Lead Physicians</h2>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(1,1fr)",gap:22}}>
+              {h.doctors.map(d=>(
+                <div key={d.name} style={{background:T.white,borderRadius:20,padding:"28px 32px",
+                  border:`1.5px solid ${T.grayLine}`,display:"flex",gap:28,alignItems:"flex-start",flexWrap:"wrap"}}>
+                  <div style={{width:72,height:72,borderRadius:"50%",background:T.sky,flexShrink:0,
+                    display:"flex",alignItems:"center",justifyContent:"center",
+                    fontSize:26,color:T.navy,fontWeight:900}}>
+                    {d.name[0]}
+                  </div>
+                  <div style={{flex:1,minWidth:240}}>
+                    <div style={{fontWeight:900,color:T.navy,fontSize:20}}>{d.name}</div>
+                    <div style={{color:T.skyDark,fontSize:14,fontWeight:700,marginBottom:18,marginTop:2}}>{d.title}</div>
+                    <ul style={{listStyle:"none",padding:0,margin:0,
+                      display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(300px,1fr))",gap:"6px 24px"}}>
+                      {d.credentials.map((c,i)=>(
+                        <li key={i} style={{display:"flex",gap:8,alignItems:"flex-start",
+                          color:T.textMid,fontSize:13,lineHeight:1.55}}>
+                          <span style={{color:T.sky,fontWeight:900,flexShrink:0,marginTop:1}}>·</span>
+                          {c}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+
+      </div>
+    </div>
+  );
+}
+
+// ── Contact ─────────────────────────────────────────────────────
+function ContactPage(){
+  const [step,setStep]=useState(1);
+  const [form,setForm]=useState({
+    firstName:"",lastName:"",email:"",phone:"",
+    procedures:[],budget:"",year:"",month:"",goals:"",medicalNotes:"",photos:[],
+    addons:{visa:"No",interpreter:"None",accommodation:"No",pickup:"None"},
+  });
+  const [done,setDone]=useState(false);
+  const up=v=>setForm(f=>({...f,...v}));
+
+  const years=["2025","2026","2027","2028"];
+  const months=["January","February","March","April","May","June","July","August","September","October","November","December"];
+  const budgetOptions=["Under Php 50,000","Php 50,000–200,000","Php 200,000–500,000","Over Php 500,000"];
+
+  const toggleProc=(label)=>{
+    const arr=form.procedures.includes(label)
+      ?form.procedures.filter(p=>p!==label)
+      :[...form.procedures,label];
+    up({procedures:arr});
+  };
+
+  const inp={width:"100%",padding:"13px 16px",borderRadius:12,
+    border:`1.5px solid ${T.grayLine}`,fontSize:15,
+    boxSizing:"border-box",color:T.navy,outline:"none"};
+  const lbl={display:"block",fontSize:13,fontWeight:700,color:T.textMid,marginBottom:8};
+
+  if(done)return(
+    <div style={{minHeight:"80vh",display:"flex",alignItems:"center",justifyContent:"center",background:T.offWhite}}>
+      <div style={{textAlign:"center",maxWidth:500,padding:52,background:T.white,
+        borderRadius:28,border:`1.5px solid ${T.grayLine}`}}>
+        <div style={{fontSize:64,marginBottom:22}}>✅</div>
+        <h2 style={{color:T.navy,fontWeight:900,marginBottom:14,fontSize:28}}>Inquiry Received!</h2>
+        <p style={{color:T.grayText,lineHeight:1.75}}>Our coordinator will contact you within <strong>24 hours</strong> via WhatsApp.</p>
+        <div style={{marginTop:28,background:T.skyPale,borderRadius:16,padding:"18px 24px"}}>
+          <p style={{margin:0,color:T.skyDark,fontSize:14}}>
+            💬 Reach us anytime: <strong>WhatsApp +63 917 160 3020</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+
+  return(
+    <div style={{minHeight:"100vh",background:T.offWhite}}>
+      <div style={{position:"relative",backgroundImage:"url(https://images.unsplash.com/photo-1559757175-5700dde675bc?w=1400&q=80)",
+        backgroundSize:"cover",backgroundPosition:"center",padding:"64px 32px 52px"}}>
+        <div style={{position:"absolute",inset:0,background:`${T.navy}CC`}}/>
+        <div style={{position:"relative",maxWidth:700,margin:"0 auto",textAlign:"center"}}>
+          <h2 style={{fontSize:44,fontWeight:900,color:T.white,marginBottom:10,letterSpacing:"-0.02em"}}>Free Consultation</h2>
+          <p style={{color:"rgba(255,255,255,0.68)",fontSize:17}}>No commitment. Our coordinator responds within 24 hours.</p>
+        </div>
+      </div>
+      <div style={{maxWidth:680,margin:"0 auto",padding:"52px 28px"}}>
+        {/* Progress */}
+        <div style={{marginBottom:38}}>
+          <div style={{display:"flex",justifyContent:"space-between",marginBottom:10}}>
+            {["Personal Info","Medical Details","Add-Ons"].map((l,i)=>(
+              <span key={l} style={{fontSize:13,fontWeight:step===i+1?700:400,
+                color:step>i?T.skyDark:step===i+1?T.navy:T.grayText}}>{i+1}. {l}</span>
+            ))}
+          </div>
+          <div style={{height:6,background:T.grayLine,borderRadius:3}}>
+            <div style={{height:"100%",width:`${(step/3)*100}%`,background:T.sky,borderRadius:3,transition:"width 0.4s"}}/>
+          </div>
+        </div>
+
+        <div style={{background:T.white,borderRadius:24,padding:"38px 40px",border:`1.5px solid ${T.grayLine}`}}>
+
+          {/* ── Step 1: Personal Info ── */}
+          {step===1&&(
+            <div>
+              <h3 style={{fontWeight:900,color:T.navy,fontSize:22,marginBottom:24}}>Personal Information</h3>
+              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16,marginBottom:20}}>
+                <div>
+                  <label style={lbl}>First Name *</label>
+                  <input type="text" placeholder="Maria" value={form.firstName}
+                    onChange={e=>up({firstName:e.target.value})} style={inp}/>
+                </div>
+                <div>
+                  <label style={lbl}>Last Name *</label>
+                  <input type="text" placeholder="Santos" value={form.lastName}
+                    onChange={e=>up({lastName:e.target.value})} style={inp}/>
+                </div>
+              </div>
+              <div style={{marginBottom:20}}>
+                <label style={lbl}>Email *</label>
+                <input type="email" placeholder="maria@gmail.com" value={form.email}
+                  onChange={e=>up({email:e.target.value})} style={inp}/>
+              </div>
+              <div>
+                <label style={lbl}>Phone / WhatsApp (+63)</label>
+                <input type="tel" placeholder="+63 917 000 0000" value={form.phone}
+                  onChange={e=>up({phone:e.target.value})} style={inp}/>
+              </div>
+            </div>
+          )}
+
+          {/* ── Step 2: Medical Details ── */}
+          {step===2&&(
+            <div>
+              <h3 style={{fontWeight:900,color:T.navy,fontSize:22,marginBottom:24}}>Medical Details</h3>
+
+              {/* Procedure multi-select pills */}
+              <div style={{marginBottom:24}}>
+                <label style={lbl}>Procedure(s) of Interest *</label>
+                <div style={{display:"flex",flexWrap:"wrap",gap:9}}>
+                  {treatments.map(t=>{
+                    const sel=form.procedures.includes(t.label);
+                    return(
+                      <button key={t.label} onClick={()=>toggleProc(t.label)}
+                        style={{padding:"9px 18px",borderRadius:30,cursor:"pointer",fontSize:13,
+                          border:`1.5px solid ${sel?T.sky:T.grayLine}`,
+                          background:sel?T.skyPale:"transparent",
+                          color:sel?T.skyDark:T.grayText,
+                          fontWeight:sel?700:500}}>
+                        {t.icon} {t.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Budget (PHP) */}
+              <div style={{marginBottom:20}}>
+                <label style={lbl}>Budget Range (PHP)</label>
+                <div style={{display:"flex",flexWrap:"wrap",gap:9}}>
+                  {budgetOptions.map(o=>{
+                    const sel=form.budget===o;
+                    return(
+                      <button key={o} onClick={()=>up({budget:o})}
+                        style={{padding:"9px 16px",borderRadius:30,cursor:"pointer",fontSize:12,
+                          border:`1.5px solid ${sel?T.sky:T.grayLine}`,
+                          background:sel?T.skyPale:"transparent",
+                          color:sel?T.skyDark:T.grayText,
+                          fontWeight:sel?700:500}}>
+                        {o}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Preferred Timeline */}
+              <div style={{marginBottom:20}}>
+                <label style={lbl}>Preferred Timeline</label>
+                <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14}}>
+                  <select value={form.year} onChange={e=>up({year:e.target.value})} style={inp}>
+                    <option value="">Year...</option>
+                    {years.map(y=><option key={y}>{y}</option>)}
+                  </select>
+                  <select value={form.month} onChange={e=>up({month:e.target.value})} style={inp}>
+                    <option value="">Month...</option>
+                    {months.map(m=><option key={m}>{m}</option>)}
+                  </select>
+                </div>
+              </div>
+
+              {/* Goals */}
+              <div style={{marginBottom:20}}>
+                <label style={lbl}>Goals & Expectations</label>
+                <textarea value={form.goals} onChange={e=>up({goals:e.target.value})}
+                  placeholder="What outcome are you hoping to achieve?"
+                  style={{...inp,resize:"vertical",minHeight:90}}/>
+              </div>
+
+              {/* Medical Notes */}
+              <div style={{marginBottom:20}}>
+                <label style={lbl}>Medical Notes <span style={{color:T.grayText,fontWeight:400}}>(optional)</span></label>
+                <textarea value={form.medicalNotes} onChange={e=>up({medicalNotes:e.target.value})}
+                  placeholder="Any medical history, allergies, or notes the coordinator should know..."
+                  style={{...inp,resize:"vertical",minHeight:80}}/>
+              </div>
+
+              {/* Photo upload */}
+              <div>
+                <label style={lbl}>Attach Photos <span style={{color:T.grayText,fontWeight:400}}>(optional, up to 5)</span></label>
+                <div style={{border:`2px dashed ${T.grayLine}`,borderRadius:12,padding:"22px",
+                  textAlign:"center",background:T.offWhite}}>
+                  <input type="file" accept="image/jpeg,image/png,image/webp,image/heic" multiple id="photo-upload"
+                    style={{display:"none"}}
+                    onChange={e=>{
+                      const valid=Array.from(e.target.files)
+                        .filter(f=>f.size<=5*1024*1024)
+                        .slice(0,5);
+                      up({photos:valid});
+                    }}/>
+                  <label htmlFor="photo-upload" style={{cursor:"pointer"}}>
+                    <div style={{fontSize:28,marginBottom:8}}>📎</div>
+                    <div style={{color:T.grayText,fontSize:13}}>Click to upload (max 5 photos)</div>
+                    {form.photos.length>0&&(
+                      <div style={{color:T.skyDark,fontSize:13,fontWeight:700,marginTop:6}}>
+                        {form.photos.length} file(s) selected
+                      </div>
+                    )}
+                  </label>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* ── Step 3: Add-Ons ── */}
+          {step===3&&(
+            <div>
+              <h3 style={{fontWeight:900,color:T.navy,fontSize:22,marginBottom:6}}>Add-Ons</h3>
+              <p style={{color:T.grayText,fontSize:14,marginBottom:24}}>Optional services to support your trip to Korea.</p>
+
+              {/* Visa */}
+              <div style={{background:T.offWhite,borderRadius:16,padding:"18px 22px",marginBottom:14}}>
+                <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:12}}>
+                  <div style={{flex:1}}>
+                    <div style={{fontWeight:700,color:T.navy,fontSize:15}}>Visa Assistance</div>
+                    <div style={{color:T.grayText,fontSize:12,marginTop:3}}>
+                      Medical visa (C-3-M) application — <strong>₱4,000 / person</strong>
+                    </div>
+                  </div>
+                  <div style={{display:"flex",gap:8}}>
+                    {["Yes","No"].map(o=>{
+                      const sel=form.addons.visa===o;
+                      return(
+                        <button key={o} onClick={()=>up({addons:{...form.addons,visa:o}})}
+                          style={{padding:"8px 20px",borderRadius:30,cursor:"pointer",fontSize:13,fontWeight:700,
+                            background:sel?T.sky:T.white,color:sel?T.navy:T.grayText,
+                            border:`1.5px solid ${sel?T.sky:T.grayLine}`}}>{o}</button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+
+              {/* Interpreter */}
+              <div style={{background:T.offWhite,borderRadius:16,padding:"18px 22px",marginBottom:14}}>
+                <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:12}}>
+                  <div style={{flex:1}}>
+                    <div style={{fontWeight:700,color:T.navy,fontSize:15}}>Personal Interpreter</div>
+                    <div style={{color:T.grayText,fontSize:12,marginTop:3}}>
+                      3 hrs — <strong>₱5,000</strong> &nbsp;·&nbsp; 6 hrs — <strong>₱9,000</strong>
+                    </div>
+                    <div style={{color:T.grayText,fontSize:11,marginTop:2,fontStyle:"italic"}}>
+                      Note: The hospital also has in-house interpreters available.
+                    </div>
+                  </div>
+                  <div style={{display:"flex",gap:8,flexWrap:"wrap",justifyContent:"flex-end"}}>
+                    {["None","3 hrs","6 hrs"].map(o=>{
+                      const sel=form.addons.interpreter===o;
+                      return(
+                        <button key={o} onClick={()=>up({addons:{...form.addons,interpreter:o}})}
+                          style={{padding:"8px 16px",borderRadius:30,cursor:"pointer",fontSize:12,fontWeight:700,
+                            background:sel?T.sky:T.white,color:sel?T.navy:T.grayText,
+                            border:`1.5px solid ${sel?T.sky:T.grayLine}`}}>{o}</button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+
+              {/* Accommodation */}
+              <div style={{background:T.offWhite,borderRadius:16,padding:"18px 22px",marginBottom:14}}>
+                <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:12}}>
+                  <div style={{flex:1}}>
+                    <div style={{fontWeight:700,color:T.navy,fontSize:15}}>Accommodation</div>
+                    <div style={{color:T.grayText,fontSize:12,marginTop:3}}>
+                      Hotel booking assistance — <strong>₱2,000 / booking</strong>
+                    </div>
+                  </div>
+                  <div style={{display:"flex",gap:8}}>
+                    {["Yes","No"].map(o=>{
+                      const sel=form.addons.accommodation===o;
+                      return(
+                        <button key={o} onClick={()=>up({addons:{...form.addons,accommodation:o}})}
+                          style={{padding:"8px 20px",borderRadius:30,cursor:"pointer",fontSize:13,fontWeight:700,
+                            background:sel?T.sky:T.white,color:sel?T.navy:T.grayText,
+                            border:`1.5px solid ${sel?T.sky:T.grayLine}`}}>{o}</button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+
+              {/* Airport Pickup */}
+              <div style={{background:T.offWhite,borderRadius:16,padding:"18px 22px",marginBottom:22}}>
+                <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:12}}>
+                  <div style={{flex:1}}>
+                    <div style={{fontWeight:700,color:T.navy,fontSize:15}}>Airport Pickup (incl. return)</div>
+                    <div style={{color:T.grayText,fontSize:12,marginTop:3}}>
+                      4-seater — <strong>₱12,000</strong> &nbsp;·&nbsp; 6-seater — <strong>₱18,000</strong>
+                    </div>
+                  </div>
+                  <div style={{display:"flex",gap:8,flexWrap:"wrap",justifyContent:"flex-end"}}>
+                    {["None","4-seater","6-seater"].map(o=>{
+                      const sel=form.addons.pickup===o;
+                      return(
+                        <button key={o} onClick={()=>up({addons:{...form.addons,pickup:o}})}
+                          style={{padding:"8px 16px",borderRadius:30,cursor:"pointer",fontSize:12,fontWeight:700,
+                            background:sel?T.sky:T.white,color:sel?T.navy:T.grayText,
+                            border:`1.5px solid ${sel?T.sky:T.grayLine}`}}>{o}</button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+
+              {/* WhatsApp notice */}
+              <div style={{background:T.skyPale,borderRadius:14,padding:"16px 20px",
+                border:`1.5px solid ${T.skyLight}`}}>
+                <p style={{margin:0,color:T.skyDark,fontSize:14}}>
+                  💬 Our coordinator will reply via <strong>WhatsApp</strong> within 24 hours to confirm your inquiry and selected add-ons.
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* Navigation */}
+          <div style={{display:"flex",gap:14,marginTop:34}}>
+            {step>1&&(
+              <button onClick={()=>setStep(s=>s-1)} style={{flex:1,padding:"14px",
+                background:T.white,border:`1.5px solid ${T.grayLine}`,borderRadius:14,
+                cursor:"pointer",fontWeight:700,fontSize:15,color:T.grayText}}>← Back</button>
+            )}
+            <button onClick={()=>{
+                if(step<3){setStep(s=>s+1);}
+                else{
+                  const a=form.addons;
+                  const addonLines=[
+                    a.visa==="Yes"?"✅ Visa Assistance (₱4,000)":null,
+                    a.interpreter!=="None"?`✅ Interpreter — ${a.interpreter}`:null,
+                    a.accommodation==="Yes"?"✅ Accommodation Assistance (₱2,000)":null,
+                    a.pickup!=="None"?`✅ Airport Pickup — ${a.pickup}`:null,
+                  ].filter(Boolean);
+                  const msg=[
+                    "📋 *New Consultation Inquiry — DR.KONNECT*",
+                    "",
+                    `👤 *Name:* ${form.firstName} ${form.lastName}`,
+                    `📧 *Email:* ${form.email}`,
+                    `📱 *Phone/WhatsApp:* ${form.phone}`,
+                    "",
+                    `💉 *Procedures:* ${form.procedures.length?form.procedures.join(", "):"—"}`,
+                    `💰 *Budget:* ${form.budget||"—"}`,
+                    `📅 *Timeline:* ${form.month&&form.year?form.month+" "+form.year:form.year||"—"}`,
+                    "",
+                    `📝 *Goals:* ${form.goals||"—"}`,
+                    `🏥 *Medical Notes:* ${form.medicalNotes||"—"}`,
+                    "",
+                    addonLines.length?"➕ *Add-Ons:*\n"+addonLines.join("\n"):"➕ *Add-Ons:* None",
+                  ].join("\n");
+                  window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`,"_blank");
+                  setDone(true);
+                }
+              }}
+              style={{flex:2,padding:"14px",background:T.sky,border:"none",
+                borderRadius:14,cursor:"pointer",fontWeight:900,fontSize:16,color:T.navy}}>
+              {step<3?"Continue →":"Submit Inquiry 🎯"}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Testimonials ───────────────────────────────────────────────
+function Testimonials(){
+  const platforms=[
+    {
+      name:"WhatsApp",
+      color:"#25D366",
+      hint:"Add a WhatsApp chat screenshot here",
+      note:"WhatsApp Message",
+      icon:(
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+      ),
+    },
+    {
+      name:"Google Maps",
+      color:"#4285F4",
+      hint:"Add a Google Maps review screenshot here",
+      note:"Google Maps Review",
+      icon:(
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+        </svg>
+      ),
+    },
+    {
+      name:"Instagram DM",
+      color:"#E1306C",
+      hint:"Add an Instagram DM screenshot here",
+      note:"Instagram Direct Message",
+      icon:(
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="5"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+        </svg>
+      ),
+    },
+  ];
+  return(
+    <section style={{padding:"92px 32px",background:T.offWhite}}>
+      <div style={{maxWidth:1100,margin:"0 auto"}}>
+        <div style={{textAlign:"center",marginBottom:56}}>
+          <Chip s={{marginBottom:16,display:"inline-block"}}>PATIENT REVIEWS</Chip>
+          <h2 style={{fontSize:44,fontWeight:900,color:T.navy,letterSpacing:"-0.02em",marginBottom:14}}>
+            Real Reviews from Real Patients
+          </h2>
+          <p style={{color:T.grayText,fontSize:16,maxWidth:540,margin:"0 auto",lineHeight:1.75}}>
+            Actual screenshots of reviews and messages shared directly by our patients via WhatsApp, Google Maps, and Instagram DM.
+          </p>
+        </div>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:24}}>
+          {platforms.map(p=>(
+            <div key={p.name} style={{background:T.white,borderRadius:20,overflow:"hidden",
+              border:`1.5px solid ${T.grayLine}`,
+              boxShadow:"0 4px 18px rgba(13,27,42,0.06)"}}>
+              {/* Platform header bar */}
+              <div style={{background:p.color,padding:"13px 18px",
+                display:"flex",alignItems:"center",gap:9}}>
+                <div style={{color:"#fff",display:"flex",alignItems:"center"}}>{p.icon}</div>
+                <span style={{color:"#fff",fontWeight:700,fontSize:14,letterSpacing:"0.01em"}}>{p.name}</span>
+              </div>
+              {/* Screenshot placeholder area */}
+              <div style={{
+                background:"#F3F5F8",
+                minHeight:340,
+                display:"flex",flexDirection:"column",
+                alignItems:"center",justifyContent:"center",
+                padding:"32px 24px",
+                borderBottom:`2px dashed #CDD5DE`}}>
+                <div style={{width:64,height:64,borderRadius:16,background:"#E2E7EE",
+                  display:"flex",alignItems:"center",justifyContent:"center",marginBottom:18}}>
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+                    stroke="#8A9BB0" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2"/>
+                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                    <polyline points="21 15 16 10 5 21"/>
+                  </svg>
+                </div>
+                <p style={{color:"#7A8EA0",fontSize:13,fontWeight:600,
+                  textAlign:"center",margin:0,lineHeight:1.65}}>
+                  {p.hint}
+                </p>
+                <p style={{color:"#A8B8C8",fontSize:11,textAlign:"center",
+                  margin:"8px 0 0",lineHeight:1.6}}>
+                  To add: place screenshot image file here<br/>
+                  and set as background or &lt;img&gt; src
+                </p>
+              </div>
+              {/* Footer */}
+              <div style={{padding:"13px 18px",display:"flex",
+                alignItems:"center",justifyContent:"space-between"}}>
+                <span style={{fontSize:12,color:T.grayText,fontWeight:600}}>{p.note}</span>
+                <div style={{display:"flex",alignItems:"center",gap:5}}>
+                  <div style={{width:7,height:7,borderRadius:"50%",background:"#4CAF50"}}/>
+                  <span style={{fontSize:11,color:"#4CAF50",fontWeight:700}}>Verified</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <p style={{textAlign:"center",color:T.grayText,fontSize:13,marginTop:28,lineHeight:1.65}}>
+          All reviews are shared with patient consent. Personal information is blurred to protect privacy.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+// ── FAQ ────────────────────────────────────────────────────────
+function FAQ(){
+  const [open,setOpen]=useState(null);
+  return(
+    <section style={{padding:"80px 32px",background:T.white}}>
+      <div style={{maxWidth:760,margin:"0 auto"}}>
+        <div style={{textAlign:"center",marginBottom:52}}>
+          <Chip s={{marginBottom:16,display:"inline-block"}}>FAQ</Chip>
+          <h2 style={{fontSize:40,fontWeight:900,color:T.navy,letterSpacing:"-0.02em"}}>Common Questions</h2>
+        </div>
+        {faqs.map((f,i)=>(
+          <div key={i} onClick={()=>setOpen(open===i?null:i)} style={{
+            background:T.white,borderRadius:16,cursor:"pointer",
+            border:`1.5px solid ${open===i?T.sky:T.grayLine}`,
+            marginBottom:12,overflow:"hidden",transition:"border-color 0.2s"}}>
+            <div style={{padding:"18px 24px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+              <span style={{fontWeight:700,color:T.navy,fontSize:15,paddingRight:20}}>{f.q}</span>
+              <span style={{color:T.sky,fontSize:22,fontWeight:300,flexShrink:0,
+                display:"inline-block",transform:open===i?"rotate(45deg)":"none",transition:"transform 0.2s"}}>+</span>
+            </div>
+            {open===i&&(
+              <div style={{padding:"4px 24px 20px",color:T.grayText,fontSize:15,lineHeight:1.75,
+                borderTop:`1px solid ${T.grayLine}`}}>{f.a}</div>
+            )}
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+// ── CTA ────────────────────────────────────────────────────────
+function CTABanner({setPage}){
+  return(
+    <section style={{position:"relative",overflow:"hidden"}}>
+      <div style={{backgroundImage:"url(https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=1400&q=80)",
+        backgroundSize:"cover",backgroundPosition:"center",padding:"96px 32px"}}>
+        <div style={{position:"absolute",inset:0,background:`${T.sky}C8`}}/>
+        <div style={{position:"relative",maxWidth:700,margin:"0 auto",textAlign:"center"}}>
+          <h2 style={{fontSize:46,fontWeight:900,color:T.navy,marginBottom:16,letterSpacing:"-0.02em"}}>
+            Ready to Start Your Journey?
+          </h2>
+          <p style={{color:T.navyMid,fontSize:20,marginBottom:40,lineHeight:1.65}}>
+            Free consultation, zero commitment.
+          </p>
+          <button onClick={()=>setPage("contact")} style={{background:T.navy,color:T.white,
+            border:"none",borderRadius:50,padding:"17px 46px",fontWeight:800,fontSize:17,cursor:"pointer"}}>
+            Book Free Consultation →
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── Footer ──────────────────────────────────────────────────────
+// ↓ 소셜 미디어 링크 — 실제 주소로 교체하세요
+const SOCIAL_LINKS={
+  instagram:"https://instagram.com/drkonnect",   // ← 교체
+  youtube:"https://youtube.com/@drkonnect",       // ← 교체
+  tiktok:"https://tiktok.com/@drkonnect",         // ← 교체
+  whatsapp:`https://wa.me/${WA_NUMBER}`,
+};
+
+const SocialIcon=({href,label,children})=>(
+  <a href={href} target="_blank" rel="noopener noreferrer"
+    style={{display:"inline-flex",alignItems:"center",justifyContent:"center",
+      width:42,height:42,borderRadius:"50%",border:`1.5px solid ${T.navyLight}`,
+      color:"#7A9BB5",textDecoration:"none",fontSize:18,transition:"all 0.2s"}}
+    onMouseEnter={e=>{e.currentTarget.style.borderColor=T.sky;e.currentTarget.style.color=T.sky;}}
+    onMouseLeave={e=>{e.currentTarget.style.borderColor=T.navyLight;e.currentTarget.style.color="#7A9BB5";}}
+    aria-label={label}>
+    {children}
+  </a>
+);
+
+function Footer({setPage}){
+  return(
+    <footer style={{background:T.navy,padding:"64px 32px 30px"}}>
+      <div style={{maxWidth:1200,margin:"0 auto"}}>
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:48,marginBottom:52,alignItems:"start"}}>
+
+          {/* Brand + description */}
+          <div>
+            <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:16}}>
+              <span style={{fontWeight:900,fontSize:22,letterSpacing:"0.05em",lineHeight:1}}>
+                <span style={{color:T.white}}>DR</span>
+                <span style={{color:T.white,fontSize:12,display:"inline-block",verticalAlign:"bottom",fontWeight:900,letterSpacing:0,marginBottom:"1px"}}>+</span>
+                <span style={{color:T.white}}>K</span>
+                <span style={{color:T.sky}}>ONNECT</span>
+              </span>
+            </div>
+            <p style={{lineHeight:1.8,fontSize:14,color:"#7A9BB5",maxWidth:300,marginBottom:28}}>
+              Bridging Filipino patients to Korea's finest medical care — with zero consultation fees, in-person local support, and complete transparency.
+            </p>
+            {/* Social icons */}
+            <div style={{display:"flex",gap:12}}>
+              <SocialIcon href={SOCIAL_LINKS.instagram} label="Instagram">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/>
+                  <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+                </svg>
+              </SocialIcon>
+              <SocialIcon href={SOCIAL_LINKS.youtube} label="YouTube">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M23 7s-.3-1.9-1.2-2.7c-1.1-1.2-2.4-1.2-3-1.3C16.4 3 12 3 12 3s-4.4 0-6.8.1c-.6.1-1.9.1-3 1.3C1.3 5.2 1 7 1 7S.7 9.1.7 11.2v1.9c0 2.1.3 4.2.3 4.2s.3 1.9 1.2 2.7c1.1 1.2 2.6 1.1 3.3 1.2C7.5 21.3 12 21.3 12 21.3s4.4 0 6.8-.2c.6-.1 1.9-.1 3-1.3.9-.8 1.2-2.7 1.2-2.7s.3-2.1.3-4.2v-1.9C23.3 9.1 23 7 23 7zM9.7 15.5V8.4l6.6 3.6-6.6 3.5z"/>
+                </svg>
+              </SocialIcon>
+              <SocialIcon href={SOCIAL_LINKS.tiktok} label="TikTok">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.14 8.14 0 004.77 1.52V6.76a4.85 4.85 0 01-1-.07z"/>
+                </svg>
+              </SocialIcon>
+              <SocialIcon href={SOCIAL_LINKS.whatsapp} label="WhatsApp">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                </svg>
+              </SocialIcon>
+            </div>
+          </div>
+
+          {/* Contact only */}
+          <div style={{justifySelf:"end"}}>
+            <div style={{color:T.white,fontWeight:800,marginBottom:18,fontSize:15}}>Contact</div>
+            {["📍 Manila, Philippines","✉ dr.konnect.sales@gmail.com"].map(item=>(
+              <div key={item} style={{marginBottom:11,fontSize:14,color:"#7A9BB5"}}>{item}</div>
+            ))}
+            <a href={`https://wa.me/${WA_NUMBER}`} target="_blank"
+              style={{display:"block",marginBottom:11,fontSize:14,color:"#7A9BB5",textDecoration:"none"}}>
+              📱 +63 917 160 3020
+            </a>
+          </div>
+        </div>
+
+        <div style={{borderTop:`1px solid ${T.navyLight}`,paddingTop:24,
+          display:"flex",justifyContent:"space-between",flexWrap:"wrap",gap:12}}>
+          <span style={{fontSize:13,color:"#7A9BB5"}}>© 2025 DR.KONNECT. All rights reserved.</span>
+          <span style={{fontSize:13,color:"#7A9BB5"}}>Privacy Policy · Terms · Cookie Policy</span>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+// ── Auth Modal ──────────────────────────────────────────────────
+
+// ── Booking Modal ───────────────────────────────────────────────
+function BookingModal({onClose,onConfirm}){
+  const today=new Date();
+  const [viewYear,setViewYear]=useState(today.getFullYear());
+  const [viewMonth,setViewMonth]=useState(today.getMonth());
+  const [selDate,setSelDate]=useState(null);
+  const [selTime,setSelTime]=useState(null);
+  const [done,setDone]=useState(false);
+
+  const monthNames=["January","February","March","April","May","June","July","August","September","October","November","December"];
+  const daysInMonth=new Date(viewYear,viewMonth+1,0).getDate();
+  const firstDay=new Date(viewYear,viewMonth,1).getDay();
+  const timeSlots=["09:00 AM","10:00 AM","11:00 AM","01:00 PM","02:00 PM","03:00 PM","04:00 PM"];
+
+  const prevMonth=()=>{
+    if(viewMonth===0){setViewMonth(11);setViewYear(y=>y-1);}
+    else setViewMonth(m=>m-1);
+    setSelDate(null);setSelTime(null);
+  };
+  const nextMonth=()=>{
+    if(viewMonth===11){setViewMonth(0);setViewYear(y=>y+1);}
+    else setViewMonth(m=>m+1);
+    setSelDate(null);setSelTime(null);
+  };
+
+  const isPast=(d)=>{
+    const dt=new Date(viewYear,viewMonth,d);
+    dt.setHours(0,0,0,0);
+    const t=new Date();t.setHours(0,0,0,0);
+    return dt<t;
+  };
+
+  if(done) return(
+    <div style={{position:"fixed",inset:0,background:"rgba(13,27,42,0.55)",zIndex:500,
+      display:"flex",alignItems:"center",justifyContent:"center",padding:20}}>
+      <div style={{background:T.white,borderRadius:24,padding:"52px 40px",maxWidth:420,
+        width:"100%",textAlign:"center",boxShadow:"0 24px 64px rgba(13,27,42,0.18)"}}>
+        <div style={{fontSize:56,marginBottom:18}}>✅</div>
+        <h3 style={{fontSize:24,fontWeight:900,color:T.navy,marginBottom:12}}>Appointment Requested!</h3>
+        <p style={{color:T.grayText,lineHeight:1.7,marginBottom:8}}>
+          <strong style={{color:T.navy}}>{monthNames[viewMonth]} {selDate}, {viewYear}</strong> at <strong style={{color:T.navy}}>{selTime}</strong>
+        </p>
+        <p style={{color:T.grayText,fontSize:14,lineHeight:1.7,marginBottom:28}}>
+          Our coordinator will confirm via WhatsApp within 24 hours.
+        </p>
+        <div style={{display:"flex",flexDirection:"column",gap:12}}>
+          <button onClick={()=>{onConfirm&&onConfirm();}} style={{background:T.sky,color:T.navy,border:"none",
+            borderRadius:14,padding:"14px 36px",fontWeight:900,fontSize:15,cursor:"pointer"}}>
+            Continue to Inquiry Form →
+          </button>
+          <button onClick={onClose} style={{background:"none",color:T.grayText,
+            border:`1.5px solid ${T.grayLine}`,borderRadius:14,padding:"13px 36px",
+            fontWeight:700,fontSize:14,cursor:"pointer"}}>
+            Done
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
+  return(
+    <div style={{position:"fixed",inset:0,background:"rgba(13,27,42,0.55)",zIndex:500,
+      display:"flex",alignItems:"center",justifyContent:"center",padding:20}}>
+      <div style={{background:T.white,borderRadius:24,padding:"36px 32px",maxWidth:480,
+        width:"100%",boxShadow:"0 24px 64px rgba(13,27,42,0.18)",position:"relative"}}>
+        <button onClick={onClose} style={{position:"absolute",top:16,right:16,background:"none",
+          border:"none",cursor:"pointer",fontSize:22,color:T.grayText}}>✕</button>
+        <h3 style={{fontSize:22,fontWeight:900,color:T.navy,marginBottom:4}}>Book In-Person Visit</h3>
+        <p style={{color:T.grayText,fontSize:14,marginBottom:24}}>Select a date and time for your consultation.</p>
+
+        {/* Calendar */}
+        <div style={{background:T.offWhite,borderRadius:16,padding:"20px",marginBottom:20}}>
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:16}}>
+            <button onClick={prevMonth} style={{background:"none",border:"none",cursor:"pointer",
+              fontSize:18,color:T.grayText,padding:"4px 10px"}}>‹</button>
+            <span style={{fontWeight:800,color:T.navy,fontSize:15}}>{monthNames[viewMonth]} {viewYear}</span>
+            <button onClick={nextMonth} style={{background:"none",border:"none",cursor:"pointer",
+              fontSize:18,color:T.grayText,padding:"4px 10px"}}>›</button>
+          </div>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(7,1fr)",gap:4,marginBottom:6}}>
+            {["Su","Mo","Tu","We","Th","Fr","Sa"].map(d=>(
+              <div key={d} style={{textAlign:"center",fontSize:11,fontWeight:700,color:T.grayText,padding:"4px 0"}}>{d}</div>
+            ))}
+          </div>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(7,1fr)",gap:4}}>
+            {Array(firstDay).fill(null).map((_,i)=><div key={"e"+i}/>)}
+            {Array(daysInMonth).fill(null).map((_,i)=>{
+              const d=i+1;
+              const past=isPast(d);
+              const sel=selDate===d;
+              return(
+                <button key={d} onClick={()=>{if(!past){setSelDate(d);setSelTime(null);}}}
+                  style={{padding:"8px 2px",borderRadius:10,border:"none",cursor:past?"not-allowed":"pointer",
+                    background:sel?T.navy:past?"transparent":"transparent",
+                    color:sel?T.white:past?T.grayLine:T.navy,
+                    fontWeight:sel?800:500,fontSize:13,
+                    outline:sel?"none":(selDate===d?"none":"none"),
+                    transition:"background 0.15s",
+                    ...((!past&&!sel)?{":hover":{background:T.skyPale}}:{})
+                  }}
+                  onMouseEnter={e=>{if(!past&&!sel)e.currentTarget.style.background=T.skyPale;}}
+                  onMouseLeave={e=>{if(!past&&!sel)e.currentTarget.style.background="transparent";}}>
+                  {d}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Time Slots */}
+        {selDate&&(
+          <div style={{marginBottom:24}}>
+            <p style={{fontWeight:700,color:T.navy,fontSize:14,marginBottom:12}}>Available Times</p>
+            <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
+              {timeSlots.map(t=>(
+                <button key={t} onClick={()=>setSelTime(t)}
+                  style={{padding:"9px 18px",borderRadius:30,border:`1.5px solid ${selTime===t?T.navy:T.grayLine}`,
+                    background:selTime===t?T.navy:"transparent",color:selTime===t?T.white:T.navy,
+                    fontWeight:600,fontSize:13,cursor:"pointer"}}>
+                  {t}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <button onClick={()=>{if(selDate&&selTime)setDone(true);}}
+          style={{width:"100%",padding:"15px",background:selDate&&selTime?T.navy:"#ccc",
+            color:T.white,border:"none",borderRadius:14,fontWeight:800,fontSize:15,
+            cursor:selDate&&selTime?"pointer":"not-allowed"}}>
+          {selDate&&selTime?`Confirm — ${monthNames[viewMonth]} ${selDate} · ${selTime}`:"Select a date & time"}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ── Consult Section ─────────────────────────────────────────────
+function ConsultSection({setPage}){
+  const [showBooking,setShowBooking]=useState(false);
+
+  const cards=[
+    {
+      title:"Chatting",
+      icon:"💬",
+      badge:null,
+      accentColor:T.sky,
+      features:[
+        "Reply within minutes, any time of day",
+        "Send medical records, photos & reports",
+        "Get transparent cost estimates upfront",
+        "Coordinate with multiple hospitals at once",
+        "End-to-end hospital booking support",
+      ],
+      action:()=>setPage("contact"),
+    },
+    {
+      title:"Video Call",
+      icon:"🎥",
+      badge:null,
+      accentColor:T.skyDeep,
+      features:[
+        "Meet your coordinator face-to-face online",
+        "Show your concern visually in real time",
+        "Bilingual Korean–Filipino support",
+        "Live walkthrough of treatment options",
+        "End-to-end hospital booking support",
+      ],
+      action:()=>setPage("contact"),
+    },
+    {
+      title:"In-Person",
+      icon:"🤝",
+      badge:"Recommended",
+      accentColor:T.skyDark,
+      features:[
+        "Meet your coordinator face-to-face in the Philippines",
+        "Full case review with no travel or fees required",
+        "Transparent cost comparison with other countries",
+        "Hospital matching based on your condition & budget",
+        "End-to-end hospital booking support",
+      ],
+      action:()=>setShowBooking(true),
+    },
+  ];
+
+  return(
+    <section style={{padding:"92px 32px",background:T.skyPale}}>
+      {showBooking&&<BookingModal onClose={()=>setShowBooking(false)} onConfirm={()=>{setShowBooking(false);setPage("contact");}}/>}
+      <div style={{maxWidth:1160,margin:"0 auto"}}>
+        <div style={{textAlign:"center",marginBottom:56}}>
+          <Chip s={{marginBottom:16,display:"inline-block"}}>CONSULTATION</Chip>
+          <h2 style={{fontSize:42,fontWeight:900,color:T.navy,letterSpacing:"-0.02em",marginBottom:14}}>
+            How would you like to connect?
+          </h2>
+          <p style={{color:T.grayText,fontSize:17,maxWidth:580,margin:"0 auto"}}>
+            Choose the format that fits your schedule. All consultations are completely free — no commitment, no hidden fees.
+          </p>
+        </div>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:22}}>
+          {cards.map(c=>(
+            <div key={c.title} style={{background:T.white,borderRadius:24,
+              border:`1.5px solid ${T.grayLine}`,display:"flex",flexDirection:"column",
+              overflow:"hidden",boxShadow:"0 4px 20px rgba(13,27,42,0.07)"}}>
+              {/* Colored top accent bar */}
+              <div style={{height:5,background:c.accentColor}}/>
+              <div style={{padding:"28px 26px 30px",display:"flex",flexDirection:"column",flex:1}}>
+                {/* Title row */}
+                <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:18}}>
+                  <span style={{fontSize:22}}>{c.icon}</span>
+                  <h3 style={{fontSize:22,fontWeight:900,color:T.navy,margin:0,flex:1}}>{c.title}</h3>
+                  {c.badge&&(
+                    <span style={{background:T.skyPale,color:T.skyDark,fontSize:11,
+                      fontWeight:700,padding:"4px 12px",borderRadius:20,border:`1px solid ${T.skyLight}`}}>{c.badge}</span>
+                  )}
+                </div>
+                <div style={{height:"1.5px",background:T.grayLine,marginBottom:22}}/>
+                {/* Features */}
+                <ul style={{listStyle:"none",padding:0,margin:"0 0 28px",flex:1}}>
+                  {c.features.map((f,i)=>(
+                    <li key={i} style={{display:"flex",alignItems:"flex-start",gap:10,
+                      marginBottom:13,color:T.textMid,fontSize:14,lineHeight:1.55}}>
+                      <span style={{color:c.accentColor,fontWeight:800,fontSize:14,
+                        marginTop:1,flexShrink:0}}>✓</span>
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+                {/* Button */}
+                <button onClick={c.action}
+                  style={{width:"100%",padding:"14px",background:T.navy,color:T.white,
+                    border:"none",borderRadius:12,fontWeight:800,fontSize:15,cursor:"pointer",
+                    letterSpacing:"0.02em"}}>
+                  Get Started →
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── Before/After (static side-by-side, no drag) ──────────────────
+function BASlider({label,tag,beforeImg,afterImg}){
+  return(
+    <div style={{borderRadius:20,overflow:"hidden",border:`1.5px solid ${T.grayLine}`,
+      boxShadow:"0 4px 20px rgba(13,27,42,0.08)"}}>
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",height:270}}>
+        {/* BEFORE — left, login-gated */}
+        <div style={{position:"relative",overflow:"hidden",
+          background:beforeImg?`url(${beforeImg}) center/cover`:`linear-gradient(135deg,${T.navyLight},${T.navy})`,
+          display:"flex",alignItems:"flex-end",padding:12}}>
+          {beforeImg&&<img src={beforeImg} alt="before"
+            style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover"}}/>}
+          <span style={{position:"relative",zIndex:1,background:"rgba(13,27,42,0.62)",color:"#fff",
+            fontSize:11,fontWeight:800,padding:"4px 12px",borderRadius:6,letterSpacing:"0.08em"}}>
+            BEFORE
+          </span>
+        </div>
+        {/* AFTER — right, always visible */}
+        <div style={{position:"relative",overflow:"hidden",
+          background:afterImg?`url(${afterImg}) center/cover`:`linear-gradient(135deg,${T.skyLight},${T.sky})`,
+          display:"flex",alignItems:"flex-end",justifyContent:"flex-end",padding:12,
+          borderLeft:`2px solid ${T.white}`}}>
+          {afterImg&&<img src={afterImg} alt="after"
+            style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover"}}/>}
+          <span style={{position:"relative",zIndex:1,background:"rgba(13,27,42,0.62)",color:"#fff",
+            fontSize:11,fontWeight:800,padding:"4px 12px",borderRadius:6,letterSpacing:"0.08em"}}>
+            AFTER
+          </span>
+        </div>
+      </div>
+      <div style={{padding:"14px 20px",background:T.white,borderTop:`1px solid ${T.grayLine}`,
+        display:"flex",alignItems:"center",gap:10}}>
+        <span style={{fontWeight:800,color:T.navy,fontSize:14}}>{label}</span>
+        <span style={{background:T.skyPale,color:T.skyDark,fontSize:11,fontWeight:700,
+          padding:"3px 10px",borderRadius:20}}>{tag}</span>
+      </div>
+    </div>
+  );
+}
+
+// ── Before/After Section ─────────────────────────────────────────
+function BASection(){
+  const pairs=[
+    {label:"Rhinoplasty",tag:"Nose Reshaping",beforeImg:null,afterImg:null},
+    {label:"Jaw Contouring",tag:"V-Line",beforeImg:null,afterImg:null},
+    {label:"Double Eyelid",tag:"Eye Surgery",beforeImg:null,afterImg:null},
+    {label:"Facelift",tag:"Facial Rejuvenation",beforeImg:null,afterImg:null},
+  ];
+  return(
+    <section style={{padding:"92px 32px",background:T.offWhite}}>
+      <div style={{maxWidth:1100,margin:"0 auto"}}>
+        <div style={{textAlign:"center",marginBottom:56}}>
+          <Chip s={{marginBottom:16,display:"inline-block"}}>REAL RESULTS</Chip>
+          <h2 style={{fontSize:44,fontWeight:900,color:T.navy,letterSpacing:"-0.02em",marginBottom:12}}>
+            Before & After Gallery
+          </h2>
+          <p style={{color:T.grayText,fontSize:17}}>
+            Real patient results — Before on the left, After on the right.
+          </p>
+        </div>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:28}}>
+          {pairs.map(p=><BASlider key={p.label} {...p}/>)}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── Why DR.KONNECT Section ──────────────────────────────────────
+function WhySection(){
+  const cards=[
+    {
+      icon:(
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M14.5 8.5c-.7-.9-2-.9-2.5-.9-2 0-3.5 1.3-3.5 3s1.5 2.7 3.5 2.7c2 0 3.5 1.1 3.5 2.8S14 18 12 18c-.8 0-2-.5-2.5-1.2"/>
+          <line x1="12" y1="6" x2="12" y2="8"/>
+          <line x1="12" y1="18" x2="12" y2="20"/>
+        </svg>
+      ),
+      title:"Fair and Transparent Pricing",
+      desc:"We help ensure that clients are not charged unfairly simply because they are foreign patients. You deserve to pay the same fair price as anyone else — with full transparency at every step."
+    },
+    {
+      icon:(
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+      ),
+      title:"In-Person Consultation Available",
+      desc:"Face-to-face consultation is available in the Manila area, providing greater trust and convenience compared to online-only services. We meet you where you are."
+    },
+    {
+      icon:(
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="9"/>
+          <line x1="2" y1="12" x2="22" y2="12"/>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+        </svg>
+      ),
+      title:"No Language Barrier",
+      desc:"We partner with hospitals that have English-speaking coordinators and interpretation support available — so communication is never a concern at any stage of your journey."
+    },
+  ];
+  return(
+    <section style={{padding:"100px 32px",background:"#F6F7F9"}}>
+      <div style={{maxWidth:980,margin:"0 auto",textAlign:"center"}}>
+        <div style={{marginBottom:56}}>
+          <h2 style={{fontSize:46,fontWeight:900,color:T.navy,marginBottom:20,
+            letterSpacing:"-0.025em",lineHeight:1.1}}>
+            Why <span style={{color:T.sky}}>DR.KONNECT</span>?
+          </h2>
+          <p style={{color:"#6B7A8A",fontSize:17,maxWidth:660,margin:"0 auto",lineHeight:1.85}}>
+            Unlike typical medical agencies, DR.KONNECT communicates directly with clients in the Philippines,
+            helping reduce uncertainty and remove the barriers that often make Korean medical services feel difficult to access.
+          </p>
+        </div>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:24}}>
+          {cards.map(c=>(
+            <div key={c.title}
+              style={{background:"#ECEEF1",borderRadius:22,padding:"40px 30px",textAlign:"left",
+                transition:"transform 0.22s,box-shadow 0.22s"}}
+              onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-4px)";e.currentTarget.style.boxShadow="0 16px 40px rgba(13,27,42,0.10)";}}
+              onMouseLeave={e=>{e.currentTarget.style.transform="";e.currentTarget.style.boxShadow="";}}>
+              <div style={{width:60,height:60,borderRadius:"50%",
+                background:"#E2E4E8",display:"flex",alignItems:"center",
+                justifyContent:"center",marginBottom:28,color:T.navy}}>
+                {c.icon}
+              </div>
+              <h3 style={{fontSize:18,fontWeight:800,color:T.navy,marginBottom:12,lineHeight:1.35}}>{c.title}</h3>
+              <p style={{color:"#5A6875",fontSize:14,lineHeight:1.82,margin:0}}>{c.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── Currency Calculator Modal ────────────────────────────────────
+function CurrencyModal({onClose}){
+  const [amount,setAmount]=useState("100,000");
+  const [rate,setRate]=useState(null);
+  const [loading,setLoading]=useState(true);
+  const [lastUpdated,setLastUpdated]=useState("");
+  const [dir,setDir]=useState("KRW_PHP");
+
+  useEffect(()=>{
+    fetch("https://api.exchangerate-api.com/v4/latest/KRW")
+      .then(r=>r.json())
+      .then(data=>{
+        setRate(data.rates.PHP);
+        setLastUpdated(data.date);
+        setLoading(false);
+      })
+      .catch(()=>{
+        setRate(0.042);
+        setLastUpdated("(offline fallback)");
+        setLoading(false);
+      });
+  },[]);
+
+  const num=parseFloat(String(amount).replace(/,/g,""))||0;
+  const converted=rate
+    ?(dir==="KRW_PHP"?(num*rate).toFixed(2):(num/rate).toFixed(0))
+    :"—";
+  const fromLabel=dir==="KRW_PHP"?"KRW (₩)":"PHP (₱)";
+  const toLabel=dir==="KRW_PHP"?"PHP (₱)":"KRW (₩)";
+  const toSymbol=dir==="KRW_PHP"?"₱":"₩";
+
+  return(
+    <div style={{position:"fixed",inset:0,background:"rgba(13,27,42,0.72)",
+      display:"flex",alignItems:"center",justifyContent:"center",zIndex:600,padding:24}}
+      onClick={onClose}>
+      <div style={{background:T.white,borderRadius:24,padding:"36px 36px",
+        maxWidth:380,width:"100%",boxShadow:"0 24px 64px rgba(0,0,0,0.28)",position:"relative"}}
+        onClick={e=>e.stopPropagation()}>
+        <button onClick={onClose} style={{position:"absolute",top:16,right:16,
+          background:"none",border:"none",cursor:"pointer",fontSize:22,color:T.grayText}}>✕</button>
+        <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:22}}>
+          <div style={{width:40,height:40,borderRadius:12,background:T.skyPale,
+            display:"flex",alignItems:"center",justifyContent:"center"}}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke={T.skyDark} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="4" y="2" width="16" height="20" rx="2"/>
+              <line x1="8" y1="6" x2="16" y2="6"/>
+              <line x1="8" y1="10" x2="10" y2="10"/>
+              <line x1="14" y1="10" x2="16" y2="10"/>
+              <line x1="8" y1="14" x2="10" y2="14"/>
+              <line x1="14" y1="14" x2="16" y2="14"/>
+              <line x1="8" y1="18" x2="10" y2="18"/>
+              <line x1="14" y1="18" x2="16" y2="18"/>
+            </svg>
+          </div>
+          <h3 style={{fontWeight:900,color:T.navy,fontSize:19,margin:0}}>Currency Calculator</h3>
+        </div>
+
+        {/* Direction toggle */}
+        <div style={{display:"flex",background:T.offWhite,borderRadius:12,padding:4,marginBottom:20}}>
+          {[["KRW_PHP","🇰🇷 KRW → PHP 🇵🇭"],["PHP_KRW","🇵🇭 PHP → KRW 🇰🇷"]].map(([val,label])=>(
+            <button key={val} onClick={()=>setDir(val)}
+              style={{flex:1,padding:"10px 6px",borderRadius:9,border:"none",cursor:"pointer",
+                fontWeight:700,fontSize:12,
+                background:dir===val?T.white:"transparent",
+                color:dir===val?T.navy:T.grayText,
+                boxShadow:dir===val?"0 1px 4px rgba(0,0,0,0.1)":"none"}}>
+              {label}
+            </button>
+          ))}
+        </div>
+
+        {/* Amount input */}
+        <div style={{marginBottom:18}}>
+          <label style={{display:"block",fontSize:11,fontWeight:800,color:T.grayText,
+            letterSpacing:"0.1em",textTransform:"uppercase",marginBottom:8}}>{fromLabel}</label>
+          <input type="text" value={amount}
+            onChange={e=>{
+              const raw=e.target.value.replace(/[^0-9]/g,"");
+              if(!raw){setAmount("");return;}
+              setAmount(parseInt(raw,10).toLocaleString());
+            }}
+            style={{width:"100%",padding:"14px 16px",borderRadius:12,
+              border:`1.5px solid ${T.grayLine}`,fontSize:20,fontWeight:700,
+              color:T.navy,boxSizing:"border-box",outline:"none"}}/>
+        </div>
+
+        {/* Result */}
+        <div style={{background:T.skyPale,borderRadius:16,padding:"22px",
+          textAlign:"center",border:`1.5px solid ${T.skyLight}`,marginBottom:14}}>
+          <div style={{color:T.grayText,fontSize:11,fontWeight:800,
+            letterSpacing:"0.1em",textTransform:"uppercase",marginBottom:8}}>{toLabel} EQUIVALENT</div>
+          {loading?(
+            <div style={{color:T.grayText,fontSize:16}}>Loading live rate...</div>
+          ):(
+            <div style={{color:T.navy,fontWeight:900,fontSize:34,letterSpacing:"-0.02em"}}>
+              {toSymbol}{parseFloat(converted).toLocaleString()}
+            </div>
+          )}
+        </div>
+
+        {/* Rate info */}
+        {!loading&&rate&&(
+          <p style={{textAlign:"center",color:T.grayText,fontSize:11,margin:0,lineHeight:1.6}}>
+            Live rate: 1 KRW = ₱{rate.toFixed(5)}<br/>
+            Last updated: {lastUpdated}
+          </p>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ── Floating UI ──────────────────────────────────────────────────
+function FloatingUI({onCurrency}){
+  const socials=[
+    {
+      label:"WhatsApp",
+      href:`https://wa.me/${WA_NUMBER}`,
+      bg:"#25D366",
+      icon:(
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+      ),
+    },
+    {
+      label:"Instagram",
+      href:"https://instagram.com/drkonnect",
+      bg:"#E1306C",
+      icon:(
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="5"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+        </svg>
+      ),
+    },
+    {
+      label:"YouTube",
+      href:"https://youtube.com/@drkonnect",
+      bg:"#FF0000",
+      icon:(
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M23 7s-.3-1.9-1.2-2.7c-1.1-1.2-2.4-1.2-3-1.3C16.4 3 12 3 12 3s-4.4 0-6.8.1c-.6.1-1.9.1-3 1.3C1.3 5.2 1 7 1 7S.7 9.1.7 11.2v1.9c0 2.1.3 4.2.3 4.2s.3 1.9 1.2 2.7c1.1 1.2 2.6 1.1 3.3 1.2C7.5 21.3 12 21.3 12 21.3s4.4 0 6.8-.2c.6-.1 1.9-.1 3-1.3.9-.8 1.2-2.7 1.2-2.7s.3-2.1.3-4.2v-1.9C23.3 9.1 23 7 23 7zM9.7 15.5V8.4l6.6 3.6-6.6 3.5z"/>
+        </svg>
+      ),
+    },
+    {
+      label:"TikTok",
+      href:"https://tiktok.com/@drkonnect",
+      bg:"#010101",
+      icon:(
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.14 8.14 0 004.77 1.52V6.76a4.85 4.85 0 01-1-.07z"/>
+        </svg>
+      ),
+    },
+  ];
+  return(
+    <>
+      {/* Bottom-left: Currency Converter */}
+      <div style={{position:"fixed",bottom:28,left:28,zIndex:400}}>
+        <button onClick={onCurrency}
+          style={{background:T.sky,color:T.navy,border:"none",
+            borderRadius:50,padding:"14px 24px",fontWeight:800,
+            fontSize:14,cursor:"pointer",letterSpacing:"0.01em",
+            display:"flex",alignItems:"center",gap:8,
+            boxShadow:"0 6px 24px rgba(142,197,230,0.55)",
+            transition:"transform 0.18s,box-shadow 0.18s"}}
+          onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-2px)";e.currentTarget.style.boxShadow="0 10px 32px rgba(142,197,230,0.65)";}}
+          onMouseLeave={e=>{e.currentTarget.style.transform="";e.currentTarget.style.boxShadow="0 6px 24px rgba(142,197,230,0.55)";}}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="4" y="2" width="16" height="20" rx="2"/>
+            <line x1="8" y1="6" x2="16" y2="6"/>
+            <line x1="8" y1="10" x2="10" y2="10"/>
+            <line x1="14" y1="10" x2="16" y2="10"/>
+            <line x1="8" y1="14" x2="10" y2="14"/>
+            <line x1="14" y1="14" x2="16" y2="14"/>
+            <line x1="8" y1="18" x2="16" y2="18"/>
+          </svg>
+          Currency Converter
+        </button>
+      </div>
+
+      {/* Bottom-right: Social icons */}
+      <div style={{position:"fixed",bottom:28,right:28,zIndex:400,
+        display:"flex",flexDirection:"column",gap:10,alignItems:"center"}}>
+        {socials.map(s=>(
+          <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
+            title={s.label}
+            style={{width:46,height:46,borderRadius:"50%",
+              background:s.bg,color:"#ffffff",
+              display:"flex",alignItems:"center",justifyContent:"center",
+              textDecoration:"none",
+              boxShadow:"0 3px 14px rgba(0,0,0,0.22)",
+              transition:"transform 0.18s,box-shadow 0.18s"}}
+            onMouseEnter={e=>{e.currentTarget.style.transform="scale(1.13)";e.currentTarget.style.boxShadow="0 6px 20px rgba(0,0,0,0.32)";}}
+            onMouseLeave={e=>{e.currentTarget.style.transform="";e.currentTarget.style.boxShadow="0 3px 14px rgba(0,0,0,0.22)";}}>
+            {s.icon}
+          </a>
+        ))}
+      </div>
+    </>
+  );
+}
+
+// ── About Page ──────────────────────────────────────────────────
+function AboutPage({setPage}){
+  const pillars=[
+    {
+      icon:"🎯",
+      title:"Our Mission",
+      body:"To eliminate the information gap that prevents Filipino patients from accessing Korea's world-class healthcare — providing accurate, transparent guidance so every patient can make the best possible medical decision, at zero cost."
+    },
+    {
+      icon:"🌏",
+      title:"Our Vision",
+      body:"A future where geography and language are no longer barriers to quality medical care. Every Filipino patient deserves access to the world's best treatment options, evaluated fairly and without compromise."
+    },
+    {
+      icon:"💡",
+      title:"Why We Started",
+      body:"Many Filipino patients pay more for treatment in Singapore or the US simply due to familiarity — not because Korean care is more expensive. DR.KONNECT was founded to correct that imbalance with honest information and real support."
+    },
+  ];
+  const differentiators=[
+    {
+      icon:"💬",
+      title:"Zero Consultation Fees",
+      desc:"We never charge patients for online or in-person consultations, nor for hospital introductions. Our guidance is completely free — always."
+    },
+    {
+      icon:"🤝",
+      title:"In-Person Local Support",
+      desc:"Unlike online-only services, we meet you face-to-face in the Philippines. Real conversations, real trust — before you ever board a plane to Korea."
+    },
+    {
+      icon:"✅",
+      title:"Vetted Partner Hospitals",
+      desc:"We personally review every hospital's safety record, physician credentials, English-language support, and operational stability before forming a partnership."
+    },
+    {
+      icon:"🛫",
+      title:"End-to-End Journey",
+      desc:"From hospital matching and visa support to accommodation, transport, and post-treatment follow-up — we stay with you through every step of your medical journey."
+    },
+  ];
+  return(
+    <div style={{minHeight:"100vh",background:T.offWhite}}>
+
+      {/* Header Banner */}
+      <div style={{position:"relative",backgroundImage:"url(https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=1400&q=80)",
+        backgroundSize:"cover",backgroundPosition:"center",padding:"80px 32px 64px"}}>
+        <div style={{position:"absolute",inset:0,background:`${T.navy}E0`}}/>
+        <div style={{position:"relative",maxWidth:1100,margin:"0 auto"}}>
+          <Chip s={{background:"rgba(142,197,230,0.2)",color:T.skyLight,
+            border:"1px solid rgba(142,197,230,0.35)",marginBottom:18,display:"inline-block"}}>
+            ABOUT DR.KONNECT
+          </Chip>
+          <h2 style={{fontSize:48,fontWeight:900,color:T.white,marginBottom:14,
+            letterSpacing:"-0.02em",lineHeight:1.1,maxWidth:660}}>
+            A Trusted Partner for<br/>
+            <span style={{color:T.sky}}>Your Medical Journey</span>
+          </h2>
+          <p style={{color:"rgba(255,255,255,0.7)",fontSize:18,maxWidth:560,lineHeight:1.75}}>
+            Bridging Filipino patients to Korea's finest medical care —
+            eliminating information barriers, at zero cost to you.
+          </p>
+        </div>
+      </div>
+
+      <div style={{maxWidth:1100,margin:"0 auto",padding:"64px 32px"}}>
+
+        {/* CEO Section */}
+        <div style={{background:T.white,borderRadius:24,padding:"44px 48px",
+          border:`1.5px solid ${T.grayLine}`,marginBottom:32,
+          display:"flex",gap:44,alignItems:"flex-start",flexWrap:"wrap"}}>
+
+          {/* Photo — replace with actual photo when available */}
+          <div style={{width:164,height:164,borderRadius:"50%",
+            background:T.skyPale,border:`4px solid ${T.sky}`,
+            flexShrink:0,display:"flex",alignItems:"center",
+            justifyContent:"center",overflow:"hidden"}}>
+            {/* To use a real photo, replace this div contents with:
+                <img src="your-photo.jpg" alt="Eric Choi"
+                  style={{width:"100%",height:"100%",objectFit:"cover"}}/> */}
+            <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+              <circle cx="40" cy="32" r="18" fill={T.sky} opacity="0.6"/>
+              <ellipse cx="40" cy="72" rx="30" ry="18" fill={T.sky} opacity="0.4"/>
+            </svg>
+          </div>
+
+          {/* Info */}
+          <div style={{flex:1,minWidth:260}}>
+            <div style={{color:T.grayText,fontSize:12,fontWeight:800,
+              letterSpacing:"0.1em",textTransform:"uppercase",marginBottom:6}}>
+              Founder & CEO
+            </div>
+            <h3 style={{fontSize:34,fontWeight:900,color:T.navy,margin:"0 0 4px",letterSpacing:"-0.01em"}}>
+              Eric Choi
+            </h3>
+            <div style={{color:T.skyDark,fontSize:15,fontWeight:600,marginBottom:22}}>
+              Medical Tourism Consultant &nbsp;·&nbsp; Seoul &amp; Manila
+            </div>
+            <blockquote style={{
+              margin:0,padding:"20px 24px",
+              background:T.skyPale,
+              borderLeft:`4px solid ${T.sky}`,
+              borderRadius:"0 16px 16px 0",
+              color:T.textMid,fontSize:15,lineHeight:1.8,
+              fontStyle:"italic",maxWidth:560}}>
+              "Korean healthcare is closer than most people think. The distance isn't
+              geographic — it's informational. DR.KONNECT exists to close that gap,
+              one patient at a time."
+            </blockquote>
+            <div style={{display:"flex",gap:10,marginTop:22,flexWrap:"wrap"}}>
+              <Chip>🇰🇷 Based in Seoul</Chip>
+              <Chip>🇵🇭 Serving Filipino Patients</Chip>
+              <Chip>💬 English · Korean</Chip>
+            </div>
+          </div>
+        </div>
+
+        {/* Mission / Vision / Why */}
+        <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:22,marginBottom:32}}>
+          {pillars.map(p=>(
+            <div key={p.title} style={{background:T.white,borderRadius:20,padding:"32px 28px",
+              border:`1.5px solid ${T.grayLine}`}}>
+              <div style={{fontSize:30,width:60,height:60,borderRadius:16,
+                background:T.skyPale,display:"flex",alignItems:"center",
+                justifyContent:"center",marginBottom:18}}>{p.icon}</div>
+              <h4 style={{fontSize:18,fontWeight:900,color:T.navy,marginBottom:12}}>{p.title}</h4>
+              <p style={{color:T.grayText,fontSize:14,lineHeight:1.8,margin:0}}>{p.body}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Core Story — dark banner */}
+        <div style={{background:T.navy,borderRadius:24,padding:"52px 56px",marginBottom:32,
+          position:"relative",overflow:"hidden"}}>
+          <div style={{position:"absolute",top:-60,right:-60,width:240,height:240,
+            borderRadius:"50%",background:T.skyDeep,opacity:0.12,pointerEvents:"none"}}/>
+          <div style={{position:"absolute",bottom:-40,left:-40,width:180,height:180,
+            borderRadius:"50%",background:T.sky,opacity:0.07,pointerEvents:"none"}}/>
+          <div style={{position:"relative"}}>
+            <Chip s={{background:"rgba(142,197,230,0.18)",color:T.skyLight,
+              border:"1px solid rgba(142,197,230,0.3)",marginBottom:20,display:"inline-block"}}>
+              THE PROBLEM WE SOLVE
+            </Chip>
+            <h3 style={{fontSize:30,fontWeight:900,color:T.white,marginBottom:20,
+              letterSpacing:"-0.01em",maxWidth:680}}>
+              Why Filipino Patients Overpay —<br/>And How We Fix It
+            </h3>
+            <p style={{color:"rgba(255,255,255,0.75)",fontSize:15,lineHeight:1.9,
+              marginBottom:16,maxWidth:760}}>
+              In the Philippines, medical options can be limited while costs remain high. Korea, meanwhile,
+              offers world-class technology and a well-organized healthcare infrastructure — yet many patients
+              never seriously consider it. Language barriers, lack of accessible information, and the
+              assumption that "Korea must be expensive" push patients toward Singapore, the US, or Australia instead.
+            </p>
+            <p style={{color:"rgba(255,255,255,0.75)",fontSize:15,lineHeight:1.9,
+              marginBottom:16,maxWidth:760}}>
+              The result: patients often end up paying <span style={{color:T.skyLight,fontWeight:700}}>more</span> —
+              simply because they chose a familiar English-speaking country over a better-value, higher-quality alternative.
+              For certain procedures and conditions, Korean hospitals are comparably priced to — or even more affordable than —
+              major Philippine private hospitals.
+            </p>
+            <p style={{color:T.skyLight,fontSize:15,lineHeight:1.85,fontWeight:600,maxWidth:760}}>
+              DR.KONNECT was founded to correct this information imbalance. We give you the full picture,
+              so you can make the best decision for your health and your budget — with zero pressure and zero fees.
+            </p>
+          </div>
+        </div>
+
+        {/* What Makes Us Different */}
+        <div style={{marginBottom:36}}>
+          <div style={{textAlign:"center",marginBottom:36}}>
+            <Chip s={{marginBottom:14,display:"inline-block"}}>OUR DIFFERENCE</Chip>
+            <h3 style={{fontSize:36,fontWeight:900,color:T.navy,letterSpacing:"-0.02em",marginBottom:12}}>
+              What Sets DR.KONNECT Apart
+            </h3>
+            <p style={{color:T.grayText,fontSize:16,maxWidth:500,margin:"0 auto"}}>
+              We're not just a referral service. We're your medical journey partner.
+            </p>
+          </div>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:20}}>
+            {differentiators.map(d=>(
+              <div key={d.title} style={{background:T.white,borderRadius:20,
+                padding:"28px 30px",border:`1.5px solid ${T.grayLine}`,
+                display:"flex",gap:20,alignItems:"flex-start",
+                transition:"all 0.22s"}}
+                onMouseEnter={e=>{e.currentTarget.style.borderColor=T.sky;e.currentTarget.style.boxShadow=`0 10px 32px ${T.sky}28`;}}
+                onMouseLeave={e=>{e.currentTarget.style.borderColor=T.grayLine;e.currentTarget.style.boxShadow="";}}>
+                <div style={{fontSize:26,width:56,height:56,borderRadius:14,
+                  background:T.skyPale,display:"flex",alignItems:"center",
+                  justifyContent:"center",flexShrink:0}}>{d.icon}</div>
+                <div>
+                  <div style={{fontWeight:900,color:T.navy,fontSize:16,marginBottom:8}}>{d.title}</div>
+                  <div style={{color:T.grayText,fontSize:14,lineHeight:1.75}}>{d.desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Bottom CTA */}
+        <div style={{textAlign:"center",background:T.skyPale,borderRadius:24,
+          padding:"52px 32px",border:`1.5px solid ${T.skyLight}`}}>
+          <h3 style={{fontSize:28,fontWeight:900,color:T.navy,marginBottom:14,letterSpacing:"-0.01em"}}>
+            Ready to explore your options?
+          </h3>
+          <p style={{color:T.grayText,fontSize:16,lineHeight:1.75,
+            maxWidth:480,margin:"0 auto 28px"}}>
+            Start with a free, no-obligation consultation.
+            You may be surprised by how many options are available to you.
+          </p>
+          <div style={{display:"flex",gap:14,justifyContent:"center",flexWrap:"wrap"}}>
+            <button onClick={()=>setPage("contact")}
+              style={{background:T.navy,color:T.white,border:"none",
+                borderRadius:50,padding:"16px 42px",fontWeight:800,fontSize:15,cursor:"pointer"}}>
+              Get Free Consultation →
+            </button>
+            <button onClick={()=>setPage("hospitals")}
+              style={{background:"transparent",color:T.navy,
+                border:`2px solid ${T.navy}`,borderRadius:50,
+                padding:"16px 42px",fontWeight:700,fontSize:15,cursor:"pointer"}}>
+              Browse Hospitals
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
+// ── App ─────────────────────────────────────────────────────────
+function App(){
+  const [page,setPage]=useState("home");
+  const [sel,setSel]=useState(null);
+  const [showCurrency,setShowCurrency]=useState(false);
+
+  useEffect(()=>{window.scrollTo(0,0);},[page]);
+
+  return(
+    <div style={{fontFamily:"'Segoe UI',system-ui,-apple-system,sans-serif",color:T.navy,minHeight:"100vh"}}>
+      <Navbar page={page} setPage={setPage} setSel={setSel}/>
+
+      {page==="home"&&(
+        <>
+          <Hero setPage={setPage}/>
+          <WhySection/>
+          <TreatmentsSection setPage={setPage}/>
+          <HowSection/>
+          <section style={{padding:"92px 32px",background:T.offWhite}}>
+            <div style={{maxWidth:1200,margin:"0 auto"}}>
+              <div style={{textAlign:"center",marginBottom:56}}>
+                <Chip s={{marginBottom:16,display:"inline-block"}}>PARTNER HOSPITALS</Chip>
+                <h2 style={{fontSize:44,fontWeight:900,color:T.navy,letterSpacing:"-0.02em",marginBottom:12}}>Featured Hospitals</h2>
+                <p style={{color:T.grayText,fontSize:17}}>
+                  Click any card to view pricing and patient photos.
+                </p>
+              </div>
+              <div style={{display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:26}}>
+                {hospitals.map(h=>(
+                  <HCard key={h.id} h={h} setSel={setSel} setPage={setPage}/>
+                ))}
+              </div>
+            </div>
+          </section>
+          <ConsultSection setPage={setPage}/>
+          <BASection/>
+          <Testimonials/>
+          <CTABanner setPage={setPage}/>
+          <FAQ/>
+        </>
+      )}
+      {page==="hospitals"&&<HospitalsPage setSel={setSel} setPage={setPage}/>}
+      {page==="detail"&&sel&&<Detail h={sel} setPage={setPage}/>}
+      {page==="contact"&&<ContactPage/>}
+      {page==="about"&&<AboutPage setPage={setPage}/>}
+      {page==="treatments"&&(
+        <div style={{minHeight:"100vh",background:T.offWhite,padding:"72px 32px"}}>
+          <div style={{maxWidth:1100,margin:"0 auto"}}>
+            <Chip s={{marginBottom:16,display:"inline-block"}}>SPECIALTIES</Chip>
+            <h2 style={{fontSize:42,fontWeight:900,color:T.navy,marginBottom:44}}>All Treatment Specialties</h2>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(160px,1fr))",gap:20}}>
+              {treatments.map(t=>(
+                <div key={t.label} style={{background:T.white,borderRadius:20,padding:"30px 22px",
+                  border:`1.5px solid ${T.grayLine}`,textAlign:"center"}}>
+                  <div style={{fontSize:30,background:T.skyPale,width:64,height:64,borderRadius:16,
+                    display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 14px"}}>{t.icon}</div>
+                  <div style={{fontWeight:800,color:T.navy,marginBottom:6}}>{t.label}</div>
+                  <div style={{color:T.grayText,fontSize:13}}>{t.desc}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+      {page==="how-it-works"&&(
+        <div style={{minHeight:"100vh",background:T.offWhite,padding:"72px 32px"}}>
+          <div style={{maxWidth:880,margin:"0 auto"}}>
+            <h2 style={{fontSize:42,fontWeight:900,color:T.navy,marginBottom:44}}>How It Works</h2>
+            {steps.map(s=>(
+              <div key={s.n} style={{background:T.white,borderRadius:20,padding:30,marginBottom:18,
+                border:`1.5px solid ${T.grayLine}`,display:"flex",gap:22,alignItems:"center"}}>
+                <div style={{width:56,height:56,borderRadius:16,background:T.sky,color:T.navy,
+                  fontWeight:900,fontSize:15,display:"flex",alignItems:"center",
+                  justifyContent:"center",flexShrink:0}}>{s.n}</div>
+                <div>
+                  <div style={{fontWeight:800,fontSize:17,color:T.navy,marginBottom:6}}>{s.title}</div>
+                  <div style={{color:T.grayText,lineHeight:1.65}}>{s.desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <Footer setPage={setPage}/>
+      <FloatingUI onCurrency={()=>setShowCurrency(true)}/>
+      {showCurrency&&<CurrencyModal onClose={()=>setShowCurrency(false)}/>}
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
