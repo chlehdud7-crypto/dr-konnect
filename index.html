@@ -26,6 +26,16 @@
 <script type="text/babel">
 const {useState,useEffect}=React;
 
+function useIsMobile(){
+  const [m,setM]=useState(()=>window.innerWidth<768);
+  useEffect(()=>{
+    const fn=()=>setM(window.innerWidth<768);
+    window.addEventListener("resize",fn);
+    return()=>window.removeEventListener("resize",fn);
+  },[]);
+  return m;
+}
+
 const WA_NUMBER="639171603020";
 
 const T={
@@ -174,48 +184,101 @@ const LogoIcon=()=>(
 
 // ── Navbar ─────────────────────────────────────────────────────
 function Navbar({page,setPage,setSel}){
+  const m=useIsMobile();
+  const [open,setOpen]=useState(false);
   const links=["Home","About","Hospitals","Treatments","How It Works","Contact"];
+  const Logo=()=>(
+    <div onClick={()=>{setPage("home");setSel(null);setOpen(false);}}
+      style={{cursor:"pointer",display:"flex",alignItems:"center",gap:10}}>
+      <span style={{fontWeight:900,fontSize:19,letterSpacing:"0.05em",lineHeight:1}}>
+        <span style={{color:"#000000"}}>DR</span>
+        <span style={{color:"#000000",fontSize:10,display:"inline-block",verticalAlign:"bottom",fontWeight:900,letterSpacing:0,marginBottom:"1px"}}>+</span>
+        <span style={{color:"#000000"}}>K</span>
+        <span style={{color:T.sky}}>ONNECT</span>
+      </span>
+    </div>
+  );
   return(
+    <>
     <nav style={{position:"sticky",top:0,zIndex:200,background:"rgba(255,255,255,0.97)",
       backdropFilter:"blur(14px)",borderBottom:`1px solid ${T.grayLine}`,
       boxShadow:"0 2px 16px rgba(13,27,42,0.06)"}}>
-      <div style={{maxWidth:1200,margin:"0 auto",padding:"0 32px",height:68,
+      <div style={{maxWidth:1200,margin:"0 auto",padding:m?"0 20px":"0 32px",height:64,
         display:"flex",alignItems:"center",justifyContent:"space-between"}}>
-        <div onClick={()=>{setPage("home");setSel(null);}}
-          style={{cursor:"pointer",display:"flex",alignItems:"center",gap:10}}>
-          <span style={{fontWeight:900,fontSize:19,letterSpacing:"0.05em",lineHeight:1}}>
-            <span style={{color:"#000000"}}>DR</span>
-            <span style={{color:"#000000",fontSize:10,display:"inline-block",verticalAlign:"bottom",fontWeight:900,letterSpacing:0,marginBottom:"1px"}}>+</span>
-            <span style={{color:"#000000"}}>K</span>
-            <span style={{color:T.sky}}>ONNECT</span>
-          </span>
-        </div>
-        <div style={{display:"flex",gap:2}}>
-          {links.map(l=>{
-            const k=l.toLowerCase().replace(/ /g,"-");
-            const on=page===k;
-            return(
-              <button key={l} onClick={()=>{setPage(k);setSel(null);}}
-                style={{background:on?T.skyPale:"none",border:"none",
-                  color:on?T.skyDark:T.grayText,fontWeight:on?700:500,
-                  fontSize:14,padding:"8px 16px",borderRadius:30,cursor:"pointer"}}>
-                {l}
-              </button>
-            );
-          })}
-        </div>
-        <div style={{display:"flex",gap:12,alignItems:"center"}}>
-          <button onClick={()=>setPage("contact")} style={{background:T.sky,color:T.navy,
-            border:"none",borderRadius:30,padding:"10px 24px",fontWeight:800,
-            fontSize:14,cursor:"pointer"}}>Free Consultation</button>
-        </div>
+        <Logo/>
+        {m?(
+          <button onClick={()=>setOpen(o=>!o)}
+            style={{background:"none",border:"none",cursor:"pointer",padding:"8px",
+              display:"flex",flexDirection:"column",gap:5,alignItems:"center",justifyContent:"center"}}>
+            <span style={{display:"block",width:22,height:2,background:open?T.sky:T.navy,
+              transition:"all 0.25s",transform:open?"rotate(45deg) translate(5px,5px)":"none",borderRadius:2}}/>
+            <span style={{display:"block",width:22,height:2,background:open?T.sky:T.navy,
+              transition:"all 0.25s",opacity:open?0:1,borderRadius:2}}/>
+            <span style={{display:"block",width:22,height:2,background:open?T.sky:T.navy,
+              transition:"all 0.25s",transform:open?"rotate(-45deg) translate(5px,-5px)":"none",borderRadius:2}}/>
+          </button>
+        ):(
+          <>
+          <div style={{display:"flex",gap:2}}>
+            {links.map(l=>{
+              const k=l.toLowerCase().replace(/ /g,"-");
+              const on=page===k;
+              return(
+                <button key={l} onClick={()=>{setPage(k);setSel(null);}}
+                  style={{background:on?T.skyPale:"none",border:"none",
+                    color:on?T.skyDark:T.grayText,fontWeight:on?700:500,
+                    fontSize:14,padding:"8px 16px",borderRadius:30,cursor:"pointer"}}>
+                  {l}
+                </button>
+              );
+            })}
+          </div>
+          <div style={{display:"flex",gap:12,alignItems:"center"}}>
+            <button onClick={()=>setPage("contact")} style={{background:T.sky,color:T.navy,
+              border:"none",borderRadius:30,padding:"10px 24px",fontWeight:800,
+              fontSize:14,cursor:"pointer"}}>Free Consultation</button>
+          </div>
+          </>
+        )}
       </div>
     </nav>
+
+    {/* Mobile dropdown */}
+    {m&&open&&(
+      <div style={{position:"fixed",top:64,left:0,right:0,bottom:0,zIndex:190,
+        background:"rgba(255,255,255,0.98)",backdropFilter:"blur(14px)",
+        borderTop:`1px solid ${T.grayLine}`,overflowY:"auto",
+        display:"flex",flexDirection:"column",padding:"16px 20px 40px"}}>
+        {links.map(l=>{
+          const k=l.toLowerCase().replace(/ /g,"-");
+          const on=page===k;
+          return(
+            <button key={l} onClick={()=>{setPage(k);setSel(null);setOpen(false);}}
+              style={{background:on?T.skyPale:"none",border:"none",
+                borderRadius:14,padding:"16px 20px",textAlign:"left",
+                color:on?T.skyDark:T.navy,fontWeight:on?800:600,
+                fontSize:17,cursor:"pointer",marginBottom:4,
+                borderLeft:on?`4px solid ${T.sky}`:"4px solid transparent"}}>
+              {l}
+            </button>
+          );
+        })}
+        <div style={{marginTop:20}}>
+          <button onClick={()=>{setPage("contact");setOpen(false);}}
+            style={{width:"100%",background:T.sky,color:T.navy,border:"none",
+              borderRadius:14,padding:"16px",fontWeight:800,fontSize:16,cursor:"pointer"}}>
+            Free Consultation
+          </button>
+        </div>
+      </div>
+    )}
+    </>
   );
 }
 
 // ── Hero ───────────────────────────────────────────────────────
 function Hero({setPage}){
+  const m=useIsMobile();
   const [idx,setIdx]=useState(0);
   const slides=[
     {img:"https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=1800&q=80",cap:"Premium Aesthetic Care"},
@@ -228,7 +291,7 @@ function Hero({setPage}){
   },[]);
 
   return(
-    <section style={{position:"relative",height:"93vh",minHeight:640,overflow:"hidden"}}>
+    <section style={{position:"relative",height:m?"88vh":"93vh",minHeight:m?500:640,overflow:"hidden"}}>
       {slides.map((s,i)=>(
         <div key={i} style={{position:"absolute",inset:0,
           backgroundImage:`url(${s.img})`,backgroundSize:"cover",backgroundPosition:"center",
@@ -239,35 +302,35 @@ function Hero({setPage}){
 
       <div style={{position:"relative",zIndex:2,height:"100%",
         display:"flex",flexDirection:"column",justifyContent:"center",
-        padding:"0 88px",maxWidth:1200,margin:"0 auto"}}>
+        padding:m?"0 24px":"0 88px",maxWidth:1200,margin:"0 auto"}}>
         <Chip s={{background:"rgba(142,197,230,0.22)",color:T.skyLight,
-          border:"1px solid rgba(142,197,230,0.4)",marginBottom:26,display:"inline-block",
-          width:"fit-content",alignSelf:"flex-start"}}>
+          border:"1px solid rgba(142,197,230,0.4)",marginBottom:m?16:26,display:"inline-block",
+          width:"fit-content",alignSelf:"flex-start",fontSize:m?10:11}}>
           🇵🇭 Philippines → 🇰🇷 Korea
         </Chip>
-        <h1 style={{color:T.white,fontSize:64,fontWeight:900,lineHeight:1.06,
-          letterSpacing:"-0.03em",marginBottom:24,maxWidth:700}}>
+        <h1 style={{color:T.white,fontSize:m?34:64,fontWeight:900,lineHeight:1.1,
+          letterSpacing:"-0.03em",marginBottom:m?16:24,maxWidth:700}}>
           World-Class<br/>
           <span style={{color:T.sky}}>Korean Medical Services</span><br/>
           Within Your Reach
         </h1>
-        <p style={{color:"rgba(255,255,255,0.82)",fontSize:20,lineHeight:1.7,
-          marginBottom:44,maxWidth:520}}>
+        <p style={{color:"rgba(255,255,255,0.82)",fontSize:m?14:20,lineHeight:1.7,
+          marginBottom:m?28:44,maxWidth:520}}>
           In healthcare, a single decision can change everything. We want every patient to find the best possible outcome — with superior medical technology and structured support behind them. DR.KONNECT is here to help you take that first step.
         </p>
-        <div style={{display:"flex",gap:18}}>
+        <div style={{display:"flex",flexDirection:m?"column":"row",gap:m?12:18}}>
           <button onClick={()=>setPage("contact")} style={{background:T.sky,color:T.navy,
-            border:"none",borderRadius:50,padding:"17px 42px",fontWeight:800,
-            fontSize:16,cursor:"pointer"}}>
+            border:"none",borderRadius:50,padding:m?"14px 28px":"17px 42px",fontWeight:800,
+            fontSize:m?14:16,cursor:"pointer"}}>
             Get Free Consultation
           </button>
           <button onClick={()=>setPage("hospitals")} style={{background:"transparent",color:T.white,
             border:"2px solid rgba(255,255,255,0.55)",borderRadius:50,
-            padding:"17px 42px",fontWeight:700,fontSize:16,cursor:"pointer"}}>
+            padding:m?"14px 28px":"17px 42px",fontWeight:700,fontSize:m?14:16,cursor:"pointer"}}>
             Browse Hospitals →
           </button>
         </div>
-        <div style={{display:"flex",gap:8,marginTop:44}}>
+        <div style={{display:"flex",gap:8,marginTop:m?24:44}}>
           {slides.map((_,i)=>(
             <button key={i} onClick={()=>setIdx(i)} style={{
               width:i===idx?30:8,height:8,borderRadius:4,
@@ -283,19 +346,20 @@ function Hero({setPage}){
 
 // ── Treatments ─────────────────────────────────────────────────
 function TreatmentsSection({setPage}){
+  const m=useIsMobile();
   return(
-    <section style={{padding:"92px 32px",background:T.offWhite}}>
+    <section style={{padding:m?"56px 20px":"92px 32px",background:T.offWhite}}>
       <div style={{maxWidth:1200,margin:"0 auto"}}>
-        <div style={{textAlign:"center",marginBottom:58}}>
+        <div style={{textAlign:"center",marginBottom:m?36:58}}>
           <Chip s={{marginBottom:16,display:"inline-block"}}>SPECIALTIES</Chip>
-          <h2 style={{fontSize:44,fontWeight:900,color:T.navy,letterSpacing:"-0.02em",marginBottom:14}}>
+          <h2 style={{fontSize:m?28:44,fontWeight:900,color:T.navy,letterSpacing:"-0.02em",marginBottom:14}}>
             Treatment Specialties
           </h2>
-          <p style={{color:T.grayText,fontSize:18,maxWidth:520,margin:"0 auto"}}>
+          <p style={{color:T.grayText,fontSize:m?15:18,maxWidth:520,margin:"0 auto"}}>
             Experience everything from aesthetic treatments to specialized medical services
           </p>
         </div>
-        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(160px,1fr))",gap:18}}>
+        <div style={{display:"grid",gridTemplateColumns:m?"repeat(2,1fr)":"repeat(auto-fill,minmax(160px,1fr))",gap:m?12:18}}>
           {treatments.map(t=>(
             <div key={t.label} onClick={()=>setPage("hospitals")}
               style={{background:T.white,borderRadius:20,padding:"30px 22px",
@@ -319,16 +383,17 @@ function TreatmentsSection({setPage}){
 
 // ── How It Works ───────────────────────────────────────────────
 function HowSection(){
+  const m=useIsMobile();
   return(
-    <section style={{padding:"92px 32px",background:T.sky}}>
+    <section style={{padding:m?"56px 20px":"92px 32px",background:T.sky}}>
       <div style={{maxWidth:1100,margin:"0 auto"}}>
-        <div style={{textAlign:"center",marginBottom:58}}>
-          <h2 style={{fontSize:44,fontWeight:900,color:T.navy,letterSpacing:"-0.02em",marginBottom:14}}>
+        <div style={{textAlign:"center",marginBottom:m?36:58}}>
+          <h2 style={{fontSize:m?28:44,fontWeight:900,color:T.navy,letterSpacing:"-0.02em",marginBottom:14}}>
             How It Works
           </h2>
-          <p style={{color:T.navyMid,fontSize:18}}>From your first inquiry to full recovery</p>
+          <p style={{color:T.navyMid,fontSize:m?15:18}}>From your first inquiry to full recovery</p>
         </div>
-        <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:24}}>
+        <div style={{display:"grid",gridTemplateColumns:m?"1fr":"repeat(3,1fr)",gap:m?12:24}}>
           {steps.map(s=>(
             <div key={s.n} style={{background:"rgba(255,255,255,0.88)",borderRadius:22,padding:30,
               border:"1.5px solid rgba(255,255,255,0.95)"}}>
@@ -387,6 +452,7 @@ function HCard({h,setSel,setPage}){
 
 // ── Hospitals Page ──────────────────────────────────────────────
 function HospitalsPage({setSel,setPage}){
+  const m=useIsMobile();
   const [q,setQ]=useState("");
   const [f,setF]=useState("All");
   const filters=["All","Plastic Surgery","Facial Contouring","Anti-Aging"];
@@ -398,38 +464,38 @@ function HospitalsPage({setSel,setPage}){
   return(
     <div style={{minHeight:"100vh",background:T.offWhite}}>
       <div style={{position:"relative",backgroundImage:"url(https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=1400&q=80)",
-        backgroundSize:"cover",backgroundPosition:"center",padding:"64px 32px 52px"}}>
+        backgroundSize:"cover",backgroundPosition:"center",padding:m?"40px 20px 36px":"64px 32px 52px"}}>
         <div style={{position:"absolute",inset:0,background:`${T.navy}D8`}}/>
         <div style={{position:"relative",maxWidth:1200,margin:"0 auto"}}>
           <Chip s={{background:"rgba(142,197,230,0.2)",color:T.skyLight,
             border:"1px solid rgba(142,197,230,0.35)",marginBottom:16,display:"inline-block"}}>
             PARTNER HOSPITALS
           </Chip>
-          <h2 style={{fontSize:46,fontWeight:900,color:T.white,marginBottom:10,letterSpacing:"-0.02em"}}>
+          <h2 style={{fontSize:m?28:46,fontWeight:900,color:T.white,marginBottom:10,letterSpacing:"-0.02em"}}>
             Korea's Finest Hospitals
           </h2>
-          <p style={{color:"rgba(255,255,255,0.64)",fontSize:17}}>
+          <p style={{color:"rgba(255,255,255,0.64)",fontSize:m?14:17}}>
             Click any hospital to view pricing and before/after galleries.
           </p>
         </div>
       </div>
-      <div style={{maxWidth:1200,margin:"0 auto",padding:"42px 32px"}}>
-        <div style={{display:"flex",gap:14,marginBottom:38,flexWrap:"wrap",alignItems:"center"}}>
+      <div style={{maxWidth:1200,margin:"0 auto",padding:m?"24px 16px":"42px 32px"}}>
+        <div style={{display:"flex",gap:14,marginBottom:m?24:38,flexWrap:"wrap",alignItems:"center"}}>
           <input value={q} onChange={e=>setQ(e.target.value)}
             placeholder="Search hospitals or specialties..."
-            style={{flex:1,minWidth:240,padding:"12px 20px",borderRadius:30,
+            style={{flex:1,minWidth:m?160:240,padding:"12px 20px",borderRadius:30,
               border:`1.5px solid ${T.grayLine}`,fontSize:14,background:T.white,color:T.navy,outline:"none"}}/>
           <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
             {filters.map(fi=>(
-              <button key={fi} onClick={()=>setF(fi)} style={{padding:"9px 18px",borderRadius:30,
-                cursor:"pointer",fontSize:13,fontWeight:600,
+              <button key={fi} onClick={()=>setF(fi)} style={{padding:m?"7px 12px":"9px 18px",borderRadius:30,
+                cursor:"pointer",fontSize:m?12:13,fontWeight:600,
                 background:f===fi?T.sky:T.white,
                 color:f===fi?T.navy:T.grayText,
                 border:`1.5px solid ${f===fi?T.sky:T.grayLine}`}}>{fi}</button>
             ))}
           </div>
         </div>
-        <div style={{display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:26}}>
+        <div style={{display:"grid",gridTemplateColumns:m?"1fr":"repeat(2,1fr)",gap:m?16:26}}>
           {list.map(h=>(
             <HCard key={h.id} h={h} setSel={setSel} setPage={setPage}/>
           ))}
@@ -441,6 +507,7 @@ function HospitalsPage({setSel,setPage}){
 
 // ── Hospital Detail ─────────────────────────────────────────────
 function Detail({h,setPage}){
+  const m=useIsMobile();
   const [tab,setTab]=useState("intro");
   const photoRef=React.useRef();
 
@@ -459,21 +526,21 @@ function Detail({h,setPage}){
   return(
     <div style={{minHeight:"100vh",background:T.offWhite}}>
       {/* Hero */}
-      <div style={{position:"relative",height:380,overflow:"hidden"}}>
+      <div style={{position:"relative",height:m?220:380,overflow:"hidden"}}>
         <img src={h.img} alt={h.name} style={{width:"100%",height:"100%",objectFit:"cover"}}/>
         <div style={{position:"absolute",inset:0,
           background:"linear-gradient(to top,rgba(13,27,42,0.92) 30%,rgba(13,27,42,0.2) 100%)"}}/>
-        <div style={{position:"absolute",bottom:0,left:0,right:0,padding:"28px 44px"}}>
+        <div style={{position:"absolute",bottom:0,left:0,right:0,padding:m?"16px 20px":"28px 44px"}}>
           <button onClick={()=>setPage("hospitals")} style={{background:"rgba(142,197,230,0.18)",
             border:"1px solid rgba(142,197,230,0.35)",color:T.skyLight,borderRadius:8,
-            padding:"8px 16px",cursor:"pointer",fontSize:13,marginBottom:16}}>← Back to Hospitals</button>
+            padding:"8px 16px",cursor:"pointer",fontSize:13,marginBottom:12}}>← Back to Hospitals</button>
           <div>
             {h.jci&&<Chip s={{background:"rgba(142,197,230,0.25)",color:T.skyLight,
               border:"1px solid rgba(142,197,230,0.4)",marginBottom:10,display:"inline-block"}}>
               JCI ACCREDITED
             </Chip>}
-            <h1 style={{color:T.white,fontSize:38,fontWeight:900,margin:0,letterSpacing:"-0.02em"}}>{h.name}</h1>
-            <p style={{color:"rgba(255,255,255,0.62)",fontSize:15,margin:"6px 0 0"}}>{h.nameKo} · {h.location}</p>
+            <h1 style={{color:T.white,fontSize:m?22:38,fontWeight:900,margin:0,letterSpacing:"-0.02em"}}>{h.name}</h1>
+            <p style={{color:"rgba(255,255,255,0.62)",fontSize:m?12:15,margin:"6px 0 0"}}>{h.nameKo} · {h.location}</p>
           </div>
         </div>
       </div>
@@ -481,13 +548,13 @@ function Detail({h,setPage}){
       {/* Info strip */}
       {h.info&&(
         <div style={{background:T.skyPale,borderBottom:`1.5px solid ${T.skyLight}`}}>
-          <div style={{maxWidth:1100,margin:"0 auto",padding:"14px 44px",
-            display:"flex",gap:32,flexWrap:"wrap",alignItems:"flex-start"}}>
+          <div style={{maxWidth:1100,margin:"0 auto",padding:m?"12px 16px":"14px 44px",
+            display:"flex",gap:m?12:32,flexWrap:"wrap",alignItems:"flex-start"}}>
             {[{icon:"📍",text:h.info.address},{icon:"🕐",text:h.info.hours},{icon:"💬",text:h.info.languages}]
               .map((item,i)=>(
-                <div key={i} style={{display:"flex",gap:8,alignItems:"flex-start",flex:1,minWidth:200}}>
-                  <span style={{fontSize:14,flexShrink:0}}>{item.icon}</span>
-                  <span style={{fontSize:12,color:T.textMid,lineHeight:1.55}}>{item.text}</span>
+                <div key={i} style={{display:"flex",gap:8,alignItems:"flex-start",flex:1,minWidth:m?140:200}}>
+                  <span style={{fontSize:12,flexShrink:0}}>{item.icon}</span>
+                  <span style={{fontSize:11,color:T.textMid,lineHeight:1.55}}>{item.text}</span>
                 </div>
               ))}
             <a href={h.info.website} target="_blank" rel="noopener noreferrer"
@@ -501,33 +568,33 @@ function Detail({h,setPage}){
 
       {/* Tabs */}
       <div style={{background:T.white,borderBottom:`1.5px solid ${T.grayLine}`,
-        position:"sticky",top:68,zIndex:100}}>
-        <div style={{maxWidth:1100,margin:"0 auto",padding:"0 44px",display:"flex",overflowX:"auto"}}>
+        position:"sticky",top:64,zIndex:100}}>
+        <div style={{maxWidth:1100,margin:"0 auto",padding:m?"0 4px":"0 44px",display:"flex",overflowX:"auto"}}>
           {tabs.map(([k,l])=>(
-            <button key={k} onClick={()=>setTab(k)} style={{padding:"16px 22px",background:"none",
+            <button key={k} onClick={()=>setTab(k)} style={{padding:m?"12px 10px":"16px 22px",background:"none",
               border:"none",borderBottom:`3px solid ${tab===k?T.sky:"transparent"}`,
               color:tab===k?T.skyDark:T.grayText,fontWeight:tab===k?800:500,
-              cursor:"pointer",fontSize:14,whiteSpace:"nowrap",flexShrink:0}}>
-              {l}
+              cursor:"pointer",fontSize:m?11:14,whiteSpace:"nowrap",flexShrink:0}}>
+              {m?l.split(" ")[0]:l}
             </button>
           ))}
         </div>
       </div>
 
-      <div style={{maxWidth:1100,margin:"0 auto",padding:"44px"}}>
+      <div style={{maxWidth:1100,margin:"0 auto",padding:m?"20px 16px":"44px"}}>
 
         {/* ── Tab 1: Introduction ── */}
         {tab==="intro"&&(
           <>
-            <h2 style={{fontSize:26,fontWeight:900,color:T.navy,marginBottom:22}}>About {h.name}</h2>
-            <div style={{background:T.white,borderRadius:20,padding:"36px 40px",
-              border:`1.5px solid ${T.grayLine}`,marginBottom:28}}>
+            <h2 style={{fontSize:m?20:26,fontWeight:900,color:T.navy,marginBottom:m?16:22}}>About {h.name}</h2>
+            <div style={{background:T.white,borderRadius:20,padding:m?"20px 18px":"36px 40px",
+              border:`1.5px solid ${T.grayLine}`,marginBottom:m?18:28}}>
               {h.intro.split("\n\n").map((para,i)=>(
-                <p key={i} style={{color:T.textMid,fontSize:15,lineHeight:1.9,
+                <p key={i} style={{color:T.textMid,fontSize:m?14:15,lineHeight:1.9,
                   marginBottom:i<h.intro.split("\n\n").length-1?18:0}}>{para}</p>
               ))}
             </div>
-            <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:18}}>
+            <div style={{display:"grid",gridTemplateColumns:m?"1fr":"repeat(3,1fr)",gap:m?10:18}}>
               {h.specialties.map(s=>(
                 <div key={s} style={{background:T.skyPale,borderRadius:16,padding:"20px 22px",
                   border:`1.5px solid ${T.skyLight}`,textAlign:"center"}}>
@@ -626,9 +693,9 @@ function Detail({h,setPage}){
         {/* ── Tab 4: Before & After ── */}
         {tab==="ba"&&(
           <>
-            <h2 style={{fontSize:26,fontWeight:900,color:T.navy,marginBottom:6}}>Before & After Gallery</h2>
-            <p style={{color:T.grayText,fontSize:15,marginBottom:10}}>Real patient results. Shared with full patient consent.</p>
-            <div style={{display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:26}}>
+            <h2 style={{fontSize:m?20:26,fontWeight:900,color:T.navy,marginBottom:6}}>Before & After Gallery</h2>
+            <p style={{color:T.grayText,fontSize:m?13:15,marginBottom:10}}>Real patient results. Shared with full patient consent.</p>
+            <div style={{display:"grid",gridTemplateColumns:m?"1fr":"repeat(2,1fr)",gap:m?14:26}}>
               {h.ba.map((ba,i)=>(
                 <div key={i} style={{background:T.white,borderRadius:20,overflow:"hidden",
                   border:`1.5px solid ${T.grayLine}`}}>
@@ -699,6 +766,7 @@ function Detail({h,setPage}){
 
 // ── Contact ─────────────────────────────────────────────────────
 function ContactPage(){
+  const m=useIsMobile();
   const [step,setStep]=useState(1);
   const [form,setForm]=useState({
     firstName:"",lastName:"",email:"",phone:"",
@@ -743,14 +811,14 @@ function ContactPage(){
   return(
     <div style={{minHeight:"100vh",background:T.offWhite}}>
       <div style={{position:"relative",backgroundImage:"url(https://images.unsplash.com/photo-1559757175-5700dde675bc?w=1400&q=80)",
-        backgroundSize:"cover",backgroundPosition:"center",padding:"64px 32px 52px"}}>
+        backgroundSize:"cover",backgroundPosition:"center",padding:m?"40px 20px 32px":"64px 32px 52px"}}>
         <div style={{position:"absolute",inset:0,background:`${T.navy}CC`}}/>
         <div style={{position:"relative",maxWidth:700,margin:"0 auto",textAlign:"center"}}>
-          <h2 style={{fontSize:44,fontWeight:900,color:T.white,marginBottom:10,letterSpacing:"-0.02em"}}>Free Consultation</h2>
-          <p style={{color:"rgba(255,255,255,0.68)",fontSize:17}}>No commitment. Our coordinator responds within 24 hours.</p>
+          <h2 style={{fontSize:m?28:44,fontWeight:900,color:T.white,marginBottom:10,letterSpacing:"-0.02em"}}>Free Consultation</h2>
+          <p style={{color:"rgba(255,255,255,0.68)",fontSize:m?14:17}}>No commitment. Our coordinator responds within 24 hours.</p>
         </div>
       </div>
-      <div style={{maxWidth:680,margin:"0 auto",padding:"52px 28px"}}>
+      <div style={{maxWidth:680,margin:"0 auto",padding:m?"24px 16px":"52px 28px"}}>
         {/* Progress */}
         <div style={{marginBottom:38}}>
           <div style={{display:"flex",justifyContent:"space-between",marginBottom:10}}>
@@ -764,13 +832,13 @@ function ContactPage(){
           </div>
         </div>
 
-        <div style={{background:T.white,borderRadius:24,padding:"38px 40px",border:`1.5px solid ${T.grayLine}`}}>
+        <div style={{background:T.white,borderRadius:24,padding:m?"24px 20px":"38px 40px",border:`1.5px solid ${T.grayLine}`}}>
 
           {/* ── Step 1: Personal Info ── */}
           {step===1&&(
             <div>
               <h3 style={{fontWeight:900,color:T.navy,fontSize:22,marginBottom:24}}>Personal Information</h3>
-              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16,marginBottom:20}}>
+              <div style={{display:"grid",gridTemplateColumns:m?"1fr":"1fr 1fr",gap:16,marginBottom:20}}>
                 <div>
                   <label style={lbl}>First Name *</label>
                   <input type="text" placeholder="Maria" value={form.firstName}
@@ -1059,6 +1127,7 @@ function ContactPage(){
 
 // ── Testimonials ───────────────────────────────────────────────
 function Testimonials(){
+  const m=useIsMobile();
   const platforms=[
     {
       name:"WhatsApp",
@@ -1097,18 +1166,18 @@ function Testimonials(){
     },
   ];
   return(
-    <section style={{padding:"92px 32px",background:T.offWhite}}>
+    <section style={{padding:m?"56px 20px":"92px 32px",background:T.offWhite}}>
       <div style={{maxWidth:1100,margin:"0 auto"}}>
-        <div style={{textAlign:"center",marginBottom:56}}>
+        <div style={{textAlign:"center",marginBottom:m?36:56}}>
           <Chip s={{marginBottom:16,display:"inline-block"}}>PATIENT REVIEWS</Chip>
-          <h2 style={{fontSize:44,fontWeight:900,color:T.navy,letterSpacing:"-0.02em",marginBottom:14}}>
+          <h2 style={{fontSize:m?28:44,fontWeight:900,color:T.navy,letterSpacing:"-0.02em",marginBottom:14}}>
             Real Reviews from Real Patients
           </h2>
-          <p style={{color:T.grayText,fontSize:16,maxWidth:540,margin:"0 auto",lineHeight:1.75}}>
+          <p style={{color:T.grayText,fontSize:m?14:16,maxWidth:540,margin:"0 auto",lineHeight:1.75}}>
             Actual screenshots of reviews and messages shared directly by our patients via WhatsApp, Google Maps, and Instagram DM.
           </p>
         </div>
-        <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:24}}>
+        <div style={{display:"grid",gridTemplateColumns:m?"1fr":"repeat(3,1fr)",gap:m?16:24}}>
           {platforms.map(p=>(
             <div key={p.name} style={{background:T.white,borderRadius:20,overflow:"hidden",
               border:`1.5px solid ${T.grayLine}`,
@@ -1168,13 +1237,14 @@ function Testimonials(){
 
 // ── FAQ ────────────────────────────────────────────────────────
 function FAQ(){
+  const m=useIsMobile();
   const [open,setOpen]=useState(null);
   return(
-    <section style={{padding:"80px 32px",background:T.white}}>
+    <section style={{padding:m?"48px 16px":"80px 32px",background:T.white}}>
       <div style={{maxWidth:760,margin:"0 auto"}}>
-        <div style={{textAlign:"center",marginBottom:52}}>
+        <div style={{textAlign:"center",marginBottom:m?32:52}}>
           <Chip s={{marginBottom:16,display:"inline-block"}}>FAQ</Chip>
-          <h2 style={{fontSize:40,fontWeight:900,color:T.navy,letterSpacing:"-0.02em"}}>Common Questions</h2>
+          <h2 style={{fontSize:m?26:40,fontWeight:900,color:T.navy,letterSpacing:"-0.02em"}}>Common Questions</h2>
         </div>
         {faqs.map((f,i)=>(
           <div key={i} onClick={()=>setOpen(open===i?null:i)} style={{
@@ -1199,20 +1269,21 @@ function FAQ(){
 
 // ── CTA ────────────────────────────────────────────────────────
 function CTABanner({setPage}){
+  const m=useIsMobile();
   return(
     <section style={{position:"relative",overflow:"hidden"}}>
       <div style={{backgroundImage:"url(https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=1400&q=80)",
-        backgroundSize:"cover",backgroundPosition:"center",padding:"96px 32px"}}>
+        backgroundSize:"cover",backgroundPosition:"center",padding:m?"60px 24px":"96px 32px"}}>
         <div style={{position:"absolute",inset:0,background:`${T.sky}C8`}}/>
         <div style={{position:"relative",maxWidth:700,margin:"0 auto",textAlign:"center"}}>
-          <h2 style={{fontSize:46,fontWeight:900,color:T.navy,marginBottom:16,letterSpacing:"-0.02em"}}>
+          <h2 style={{fontSize:m?26:46,fontWeight:900,color:T.navy,marginBottom:m?12:16,letterSpacing:"-0.02em"}}>
             Ready to Start Your Journey?
           </h2>
-          <p style={{color:T.navyMid,fontSize:20,marginBottom:40,lineHeight:1.65}}>
+          <p style={{color:T.navyMid,fontSize:m?15:20,marginBottom:m?28:40,lineHeight:1.65}}>
             Free consultation, zero commitment.
           </p>
           <button onClick={()=>setPage("contact")} style={{background:T.navy,color:T.white,
-            border:"none",borderRadius:50,padding:"17px 46px",fontWeight:800,fontSize:17,cursor:"pointer"}}>
+            border:"none",borderRadius:50,padding:m?"14px 32px":"17px 46px",fontWeight:800,fontSize:m?15:17,cursor:"pointer"}}>
             Book Free Consultation →
           </button>
         </div>
@@ -1243,10 +1314,11 @@ const SocialIcon=({href,label,children})=>(
 );
 
 function Footer({setPage}){
+  const m=useIsMobile();
   return(
-    <footer style={{background:T.navy,padding:"64px 32px 30px"}}>
+    <footer style={{background:T.navy,padding:m?"44px 20px 24px":"64px 32px 30px"}}>
       <div style={{maxWidth:1200,margin:"0 auto"}}>
-        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:48,marginBottom:52,alignItems:"start"}}>
+        <div style={{display:"grid",gridTemplateColumns:m?"1fr":"1fr 1fr",gap:m?32:48,marginBottom:m?36:52,alignItems:"start"}}>
 
           {/* Brand + description */}
           <div>
@@ -1449,8 +1521,32 @@ function BookingModal({onClose,onConfirm}){
   );
 }
 
+// ── Featured Hospitals Section (Home) ───────────────────────────
+function FeaturedHospitalsSection({setSel,setPage}){
+  const m=useIsMobile();
+  return(
+    <section style={{padding:m?"56px 20px":"92px 32px",background:T.offWhite}}>
+      <div style={{maxWidth:1200,margin:"0 auto"}}>
+        <div style={{textAlign:"center",marginBottom:m?36:56}}>
+          <Chip s={{marginBottom:16,display:"inline-block"}}>PARTNER HOSPITALS</Chip>
+          <h2 style={{fontSize:m?28:44,fontWeight:900,color:T.navy,letterSpacing:"-0.02em",marginBottom:12}}>Featured Hospitals</h2>
+          <p style={{color:T.grayText,fontSize:m?14:17}}>
+            Click any card to view pricing and patient photos.
+          </p>
+        </div>
+        <div style={{display:"grid",gridTemplateColumns:m?"1fr":"repeat(2,1fr)",gap:m?16:26}}>
+          {hospitals.map(h=>(
+            <HCard key={h.id} h={h} setSel={setSel} setPage={setPage}/>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ── Consult Section ─────────────────────────────────────────────
 function ConsultSection({setPage}){
+  const m=useIsMobile();
   const [showBooking,setShowBooking]=useState(false);
 
   const cards=[
@@ -1499,19 +1595,19 @@ function ConsultSection({setPage}){
   ];
 
   return(
-    <section style={{padding:"92px 32px",background:T.skyPale}}>
+    <section style={{padding:m?"56px 20px":"92px 32px",background:T.skyPale}}>
       {showBooking&&<BookingModal onClose={()=>setShowBooking(false)} onConfirm={()=>{setShowBooking(false);setPage("contact");}}/>}
       <div style={{maxWidth:1160,margin:"0 auto"}}>
-        <div style={{textAlign:"center",marginBottom:56}}>
+        <div style={{textAlign:"center",marginBottom:m?36:56}}>
           <Chip s={{marginBottom:16,display:"inline-block"}}>CONSULTATION</Chip>
-          <h2 style={{fontSize:42,fontWeight:900,color:T.navy,letterSpacing:"-0.02em",marginBottom:14}}>
+          <h2 style={{fontSize:m?28:42,fontWeight:900,color:T.navy,letterSpacing:"-0.02em",marginBottom:14}}>
             How would you like to connect?
           </h2>
-          <p style={{color:T.grayText,fontSize:17,maxWidth:580,margin:"0 auto"}}>
+          <p style={{color:T.grayText,fontSize:m?14:17,maxWidth:580,margin:"0 auto"}}>
             Choose the format that fits your schedule. All consultations are completely free — no commitment, no hidden fees.
           </p>
         </div>
-        <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:22}}>
+        <div style={{display:"grid",gridTemplateColumns:m?"1fr":"repeat(3,1fr)",gap:m?14:22}}>
           {cards.map(c=>(
             <div key={c.title} style={{background:T.white,borderRadius:24,
               border:`1.5px solid ${T.grayLine}`,display:"flex",flexDirection:"column",
@@ -1598,6 +1694,7 @@ function BASlider({label,tag,beforeImg,afterImg}){
 
 // ── Before/After Section ─────────────────────────────────────────
 function BASection(){
+  const m=useIsMobile();
   const pairs=[
     {label:"Rhinoplasty",tag:"Nose Reshaping",beforeImg:null,afterImg:null},
     {label:"Jaw Contouring",tag:"V-Line",beforeImg:null,afterImg:null},
@@ -1605,18 +1702,18 @@ function BASection(){
     {label:"Facelift",tag:"Facial Rejuvenation",beforeImg:null,afterImg:null},
   ];
   return(
-    <section style={{padding:"92px 32px",background:T.offWhite}}>
+    <section style={{padding:m?"56px 20px":"92px 32px",background:T.offWhite}}>
       <div style={{maxWidth:1100,margin:"0 auto"}}>
-        <div style={{textAlign:"center",marginBottom:56}}>
+        <div style={{textAlign:"center",marginBottom:m?36:56}}>
           <Chip s={{marginBottom:16,display:"inline-block"}}>REAL RESULTS</Chip>
-          <h2 style={{fontSize:44,fontWeight:900,color:T.navy,letterSpacing:"-0.02em",marginBottom:12}}>
+          <h2 style={{fontSize:m?28:44,fontWeight:900,color:T.navy,letterSpacing:"-0.02em",marginBottom:12}}>
             Before & After Gallery
           </h2>
-          <p style={{color:T.grayText,fontSize:17}}>
+          <p style={{color:T.grayText,fontSize:m?14:17}}>
             Real patient results — Before on the left, After on the right.
           </p>
         </div>
-        <div style={{display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:28}}>
+        <div style={{display:"grid",gridTemplateColumns:m?"1fr":"repeat(2,1fr)",gap:m?16:28}}>
           {pairs.map(p=><BASlider key={p.label} {...p}/>)}
         </div>
       </div>
@@ -1626,6 +1723,7 @@ function BASection(){
 
 // ── Why DR.KONNECT Section ──────────────────────────────────────
 function WhySection(){
+  const m=useIsMobile();
   const cards=[
     {
       icon:(
@@ -1664,19 +1762,19 @@ function WhySection(){
     },
   ];
   return(
-    <section style={{padding:"100px 32px",background:"#F6F7F9"}}>
+    <section style={{padding:m?"56px 20px":"100px 32px",background:"#F6F7F9"}}>
       <div style={{maxWidth:980,margin:"0 auto",textAlign:"center"}}>
-        <div style={{marginBottom:56}}>
-          <h2 style={{fontSize:46,fontWeight:900,color:T.navy,marginBottom:20,
+        <div style={{marginBottom:m?36:56}}>
+          <h2 style={{fontSize:m?28:46,fontWeight:900,color:T.navy,marginBottom:m?14:20,
             letterSpacing:"-0.025em",lineHeight:1.1}}>
             Why <span style={{color:T.sky}}>DR.KONNECT</span>?
           </h2>
-          <p style={{color:"#6B7A8A",fontSize:17,maxWidth:660,margin:"0 auto",lineHeight:1.85}}>
+          <p style={{color:"#6B7A8A",fontSize:m?14:17,maxWidth:660,margin:"0 auto",lineHeight:1.85}}>
             Unlike typical medical agencies, DR.KONNECT communicates directly with clients in the Philippines,
             helping reduce uncertainty and remove the barriers that often make Korean medical services feel difficult to access.
           </p>
         </div>
-        <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:24}}>
+        <div style={{display:"grid",gridTemplateColumns:m?"1fr":"repeat(3,1fr)",gap:m?14:24}}>
           {cards.map(c=>(
             <div key={c.title}
               style={{background:"#ECEEF1",borderRadius:22,padding:"40px 30px",textAlign:"left",
@@ -1813,6 +1911,7 @@ function CurrencyModal({onClose}){
 
 // ── Floating UI ──────────────────────────────────────────────────
 function FloatingUI({onCurrency}){
+  const m=useIsMobile();
   const socials=[
     {
       label:"WhatsApp",
@@ -1860,12 +1959,12 @@ function FloatingUI({onCurrency}){
   return(
     <>
       {/* Bottom-left: Currency Converter */}
-      <div style={{position:"fixed",bottom:28,left:28,zIndex:400}}>
+      <div style={{position:"fixed",bottom:m?16:28,left:m?16:28,zIndex:400}}>
         <button onClick={onCurrency}
           style={{background:T.sky,color:T.navy,border:"none",
-            borderRadius:50,padding:"14px 24px",fontWeight:800,
+            borderRadius:50,padding:m?"11px 14px":"14px 24px",fontWeight:800,
             fontSize:14,cursor:"pointer",letterSpacing:"0.01em",
-            display:"flex",alignItems:"center",gap:8,
+            display:"flex",alignItems:"center",gap:m?0:8,
             boxShadow:"0 6px 24px rgba(142,197,230,0.55)",
             transition:"transform 0.18s,box-shadow 0.18s"}}
           onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-2px)";e.currentTarget.style.boxShadow="0 10px 32px rgba(142,197,230,0.65)";}}
@@ -1880,17 +1979,17 @@ function FloatingUI({onCurrency}){
             <line x1="14" y1="14" x2="16" y2="14"/>
             <line x1="8" y1="18" x2="16" y2="18"/>
           </svg>
-          Currency Converter
+          {!m&&"Currency Converter"}
         </button>
       </div>
 
       {/* Bottom-right: Social icons */}
-      <div style={{position:"fixed",bottom:28,right:28,zIndex:400,
-        display:"flex",flexDirection:"column",gap:10,alignItems:"center"}}>
+      <div style={{position:"fixed",bottom:m?16:28,right:m?16:28,zIndex:400,
+        display:"flex",flexDirection:"column",gap:m?8:10,alignItems:"center"}}>
         {socials.map(s=>(
           <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
             title={s.label}
-            style={{width:46,height:46,borderRadius:"50%",
+            style={{width:m?38:46,height:m?38:46,borderRadius:"50%",
               background:s.bg,color:"#ffffff",
               display:"flex",alignItems:"center",justifyContent:"center",
               textDecoration:"none",
@@ -1908,6 +2007,7 @@ function FloatingUI({onCurrency}){
 
 // ── About Page ──────────────────────────────────────────────────
 function AboutPage({setPage}){
+  const m=useIsMobile();
   const pillars=[
     {
       icon:"🎯",
@@ -1952,31 +2052,31 @@ function AboutPage({setPage}){
 
       {/* Header Banner */}
       <div style={{position:"relative",backgroundImage:"url(https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=1400&q=80)",
-        backgroundSize:"cover",backgroundPosition:"center",padding:"80px 32px 64px"}}>
+        backgroundSize:"cover",backgroundPosition:"center",padding:m?"48px 20px 40px":"80px 32px 64px"}}>
         <div style={{position:"absolute",inset:0,background:`${T.navy}E0`}}/>
         <div style={{position:"relative",maxWidth:1100,margin:"0 auto"}}>
           <Chip s={{background:"rgba(142,197,230,0.2)",color:T.skyLight,
             border:"1px solid rgba(142,197,230,0.35)",marginBottom:18,display:"inline-block"}}>
             ABOUT DR.KONNECT
           </Chip>
-          <h2 style={{fontSize:48,fontWeight:900,color:T.white,marginBottom:14,
+          <h2 style={{fontSize:m?28:48,fontWeight:900,color:T.white,marginBottom:14,
             letterSpacing:"-0.02em",lineHeight:1.1,maxWidth:660}}>
             A Trusted Partner for<br/>
             <span style={{color:T.sky}}>Your Medical Journey</span>
           </h2>
-          <p style={{color:"rgba(255,255,255,0.7)",fontSize:18,maxWidth:560,lineHeight:1.75}}>
+          <p style={{color:"rgba(255,255,255,0.7)",fontSize:m?14:18,maxWidth:560,lineHeight:1.75}}>
             Bridging Filipino patients to Korea's finest medical care —
             eliminating information barriers, at zero cost to you.
           </p>
         </div>
       </div>
 
-      <div style={{maxWidth:1100,margin:"0 auto",padding:"64px 32px"}}>
+      <div style={{maxWidth:1100,margin:"0 auto",padding:m?"24px 16px":"64px 32px"}}>
 
         {/* CEO Section */}
-        <div style={{background:T.white,borderRadius:24,padding:"44px 48px",
-          border:`1.5px solid ${T.grayLine}`,marginBottom:32,
-          display:"flex",gap:44,alignItems:"flex-start",flexWrap:"wrap"}}>
+        <div style={{background:T.white,borderRadius:24,padding:m?"24px 20px":"44px 48px",
+          border:`1.5px solid ${T.grayLine}`,marginBottom:m?20:32,
+          display:"flex",flexDirection:m?"column":"row",gap:m?24:44,alignItems:"flex-start"}}>
 
           {/* Photo — replace with actual photo when available */}
           <div style={{width:164,height:164,borderRadius:"50%",
@@ -2024,7 +2124,7 @@ function AboutPage({setPage}){
         </div>
 
         {/* Mission / Vision / Why */}
-        <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:22,marginBottom:32}}>
+        <div style={{display:"grid",gridTemplateColumns:m?"1fr":"repeat(3,1fr)",gap:m?12:22,marginBottom:m?20:32}}>
           {pillars.map(p=>(
             <div key={p.title} style={{background:T.white,borderRadius:20,padding:"32px 28px",
               border:`1.5px solid ${T.grayLine}`}}>
@@ -2038,7 +2138,7 @@ function AboutPage({setPage}){
         </div>
 
         {/* Core Story — dark banner */}
-        <div style={{background:T.navy,borderRadius:24,padding:"52px 56px",marginBottom:32,
+        <div style={{background:T.navy,borderRadius:24,padding:m?"28px 20px":"52px 56px",marginBottom:m?20:32,
           position:"relative",overflow:"hidden"}}>
           <div style={{position:"absolute",top:-60,right:-60,width:240,height:240,
             borderRadius:"50%",background:T.skyDeep,opacity:0.12,pointerEvents:"none"}}/>
@@ -2085,7 +2185,7 @@ function AboutPage({setPage}){
               We're not just a referral service. We're your medical journey partner.
             </p>
           </div>
-          <div style={{display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:20}}>
+          <div style={{display:"grid",gridTemplateColumns:m?"1fr":"repeat(2,1fr)",gap:m?12:20}}>
             {differentiators.map(d=>(
               <div key={d.title} style={{background:T.white,borderRadius:20,
                 padding:"28px 30px",border:`1.5px solid ${T.grayLine}`,
@@ -2154,22 +2254,7 @@ function App(){
           <WhySection/>
           <TreatmentsSection setPage={setPage}/>
           <HowSection/>
-          <section style={{padding:"92px 32px",background:T.offWhite}}>
-            <div style={{maxWidth:1200,margin:"0 auto"}}>
-              <div style={{textAlign:"center",marginBottom:56}}>
-                <Chip s={{marginBottom:16,display:"inline-block"}}>PARTNER HOSPITALS</Chip>
-                <h2 style={{fontSize:44,fontWeight:900,color:T.navy,letterSpacing:"-0.02em",marginBottom:12}}>Featured Hospitals</h2>
-                <p style={{color:T.grayText,fontSize:17}}>
-                  Click any card to view pricing and patient photos.
-                </p>
-              </div>
-              <div style={{display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:26}}>
-                {hospitals.map(h=>(
-                  <HCard key={h.id} h={h} setSel={setSel} setPage={setPage}/>
-                ))}
-              </div>
-            </div>
-          </section>
+          <FeaturedHospitalsSection setSel={setSel} setPage={setPage}/>
           <ConsultSection setPage={setPage}/>
           <BASection/>
           <Testimonials/>
@@ -2178,6 +2263,7 @@ function App(){
         </>
       )}
       {page==="hospitals"&&<HospitalsPage setSel={setSel} setPage={setPage}/>}
+
       {page==="detail"&&sel&&<Detail h={sel} setPage={setPage}/>}
       {page==="contact"&&<ContactPage/>}
       {page==="about"&&<AboutPage setPage={setPage}/>}
