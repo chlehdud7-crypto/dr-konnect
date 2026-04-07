@@ -131,7 +131,12 @@ const hospitals=[
    desc:"A cutting-edge aesthetic clinic in Seocho-gu specializing in autologous stem cell therapy, lifting procedures, and minimally invasive body contouring — with 1:1 personalized care and fast recovery.",
    intro:"Good aesthetics begin with healthy beauty — and that philosophy is at the heart of K-Cell Clinic.\n\nThrough precise, individualized 1:1 consultations, K-Cell delivers results that are satisfying without being excessive. Fast treatment times and short recovery periods are not just conveniences — they are core to our medical philosophy. From autologous blood stem cell therapy to the latest lifting technologies, K-Cell combines science with artistry to help every patient look and feel their best.",
    img:"https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80",
-   clinicPhotos:[],
+   clinicPhotos:[
+     "K-CELL%20INTERIOIR%201.jpeg",
+     "K-CELL%20INTERIOIR%202.jpeg",
+     "K-CELL%20INTERIOIR%203.jpeg",
+     "K-CELL%20INTERIOIR%204.jpeg",
+   ],
    info:{
      address:"2F, Ara Tower, 3 Seocho-daero 77-gil, Seocho-gu, Seoul, South Korea",
      hours:"Mon–Fri 10:00–19:00 (Thu until 20:00) · Sat 10:00–15:00 · Sun & Holidays Closed",
@@ -196,7 +201,14 @@ const hospitals=[
    desc:"A board-certified dermatology group with multiple branches in Seoul, known for specialist-led consultations, guaranteed authentic products, and a commitment to honest, evidence-based skin care.",
    intro:"Good care starts with a thorough, expert consultation — and at WELL'S Dermatology, every consultation is led directly by a board-certified dermatologist.\n\nWELL'S operates on four core principles: honesty in treatment (genuine products, guaranteed quantities), patient-first thinking (doctors undergo treatments themselves to improve safety and comfort), continuous learning (constant investment in the latest technologies), and staff-wide expertise (all team members are trained to provide accurate information on effects, precautions, and side effects). From anti-aging and pigmentation to acne, body contouring, and hair loss — WELL'S delivers dermatology the right way.",
    img:"https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800&q=80",
-   clinicPhotos:[],
+   clinicPhotos:[
+     "WELL%27S%20INTERIOIR%201.jpg",
+     "WELL%27S%20INTERIOIR%202.jpg",
+     "WELL%27S%20INTERIOIR%203.jpg",
+     "WELL%27S%20INTERIOIR%204.jpg",
+     "WELL%27S%20INTERIOIR%205.jpg",
+     "WELL%27S%20INTERIOIR%206.jpg",
+   ],
    info:{
      address:"8F, 842 Nonhyeon-ro, Gangnam-gu, Seoul, South Korea (Apgujeong Main Branch)",
      hours:"Mon–Fri 10:00–20:00 (lunch 13:00–14:00) · Sat 10:00–17:00 · Sun & Holidays Closed",
@@ -1224,96 +1236,80 @@ function ContactPage(){
 
               {/* Visa */}
               <div style={{background:T.offWhite,borderRadius:16,padding:"18px 22px",marginBottom:14}}>
-                <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:12}}>
-                  <div style={{flex:1}}>
-                    <div style={{fontWeight:700,color:T.navy,fontSize:15}}>Visa Assistance</div>
-                    <div style={{color:T.grayText,fontSize:12,marginTop:3}}>
-                      Medical visa (C-3-M) application — <strong>₱4,000 / person</strong>
-                    </div>
-                  </div>
-                  <div style={{display:"flex",gap:8}}>
-                    {["Yes","No"].map(o=>{
-                      const sel=form.addons.visa===o;
-                      return(
-                        <button key={o} onClick={()=>up({addons:{...form.addons,visa:o}})}
-                          style={{padding:"8px 20px",borderRadius:30,cursor:"pointer",fontSize:13,fontWeight:700,
-                            background:sel?T.sky:T.white,color:sel?T.navy:T.grayText,
-                            border:`1.5px solid ${sel?T.sky:T.grayLine}`}}>{o}</button>
-                      );
-                    })}
-                  </div>
+                <div style={{fontWeight:700,color:T.navy,fontSize:15,marginBottom:4}}>Visa Assistance</div>
+                <div style={{color:T.grayText,fontSize:12,marginBottom:10}}>
+                  Medical visa (C-3-M) application — <strong>₱4,000 / person</strong>
+                </div>
+                <div style={{display:"flex",gap:8}}>
+                  {["Yes","No"].map(o=>{
+                    const sel=form.addons.visa===o;
+                    return(
+                      <button key={o} onClick={()=>up({addons:{...form.addons,visa:o}})}
+                        style={{padding:"8px 20px",borderRadius:30,cursor:"pointer",fontSize:13,fontWeight:700,
+                          background:sel?T.sky:T.white,color:sel?T.navy:T.grayText,
+                          border:`1.5px solid ${sel?T.sky:T.grayLine}`}}>{o}</button>
+                    );
+                  })}
                 </div>
               </div>
 
               {/* Interpreter */}
               <div style={{background:T.offWhite,borderRadius:16,padding:"18px 22px",marginBottom:14}}>
-                <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:12}}>
-                  <div style={{flex:1}}>
-                    <div style={{fontWeight:700,color:T.navy,fontSize:15}}>Personal Interpreter</div>
-                    <div style={{color:T.grayText,fontSize:12,marginTop:3}}>
-                      3 hrs — <strong>₱5,000</strong> &nbsp;·&nbsp; 6 hrs — <strong>₱9,000</strong>
-                    </div>
-                    <div style={{color:T.grayText,fontSize:11,marginTop:2,fontStyle:"italic"}}>
-                      Note: The hospital also has in-house interpreters available.
-                    </div>
-                  </div>
-                  <div style={{display:"flex",gap:8,flexWrap:"wrap",justifyContent:"flex-end"}}>
-                    {["None","3 hrs","6 hrs"].map(o=>{
-                      const sel=form.addons.interpreter===o;
-                      return(
-                        <button key={o} onClick={()=>up({addons:{...form.addons,interpreter:o}})}
-                          style={{padding:"8px 16px",borderRadius:30,cursor:"pointer",fontSize:12,fontWeight:700,
-                            background:sel?T.sky:T.white,color:sel?T.navy:T.grayText,
-                            border:`1.5px solid ${sel?T.sky:T.grayLine}`}}>{o}</button>
-                      );
-                    })}
-                  </div>
+                <div style={{fontWeight:700,color:T.navy,fontSize:15,marginBottom:4}}>Personal Interpreter</div>
+                <div style={{color:T.grayText,fontSize:12,marginBottom:4}}>
+                  3 hrs — <strong>₱5,000</strong> &nbsp;·&nbsp; 6 hrs — <strong>₱9,000</strong>
+                </div>
+                <div style={{color:T.grayText,fontSize:11,marginBottom:10,fontStyle:"italic"}}>
+                  Note: The hospital also has in-house interpreters available.
+                </div>
+                <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
+                  {["None","3 hrs","6 hrs"].map(o=>{
+                    const sel=form.addons.interpreter===o;
+                    return(
+                      <button key={o} onClick={()=>up({addons:{...form.addons,interpreter:o}})}
+                        style={{padding:"8px 16px",borderRadius:30,cursor:"pointer",fontSize:12,fontWeight:700,
+                          background:sel?T.sky:T.white,color:sel?T.navy:T.grayText,
+                          border:`1.5px solid ${sel?T.sky:T.grayLine}`}}>{o}</button>
+                    );
+                  })}
                 </div>
               </div>
 
               {/* Accommodation */}
               <div style={{background:T.offWhite,borderRadius:16,padding:"18px 22px",marginBottom:14}}>
-                <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:12}}>
-                  <div style={{flex:1}}>
-                    <div style={{fontWeight:700,color:T.navy,fontSize:15}}>Accommodation</div>
-                    <div style={{color:T.grayText,fontSize:12,marginTop:3}}>
-                      Hotel booking assistance — <strong>₱2,000 / booking</strong>
-                    </div>
-                  </div>
-                  <div style={{display:"flex",gap:8}}>
-                    {["Yes","No"].map(o=>{
-                      const sel=form.addons.accommodation===o;
-                      return(
-                        <button key={o} onClick={()=>up({addons:{...form.addons,accommodation:o}})}
-                          style={{padding:"8px 20px",borderRadius:30,cursor:"pointer",fontSize:13,fontWeight:700,
-                            background:sel?T.sky:T.white,color:sel?T.navy:T.grayText,
-                            border:`1.5px solid ${sel?T.sky:T.grayLine}`}}>{o}</button>
-                      );
-                    })}
-                  </div>
+                <div style={{fontWeight:700,color:T.navy,fontSize:15,marginBottom:4}}>Accommodation</div>
+                <div style={{color:T.grayText,fontSize:12,marginBottom:10}}>
+                  Hotel booking assistance — <strong>₱2,000 / booking</strong>
+                </div>
+                <div style={{display:"flex",gap:8}}>
+                  {["Yes","No"].map(o=>{
+                    const sel=form.addons.accommodation===o;
+                    return(
+                      <button key={o} onClick={()=>up({addons:{...form.addons,accommodation:o}})}
+                        style={{padding:"8px 20px",borderRadius:30,cursor:"pointer",fontSize:13,fontWeight:700,
+                          background:sel?T.sky:T.white,color:sel?T.navy:T.grayText,
+                          border:`1.5px solid ${sel?T.sky:T.grayLine}`}}>{o}</button>
+                    );
+                  })}
                 </div>
               </div>
 
               {/* Airport Pickup */}
               <div style={{background:T.offWhite,borderRadius:16,padding:"18px 22px",marginBottom:22}}>
-                <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:12}}>
-                  <div style={{flex:1}}>
-                    <div style={{fontWeight:700,color:T.navy,fontSize:15}}>Airport Pickup (incl. return)</div>
-                    <div style={{color:T.grayText,fontSize:12,marginTop:3}}>
-                      4-seater — <strong>₱12,000</strong> &nbsp;·&nbsp; 6-seater — <strong>₱18,000</strong>
-                    </div>
-                  </div>
-                  <div style={{display:"flex",gap:8,flexWrap:"wrap",justifyContent:"flex-end"}}>
-                    {["None","4-seater","6-seater"].map(o=>{
-                      const sel=form.addons.pickup===o;
-                      return(
-                        <button key={o} onClick={()=>up({addons:{...form.addons,pickup:o}})}
-                          style={{padding:"8px 16px",borderRadius:30,cursor:"pointer",fontSize:12,fontWeight:700,
-                            background:sel?T.sky:T.white,color:sel?T.navy:T.grayText,
-                            border:`1.5px solid ${sel?T.sky:T.grayLine}`}}>{o}</button>
-                      );
-                    })}
-                  </div>
+                <div style={{fontWeight:700,color:T.navy,fontSize:15,marginBottom:4}}>Airport Pickup (incl. return)</div>
+                <div style={{color:T.grayText,fontSize:12,marginBottom:10}}>
+                  4-seater — <strong>₱12,000</strong> &nbsp;·&nbsp; 6-seater — <strong>₱18,000</strong>
+                </div>
+                <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
+                  {["None","4-seater","6-seater"].map(o=>{
+                    const sel=form.addons.pickup===o;
+                    return(
+                      <button key={o} onClick={()=>up({addons:{...form.addons,pickup:o}})}
+                        style={{padding:"8px 16px",borderRadius:30,cursor:"pointer",fontSize:12,fontWeight:700,
+                          background:sel?T.sky:T.white,color:sel?T.navy:T.grayText,
+                          border:`1.5px solid ${sel?T.sky:T.grayLine}`}}>{o}</button>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -2032,14 +2028,14 @@ function WhySection(){
           {cards.map(c=>(
             <div key={c.title}
               style={{background:"#ECEEF1",borderRadius:m?16:22,padding:m?"20px 18px":"40px 30px",
-                textAlign:m?"center":"left",
+                textAlign:"center",
                 transition:"transform 0.22s,box-shadow 0.22s"}}
               onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-4px)";e.currentTarget.style.boxShadow="0 16px 40px rgba(13,27,42,0.10)";}}
               onMouseLeave={e=>{e.currentTarget.style.transform="";e.currentTarget.style.boxShadow="";}}>
               <div style={{width:m?48:60,height:m?48:60,borderRadius:"50%",
                 background:"#E2E4E8",display:"flex",alignItems:"center",
-                justifyContent:"center",marginBottom:m?12:28,color:T.navy,
-                margin:m?"0 auto 12px":"0 0 28px 0"}}>
+                justifyContent:"center",color:T.navy,
+                margin:"0 auto",marginBottom:m?12:28}}>
                 {c.icon}
               </div>
               <h3 style={{fontSize:m?15:18,fontWeight:800,color:T.navy,marginBottom:m?6:12,lineHeight:1.35}}>{c.title}</h3>
