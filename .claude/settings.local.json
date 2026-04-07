@@ -3,7 +3,12 @@
     "allow": [
       "WebFetch(domain:vgprs.com)",
       "Bash(open -a Safari \"/Users/doyouongchoieric/DR.KONNECT WEB PAGE/DR_KONNECT.html\")",
-      "Bash(git -C \"/Users/doyouongchoieric/DR.KONNECT WEB PAGE\" status)"
+      "Bash(git -C \"/Users/doyouongchoieric/DR.KONNECT WEB PAGE\" status)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" https://www.dr-konnect.com)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" --insecure https://www.dr-konnect.com)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://www.dr-konnect.com)",
+      "WebFetch(domain:kcellclinic.co.kr)",
+      "WebFetch(domain:www.wellsclinic.co.kr)"
     ]
   }
 }

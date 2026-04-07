@@ -55,8 +55,8 @@ const hospitals=[
      "8.jpg","9.jpg","10.jpg","11.jpg","12.jpg","14.jpg","15.jpg","16.jpg",
    ],
    info:{
-     address:"Gangnam-gu, Seoul, South Korea  (exact address to be updated)",
-     hours:"Mon – Sat  10:00 AM – 7:00 PM",
+     address:"9F, Block 77, 17 Seocho-daero 77-gil, Seocho-gu, Seoul, South Korea",
+     hours:"Mon–Fri 09:30–21:00 · Sat 09:30–17:00 · Sun Closed",
      website:"https://vgprs.com",
      languages:"English · Korean · Chinese · Japanese · Vietnamese · Thai · Indonesian · Mongolian · Russian",
    },
@@ -81,6 +81,7 @@ const hospitals=[
      {
        name:"Youngmin Im",
        title:"Chief Director",
+       photo:"doc_youngmin.jpg",
        credentials:[
          "MD (Doctor of Medicine)",
          "Internship & residency, Seoul St. Mary's Hospital",
@@ -97,6 +98,7 @@ const hospitals=[
      {
        name:"Sangwook Park",
        title:"Deputy Director",
+       photo:"doc_sangwook.jpg",
        credentials:[
          "Board-certified Plastic Surgeon",
          "Residency, Dept. of Plastic Surgery, Seoul St. Mary's Hospital, Catholic University of Korea",
@@ -112,6 +114,7 @@ const hospitals=[
      {
        name:"Junghue Kim",
        title:"Director",
+       photo:"doc_junghue.jpg",
        credentials:[
          "Board-certified Plastic Surgeon",
          "Graduate, Catholic University of Korea",
@@ -119,6 +122,209 @@ const hospitals=[
          "Former Director, Pop Plastic Surgery",
          "Member, Korean Society of Plastic & Reconstructive Surgeons",
          "Member, Korean Society for Aesthetic Plastic Surgery",
+       ],
+     },
+   ],
+  },
+  {id:2,name:"K-Cell Clinic",nameKo:"케이셀의원",location:"Seocho-gu, Seoul",
+   specialties:["Stem Cell Therapy","Anti-Aging","Body Contouring"],jci:false,
+   desc:"A cutting-edge aesthetic clinic in Seocho-gu specializing in autologous stem cell therapy, lifting procedures, and minimally invasive body contouring — with 1:1 personalized care and fast recovery.",
+   intro:"Good aesthetics begin with healthy beauty — and that philosophy is at the heart of K-Cell Clinic.\n\nThrough precise, individualized 1:1 consultations, K-Cell delivers results that are satisfying without being excessive. Fast treatment times and short recovery periods are not just conveniences — they are core to our medical philosophy. From autologous blood stem cell therapy to the latest lifting technologies, K-Cell combines science with artistry to help every patient look and feel their best.",
+   img:"https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80",
+   clinicPhotos:[],
+   info:{
+     address:"2F, Ara Tower, 3 Seocho-daero 77-gil, Seocho-gu, Seoul, South Korea",
+     hours:"Mon–Fri 10:00–19:00 (Thu until 20:00) · Sat 10:00–15:00 · Sun & Holidays Closed",
+     website:"http://kcellclinic.co.kr",
+     languages:"Korean · English (coordinator available)",
+   },
+   procedures:[
+     {name:"Autologous Blood Stem Cell Therapy",price:"Contact for Quote",days:"1–2 days"},
+     {name:"Ultherapy Prime (Lifting)",price:"Contact for Quote",days:"1 day"},
+     {name:"Thermage FLX",price:"Contact for Quote",days:"1 day"},
+     {name:"Thread Lifting",price:"Contact for Quote",days:"1 day"},
+     {name:"Titanium Lifting",price:"Contact for Quote",days:"1 day"},
+     {name:"Under-Eye Fat Repositioning",price:"Contact for Quote",days:"1–2 days"},
+     {name:"Upper / Lower Eyelid Surgery",price:"Contact for Quote",days:"1–2 days"},
+     {name:"Botox / Fillers",price:"Contact for Quote",days:"1 day"},
+     {name:"Body Contouring / Fat Sculpting",price:"Contact for Quote",days:"1–3 days"},
+     {name:"Stem Cell Breast Augmentation",price:"Contact for Quote",days:"2–3 days"},
+   ],
+   ba:[
+     {label:"Thread Lifting",tag:"Anti-Aging",b:"#C4A882",a:"#D8C0A0"},
+     {label:"Body Contouring",tag:"Fat Sculpting",b:"#A09080",a:"#C0B0A0"},
+   ],
+   doctors:[
+     {
+       name:"Geun-Hwan Kim",
+       title:"Chief Director",
+       photo:"doc_geunhwan.jpg",
+       credentials:[
+         "Current Chief Director, K-Cell Clinic",
+         "Former Director, Cohen Plastic Surgery",
+         "Former Chief Director, Easy Cohen Clinic",
+         "Former Chief Director, Yonsei MyView Clinic",
+         "Former Director, Hi Yonsei Aesthetic Surgery Clinic",
+         "Former Director, La Prin Clinic",
+         "Graduate, Pusan National University College of Medicine · General Surgery Specialist",
+         "IBCS International Board of Cosmetic Surgery — Certified Surgeon",
+         "Member, Korean Society of Aesthetic Surgery",
+         "Member, Korean Society of Aesthetic Plastic Laser Medicine",
+         "Member, Korean Society of Obesity & Aesthetic Body Shape",
+         "Member, Korean Society of Surgical Ultrasound",
+         "Member, Korean Society of Stem Cell Therapy",
+       ],
+     },
+     {
+       name:"Hyun-Sook Hong",
+       title:"Director",
+       photo:"doc_hyunsook.jpg",
+       credentials:[
+         "Current Director, K-Cell Clinic",
+         "Former Director, Tatoa Clinic",
+         "Former Director, Pretty Face Clinic (Nonhyeon Branch)",
+         "Former Director, Kklim365 Seolleung Branch",
+         "Graduate, Ewha Womans University College of Medicine · Family Medicine Specialist",
+         "Member, Korean Society of Obesity & Aesthetic Medicine",
+         "Member, Korean Society of Laser Dermatology & Trichology",
+       ],
+     },
+   ],
+  },
+  {id:3,name:"WELL'S Dermatology & Medical SPA",nameKo:"웰스피부과",location:"Gangnam-gu, Seoul",
+   specialties:["Dermatology","Laser Treatment","Anti-Aging"],jci:false,
+   desc:"A board-certified dermatology group with multiple branches in Seoul, known for specialist-led consultations, guaranteed authentic products, and a commitment to honest, evidence-based skin care.",
+   intro:"Good care starts with a thorough, expert consultation — and at WELL'S Dermatology, every consultation is led directly by a board-certified dermatologist.\n\nWELL'S operates on four core principles: honesty in treatment (genuine products, guaranteed quantities), patient-first thinking (doctors undergo treatments themselves to improve safety and comfort), continuous learning (constant investment in the latest technologies), and staff-wide expertise (all team members are trained to provide accurate information on effects, precautions, and side effects). From anti-aging and pigmentation to acne, body contouring, and hair loss — WELL'S delivers dermatology the right way.",
+   img:"https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800&q=80",
+   clinicPhotos:[],
+   info:{
+     address:"8F, 842 Nonhyeon-ro, Gangnam-gu, Seoul, South Korea (Apgujeong Main Branch)",
+     hours:"Mon–Fri 10:00–20:00 (lunch 13:00–14:00) · Sat 10:00–17:00 · Sun & Holidays Closed",
+     website:"https://www.wellsclinic.co.kr",
+     languages:"Korean · English (coordinator available)",
+   },
+   procedures:[
+     {name:"Anti-Aging Treatment",price:"Contact for Quote",days:"1 day"},
+     {name:"Pigmentation Treatment",price:"Contact for Quote",days:"1 day"},
+     {name:"Acne & Scar Treatment",price:"Contact for Quote",days:"1 day"},
+     {name:"Pore Reduction",price:"Contact for Quote",days:"1 day"},
+     {name:"Tattoo Removal",price:"Contact for Quote",days:"1 day"},
+     {name:"Skin Booster / Filler",price:"Contact for Quote",days:"1 day"},
+     {name:"Ultherapy / Thermage",price:"Contact for Quote",days:"1 day"},
+     {name:"Body Contouring",price:"Contact for Quote",days:"1 day"},
+     {name:"Hair Loss Treatment",price:"Contact for Quote",days:"1 day"},
+   ],
+   ba:[
+     {label:"Pigmentation",tag:"Laser Treatment",b:"#C4A882",a:"#D8C0A0"},
+     {label:"Acne & Scars",tag:"Skin Resurfacing",b:"#A09080",a:"#C0B0A0"},
+   ],
+   doctors:[
+     {
+       name:"Hyo-Seop Ryu",
+       title:"Chief Director",
+       photo:"doc_ryuhyo.jpg",
+       credentials:[
+         "MD (Doctor of Medicine) · PhD in Dermatology",
+         "Clinical Instructor, Bundang Seoul National University Hospital, Dept. of Dermatology",
+         "Assistant Professor, Bundang Seoul National University Hospital",
+         "Director of Welfare Dermatology Clinic, Jeju Public Health Service",
+         "Chief Director, Bundang Bon Dermatology Clinic",
+         "Chief Director, Teuldream Dermatology Clinic",
+         "Visiting Professor, Incheon International St. Mary's Hospital / Dubai Maris Clinic",
+         "Former Member, American Academy of Dermatology (AAD)",
+         "Former Member, American Society for Laser Medicine and Surgery (ASLMS)",
+         "Former Member, International Society of Hair Restoration Surgery (ISHRS)",
+         "Member, Korean Dermatological Association",
+         "Member, Korean Hair Research Society",
+         "Member, Korean Anti-Aging Medicine Society",
+         "Listed in Three Major Who's Who Directories: IBC, Marquis Who's Who",
+       ],
+     },
+     {
+       name:"Won-Sin Lee",
+       title:"Chief Director",
+       photo:"doc_leewon.jpg",
+       credentials:[
+         "Dermatology Specialist, Seoul Asan Medical Center",
+         "Residency & Board Certification, Dept. of Dermatology, Seoul Asan Medical Center",
+         "Former Director, Korean Leprosy Welfare Association Welfare Dermatology Clinic",
+         "Recipient, Outstanding Public Health Physician Commendation",
+         "Regional Leprosy Management Physician, Korea Disease Control and Prevention Agency",
+         "Adjunct Clinical Professor, Dept. of Dermatology, Seoul Asan Medical Center",
+         "Member, Korean Dermatological Association",
+         "Member, Korean Dermatology Clinic Association",
+         "Member, Korean Laser Medicine Society",
+         "Member, Korean Society of Aesthetic Dermatology",
+         "Member, Korean Society of Dermatologic Surgery",
+         "Member, Korean Cosmetic Dermatology Society",
+         "Member, Korean Hair Research Society",
+         "Member, Korean Society of Obesity & Aesthetic Medicine",
+         "Member, Korean Atopic Dermatitis Association",
+       ],
+     },
+     {
+       name:"Won-Woo Choi",
+       title:"Chief Director",
+       photo:"doc_choiwon.jpg",
+       credentials:[
+         "Dermatology Specialist, Seoul National University Hospital",
+         "Residency & Board Certification, Dept. of Dermatology, Seoul National University Hospital",
+         "Master's Degree (in progress), Seoul National University College of Medicine",
+         "PhD in Dermatology, Seoul National University",
+         "Clinical Instructor, Seoul National University Hospital",
+         "Adjunct Clinical Professor, Dept. of Dermatology, Seoul National University Hospital",
+         "CEO, Cutis Bio Co., Ltd.",
+         "Member, Korean Dermatological Association",
+         "Member, Korean Dermatology Clinic Association",
+         "Member, Korean Laser Medicine Society",
+         "Member, Korean Society of Aesthetic Dermatology",
+         "Member, Korean Cosmetic Dermatology Society",
+         "Member, Korean Hair Research Society",
+         "Member, Korean Society of Obesity & Body Shape Medicine",
+         "Member, Korean Atopic Dermatitis Association",
+         "Member, American Academy of Dermatology (AAD)",
+         "Member, American Society for Laser Medicine and Surgery (ASLMS)",
+       ],
+     },
+     {
+       name:"Sang-Hee Lee",
+       title:"Chief Director",
+       photo:"doc_leesang.jpg",
+       credentials:[
+         "Graduate, Yonsei University College of Medicine",
+         "Master's Degree in Dermatology, Yonsei University College of Medicine",
+         "Internship, Sinchon Severance Hospital",
+         "Residency & Board Certification, Dept. of Dermatology, Gangnam Severance Hospital",
+         "Clinical Instructor, Gangnam Severance Hospital",
+         "Former Director, Cheongdam Ijham Dermatology Clinic",
+         "Member, Korean Dermatological Association",
+         "Member, Korean Dermatology Physicians Association",
+         "Member, Korean Laser Dermatology Society",
+         "Member, Korean Acne Research Society",
+         "Member, Korean Society of Aesthetic Dermatology",
+         "Member, Korean Society of Obesity & Body Shape Medicine",
+       ],
+     },
+     {
+       name:"Jun-Seok Choi",
+       title:"Chief Director",
+       photo:"doc_choijun.jpg",
+       credentials:[
+         "Bachelor's Degree, Seoul National University",
+         "Top Admission, Gachon University School of Medicine",
+         "Master's Degree, Gachon University School of Medicine",
+         "PhD Candidate in Dermatology, Gachon University School of Medicine",
+         "Adjunct Clinical Professor, Dept. of Dermatology, Gachon University Gil Medical Center",
+         "Former Director, Malgeuncham Dermatology Clinic",
+         "Former Director, Bucheon WELL'S Dermatology Clinic",
+         "Member, Korean Dermatological Association",
+         "Member, Korean Dermatology Physicians Association",
+         "Member, Korean Atopic Dermatitis Association",
+         "Member, Korean Acne Research Society",
+         "Member, Korean Hair Research Society",
+         "Member, Korean Laser Dermatology Society",
+         "Member, Korean Psoriasis Society",
+         "Member, Korean Vitiligo Society",
        ],
      },
    ],
@@ -359,20 +565,20 @@ function TreatmentsSection({setPage}){
             Experience everything from aesthetic treatments to specialized medical services
           </p>
         </div>
-        <div style={{display:"grid",gridTemplateColumns:m?"repeat(2,1fr)":"repeat(auto-fill,minmax(160px,1fr))",gap:m?12:18}}>
+        <div style={{display:"grid",gridTemplateColumns:m?"repeat(2,1fr)":"repeat(auto-fill,minmax(160px,1fr))",gap:m?10:18}}>
           {treatments.map(t=>(
             <div key={t.label} onClick={()=>setPage("hospitals")}
-              style={{background:T.white,borderRadius:20,padding:"30px 22px",
+              style={{background:T.white,borderRadius:m?14:20,padding:m?"14px 12px":"30px 22px",
                 border:`1.5px solid ${T.grayLine}`,cursor:"pointer",textAlign:"center",
                 transition:"all 0.22s"}}
               onMouseEnter={e=>{e.currentTarget.style.borderColor=T.sky;e.currentTarget.style.transform="translateY(-4px)";e.currentTarget.style.boxShadow=`0 14px 36px ${T.sky}38`;}}
               onMouseLeave={e=>{e.currentTarget.style.borderColor=T.grayLine;e.currentTarget.style.transform="";e.currentTarget.style.boxShadow="";}}>
-              <div style={{fontSize:30,background:T.skyPale,width:64,height:64,borderRadius:16,
-                display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 14px"}}>
+              <div style={{fontSize:m?22:30,background:T.skyPale,width:m?48:64,height:m?48:64,borderRadius:m?12:16,
+                display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto",marginBottom:m?8:14}}>
                 {t.icon}
               </div>
-              <div style={{fontWeight:800,color:T.navy,fontSize:15,marginBottom:6}}>{t.label}</div>
-              <div style={{color:T.grayText,fontSize:13}}>{t.desc}</div>
+              <div style={{fontWeight:800,color:T.navy,fontSize:m?13:15,marginBottom:m?3:6}}>{t.label}</div>
+              <div style={{color:T.grayText,fontSize:m?11:13}}>{t.desc}</div>
             </div>
           ))}
         </div>
@@ -393,17 +599,21 @@ function HowSection(){
           </h2>
           <p style={{color:T.navyMid,fontSize:m?15:18}}>From your first inquiry to full recovery</p>
         </div>
-        <div style={{display:"grid",gridTemplateColumns:m?"1fr":"repeat(3,1fr)",gap:m?12:24}}>
+        <div style={{display:"grid",gridTemplateColumns:m?"1fr":"repeat(3,1fr)",gap:m?8:24}}>
           {steps.map(s=>(
-            <div key={s.n} style={{background:"rgba(255,255,255,0.88)",borderRadius:22,padding:30,
-              border:"1.5px solid rgba(255,255,255,0.95)"}}>
-              <div style={{background:T.navy,color:T.sky,width:50,height:50,borderRadius:14,
+            <div key={s.n} style={{background:"rgba(255,255,255,0.88)",borderRadius:m?14:22,
+              padding:m?"14px 16px":30,border:"1.5px solid rgba(255,255,255,0.95)",
+              display:m?"flex":undefined,alignItems:m?"flex-start":undefined,gap:m?12:undefined}}>
+              <div style={{background:T.navy,color:T.sky,width:m?36:50,height:m?36:50,
+                borderRadius:m?10:14,flexShrink:0,
                 display:"flex",alignItems:"center",justifyContent:"center",
-                fontWeight:900,fontSize:13,letterSpacing:"0.05em",marginBottom:18}}>
+                fontWeight:900,fontSize:m?11:13,letterSpacing:"0.05em",marginBottom:m?0:18}}>
                 {s.n}
               </div>
-              <div style={{fontWeight:800,color:T.navy,fontSize:17,marginBottom:10}}>{s.title}</div>
-              <div style={{color:T.textMid,fontSize:14,lineHeight:1.65}}>{s.desc}</div>
+              <div>
+                <div style={{fontWeight:800,color:T.navy,fontSize:m?14:17,marginBottom:m?4:10}}>{s.title}</div>
+                <div style={{color:T.textMid,fontSize:m?12:14,lineHeight:1.6}}>{s.desc}</div>
+              </div>
             </div>
           ))}
         </div>
@@ -734,10 +944,12 @@ function Detail({h,setPage}){
               {h.doctors.map(d=>(
                 <div key={d.name} style={{background:T.white,borderRadius:20,padding:"28px 32px",
                   border:`1.5px solid ${T.grayLine}`,display:"flex",gap:28,alignItems:"flex-start",flexWrap:"wrap"}}>
-                  <div style={{width:72,height:72,borderRadius:"50%",background:T.sky,flexShrink:0,
+                  <div style={{width:80,height:80,borderRadius:"50%",background:T.sky,flexShrink:0,
                     display:"flex",alignItems:"center",justifyContent:"center",
-                    fontSize:26,color:T.navy,fontWeight:900}}>
-                    {d.name[0]}
+                    fontSize:26,color:T.navy,fontWeight:900,overflow:"hidden"}}>
+                    {d.photo
+                      ? <img src={d.photo} alt={d.name} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"top"}}/>
+                      : d.name[0]}
                   </div>
                   <div style={{flex:1,minWidth:240}}>
                     <div style={{fontWeight:900,color:T.navy,fontSize:20}}>{d.name}</div>
@@ -774,11 +986,32 @@ function ContactPage(){
     addons:{visa:"No",interpreter:"None",accommodation:"No",pickup:"None"},
   });
   const [done,setDone]=useState(false);
+  const [errors,setErrors]=useState({});
   const up=v=>setForm(f=>({...f,...v}));
 
-  const years=["2025","2026","2027","2028"];
-  const months=["January","February","March","April","May","June","July","August","September","October","November","December"];
+  const now=new Date();
+  const currentYear=now.getFullYear();
+  const currentMonth=now.getMonth(); // 0-indexed
+  const years=["2025","2026","2027","2028"].filter(y=>parseInt(y)>=currentYear);
+  const allMonths=["January","February","March","April","May","June","July","August","September","October","November","December"];
+  const months=form.year===String(currentYear)
+    ? allMonths.filter((_,i)=>i>=currentMonth)
+    : allMonths;
   const budgetOptions=["Under Php 50,000","Php 50,000–200,000","Php 200,000–500,000","Over Php 500,000"];
+
+  const validateStep1=()=>{
+    const e={};
+    if(!form.firstName.trim()) e.firstName="First name is required";
+    if(!form.lastName.trim()) e.lastName="Last name is required";
+    const emailRe=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(!form.email.trim()) e.email="Email is required";
+    else if(!emailRe.test(form.email)) e.email="Please enter a valid email address";
+    const phoneRe=/^\+?[\d\s\-()]{7,20}$/;
+    if(!form.phone.trim()) e.phone="Phone number is required";
+    else if(!phoneRe.test(form.phone)) e.phone="Please enter a valid phone number";
+    setErrors(e);
+    return Object.keys(e).length===0;
+  };
 
   const toggleProc=(label)=>{
     const arr=form.procedures.includes(label)
@@ -820,11 +1053,11 @@ function ContactPage(){
       </div>
       <div style={{maxWidth:680,margin:"0 auto",padding:m?"24px 16px":"52px 28px"}}>
         {/* Progress */}
-        <div style={{marginBottom:38}}>
+        <div style={{marginBottom:m?24:38}}>
           <div style={{display:"flex",justifyContent:"space-between",marginBottom:10}}>
             {["Personal Info","Medical Details","Add-Ons"].map((l,i)=>(
-              <span key={l} style={{fontSize:13,fontWeight:step===i+1?700:400,
-                color:step>i?T.skyDark:step===i+1?T.navy:T.grayText}}>{i+1}. {l}</span>
+              <span key={l} style={{fontSize:m?11:13,fontWeight:step===i+1?700:400,
+                color:step>i?T.skyDark:step===i+1?T.navy:T.grayText}}>{i+1}. {m?l.split(" ")[0]:l}</span>
             ))}
           </div>
           <div style={{height:6,background:T.grayLine,borderRadius:3}}>
@@ -842,23 +1075,31 @@ function ContactPage(){
                 <div>
                   <label style={lbl}>First Name *</label>
                   <input type="text" placeholder="Maria" value={form.firstName}
-                    onChange={e=>up({firstName:e.target.value})} style={inp}/>
+                    onChange={e=>{up({firstName:e.target.value});setErrors(er=>({...er,firstName:""}));}}
+                    style={{...inp,borderColor:errors.firstName?"#E05555":T.grayLine}}/>
+                  {errors.firstName&&<div style={{color:"#E05555",fontSize:12,marginTop:5}}>{errors.firstName}</div>}
                 </div>
                 <div>
                   <label style={lbl}>Last Name *</label>
                   <input type="text" placeholder="Santos" value={form.lastName}
-                    onChange={e=>up({lastName:e.target.value})} style={inp}/>
+                    onChange={e=>{up({lastName:e.target.value});setErrors(er=>({...er,lastName:""}));}}
+                    style={{...inp,borderColor:errors.lastName?"#E05555":T.grayLine}}/>
+                  {errors.lastName&&<div style={{color:"#E05555",fontSize:12,marginTop:5}}>{errors.lastName}</div>}
                 </div>
               </div>
               <div style={{marginBottom:20}}>
                 <label style={lbl}>Email *</label>
                 <input type="email" placeholder="maria@gmail.com" value={form.email}
-                  onChange={e=>up({email:e.target.value})} style={inp}/>
+                  onChange={e=>{up({email:e.target.value});setErrors(er=>({...er,email:""}));}}
+                  style={{...inp,borderColor:errors.email?"#E05555":T.grayLine}}/>
+                {errors.email&&<div style={{color:"#E05555",fontSize:12,marginTop:5}}>{errors.email}</div>}
               </div>
               <div>
-                <label style={lbl}>Phone / WhatsApp (+63)</label>
+                <label style={lbl}>Phone / WhatsApp (+63) *</label>
                 <input type="tel" placeholder="+63 917 000 0000" value={form.phone}
-                  onChange={e=>up({phone:e.target.value})} style={inp}/>
+                  onChange={e=>{up({phone:e.target.value});setErrors(er=>({...er,phone:""}));}}
+                  style={{...inp,borderColor:errors.phone?"#E05555":T.grayLine}}/>
+                {errors.phone&&<div style={{color:"#E05555",fontSize:12,marginTop:5}}>{errors.phone}</div>}
               </div>
             </div>
           )}
@@ -912,13 +1153,22 @@ function ContactPage(){
               <div style={{marginBottom:20}}>
                 <label style={lbl}>Preferred Timeline</label>
                 <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14}}>
-                  <select value={form.year} onChange={e=>up({year:e.target.value})} style={inp}>
+                  <select value={form.year} onChange={e=>{
+                    const y=e.target.value;
+                    // reset month if it's now in the past for the selected year
+                    const mIdx=allMonths.indexOf(form.month);
+                    if(y===String(currentYear)&&mIdx>=0&&mIdx<currentMonth){
+                      up({year:y,month:""});
+                    } else {
+                      up({year:y});
+                    }
+                  }} style={inp}>
                     <option value="">Year...</option>
                     {years.map(y=><option key={y}>{y}</option>)}
                   </select>
                   <select value={form.month} onChange={e=>up({month:e.target.value})} style={inp}>
                     <option value="">Month...</option>
-                    {months.map(m=><option key={m}>{m}</option>)}
+                    {months.map(mo=><option key={mo}>{mo}</option>)}
                   </select>
                 </div>
               </div>
@@ -1085,7 +1335,10 @@ function ContactPage(){
                 cursor:"pointer",fontWeight:700,fontSize:15,color:T.grayText}}>← Back</button>
             )}
             <button onClick={()=>{
-                if(step<3){setStep(s=>s+1);}
+                if(step===1){
+                  if(!validateStep1()) return;
+                  setStep(2);
+                } else if(step<3){setStep(s=>s+1);}
                 else{
                   const a=form.addons;
                   const addonLines=[
@@ -1125,8 +1378,9 @@ function ContactPage(){
   );
 }
 
-// ── Testimonials ───────────────────────────────────────────────
-function Testimonials(){
+// ── Testimonials (hidden until real reviews available) ──────────
+function Testimonials(){return null;}
+function _TestimonialsInner(){
   const m=useIsMobile();
   const platforms=[
     {
@@ -1295,9 +1549,9 @@ function CTABanner({setPage}){
 // ── Footer ──────────────────────────────────────────────────────
 // ↓ 소셜 미디어 링크 — 실제 주소로 교체하세요
 const SOCIAL_LINKS={
-  instagram:"https://instagram.com/drkonnect",   // ← 교체
-  youtube:"https://youtube.com/@drkonnect",       // ← 교체
-  tiktok:"https://tiktok.com/@drkonnect",         // ← 교체
+  instagram:"https://www.instagram.com/dr.konnect/",
+  youtube:"https://youtube.com/@drkonnect",
+  tiktok:"https://www.tiktok.com/@dr.konnect",
   whatsapp:`https://wa.me/${WA_NUMBER}`,
 };
 
@@ -1362,7 +1616,7 @@ function Footer({setPage}){
           {/* Contact only */}
           <div style={{justifySelf:"end"}}>
             <div style={{color:T.white,fontWeight:800,marginBottom:18,fontSize:15}}>Contact</div>
-            {["📍 Manila, Philippines","✉ dr.konnect.sales@gmail.com"].map(item=>(
+            {["📍 Manila, Philippines","✉ dr.konnect.ph@gmail.com"].map(item=>(
               <div key={item} style={{marginBottom:11,fontSize:14,color:"#7A9BB5"}}>{item}</div>
             ))}
             <a href={`https://wa.me/${WA_NUMBER}`} target="_blank"
@@ -1774,20 +2028,22 @@ function WhySection(){
             helping reduce uncertainty and remove the barriers that often make Korean medical services feel difficult to access.
           </p>
         </div>
-        <div style={{display:"grid",gridTemplateColumns:m?"1fr":"repeat(3,1fr)",gap:m?14:24}}>
+        <div style={{display:"grid",gridTemplateColumns:m?"1fr":"repeat(3,1fr)",gap:m?10:24}}>
           {cards.map(c=>(
             <div key={c.title}
-              style={{background:"#ECEEF1",borderRadius:22,padding:"40px 30px",textAlign:"left",
+              style={{background:"#ECEEF1",borderRadius:m?16:22,padding:m?"20px 18px":"40px 30px",
+                textAlign:m?"center":"left",
                 transition:"transform 0.22s,box-shadow 0.22s"}}
               onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-4px)";e.currentTarget.style.boxShadow="0 16px 40px rgba(13,27,42,0.10)";}}
               onMouseLeave={e=>{e.currentTarget.style.transform="";e.currentTarget.style.boxShadow="";}}>
-              <div style={{width:60,height:60,borderRadius:"50%",
+              <div style={{width:m?48:60,height:m?48:60,borderRadius:"50%",
                 background:"#E2E4E8",display:"flex",alignItems:"center",
-                justifyContent:"center",marginBottom:28,color:T.navy}}>
+                justifyContent:"center",marginBottom:m?12:28,color:T.navy,
+                margin:m?"0 auto 12px":"0 0 28px 0"}}>
                 {c.icon}
               </div>
-              <h3 style={{fontSize:18,fontWeight:800,color:T.navy,marginBottom:12,lineHeight:1.35}}>{c.title}</h3>
-              <p style={{color:"#5A6875",fontSize:14,lineHeight:1.82,margin:0}}>{c.desc}</p>
+              <h3 style={{fontSize:m?15:18,fontWeight:800,color:T.navy,marginBottom:m?6:12,lineHeight:1.35}}>{c.title}</h3>
+              <p style={{color:"#5A6875",fontSize:m?12:14,lineHeight:1.75,margin:0}}>{c.desc}</p>
             </div>
           ))}
         </div>
@@ -1925,7 +2181,7 @@ function FloatingUI({onCurrency}){
     },
     {
       label:"Instagram",
-      href:"https://instagram.com/drkonnect",
+      href:"https://www.instagram.com/dr.konnect/",
       bg:"#E1306C",
       icon:(
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -1939,6 +2195,7 @@ function FloatingUI({onCurrency}){
       label:"YouTube",
       href:"https://youtube.com/@drkonnect",
       bg:"#FF0000",
+
       icon:(
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
           <path d="M23 7s-.3-1.9-1.2-2.7c-1.1-1.2-2.4-1.2-3-1.3C16.4 3 12 3 12 3s-4.4 0-6.8.1c-.6.1-1.9.1-3 1.3C1.3 5.2 1 7 1 7S.7 9.1.7 11.2v1.9c0 2.1.3 4.2.3 4.2s.3 1.9 1.2 2.7c1.1 1.2 2.6 1.1 3.3 1.2C7.5 21.3 12 21.3 12 21.3s4.4 0 6.8-.2c.6-.1 1.9-.1 3-1.3.9-.8 1.2-2.7 1.2-2.7s.3-2.1.3-4.2v-1.9C23.3 9.1 23 7 23 7zM9.7 15.5V8.4l6.6 3.6-6.6 3.5z"/>
@@ -1947,7 +2204,7 @@ function FloatingUI({onCurrency}){
     },
     {
       label:"TikTok",
-      href:"https://tiktok.com/@drkonnect",
+      href:"https://www.tiktok.com/@dr.konnect",
       bg:"#010101",
       icon:(
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -1962,9 +2219,9 @@ function FloatingUI({onCurrency}){
       <div style={{position:"fixed",bottom:m?16:28,left:m?16:28,zIndex:400}}>
         <button onClick={onCurrency}
           style={{background:T.sky,color:T.navy,border:"none",
-            borderRadius:50,padding:m?"11px 14px":"14px 24px",fontWeight:800,
-            fontSize:14,cursor:"pointer",letterSpacing:"0.01em",
-            display:"flex",alignItems:"center",gap:m?0:8,
+            borderRadius:50,padding:m?"10px 14px":"14px 24px",fontWeight:800,
+            fontSize:m?12:14,cursor:"pointer",letterSpacing:"0.01em",
+            display:"flex",alignItems:"center",gap:8,
             boxShadow:"0 6px 24px rgba(142,197,230,0.55)",
             transition:"transform 0.18s,box-shadow 0.18s"}}
           onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-2px)";e.currentTarget.style.boxShadow="0 10px 32px rgba(142,197,230,0.65)";}}
@@ -1979,7 +2236,7 @@ function FloatingUI({onCurrency}){
             <line x1="14" y1="14" x2="16" y2="14"/>
             <line x1="8" y1="18" x2="16" y2="18"/>
           </svg>
-          {!m&&"Currency Converter"}
+          Currency Converter
         </button>
       </div>
 
@@ -2102,7 +2359,7 @@ function AboutPage({setPage}){
               Eric Choi
             </h3>
             <div style={{color:T.skyDark,fontSize:15,fontWeight:600,marginBottom:22}}>
-              Medical Tourism Consultant &nbsp;·&nbsp; Seoul &amp; Manila
+              Medical Tourism Company &nbsp;·&nbsp; Seoul &amp; Manila
             </div>
             <blockquote style={{
               margin:0,padding:"20px 24px",
@@ -2115,11 +2372,6 @@ function AboutPage({setPage}){
               geographic — it's informational. DR.KONNECT exists to close that gap,
               one patient at a time."
             </blockquote>
-            <div style={{display:"flex",gap:10,marginTop:22,flexWrap:"wrap"}}>
-              <Chip>🇰🇷 Based in Seoul</Chip>
-              <Chip>🇵🇭 Serving Filipino Patients</Chip>
-              <Chip>💬 English · Korean</Chip>
-            </div>
           </div>
         </div>
 
