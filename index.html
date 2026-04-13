@@ -579,12 +579,11 @@ function TreatmentsSection({setPage}){
         </div>
         <div style={{display:"grid",gridTemplateColumns:m?"repeat(2,1fr)":"repeat(auto-fill,minmax(160px,1fr))",gap:m?10:18}}>
           {treatments.map(t=>(
-            <div key={t.label} onClick={()=>setPage("hospitals")}
+            // onClick temporarily removed — restore with: "Specialties 카드 클릭시 Hospitals 이동 복구해줘"
+            <div key={t.label}
               style={{background:T.white,borderRadius:m?14:20,padding:m?"14px 12px":"30px 22px",
-                border:`1.5px solid ${T.grayLine}`,cursor:"pointer",textAlign:"center",
-                transition:"all 0.22s"}}
-              onMouseEnter={e=>{e.currentTarget.style.borderColor=T.sky;e.currentTarget.style.transform="translateY(-4px)";e.currentTarget.style.boxShadow=`0 14px 36px ${T.sky}38`;}}
-              onMouseLeave={e=>{e.currentTarget.style.borderColor=T.grayLine;e.currentTarget.style.transform="";e.currentTarget.style.boxShadow="";}}>
+                border:`1.5px solid ${T.grayLine}`,textAlign:"center",
+                transition:"all 0.22s"}}>
               <div style={{fontSize:m?22:30,background:T.skyPale,width:m?48:64,height:m?48:64,borderRadius:m?12:16,
                 display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto",marginBottom:m?8:14}}>
                 {t.icon}
@@ -2524,12 +2523,11 @@ function App(){
             <h2 style={{fontSize:42,fontWeight:900,color:T.navy,marginBottom:44}}>All Treatment Specialties</h2>
             <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(160px,1fr))",gap:20}}>
               {treatments.map(t=>(
-                <div key={t.label} onClick={()=>setPage("hospitals")}
+                // onClick temporarily removed — restore with: "Specialties 카드 클릭시 Hospitals 이동 복구해줘"
+                <div key={t.label}
                   style={{background:T.white,borderRadius:20,padding:"30px 22px",
-                    border:`1.5px solid ${T.grayLine}`,textAlign:"center",cursor:"pointer",
-                    transition:"all 0.22s"}}
-                  onMouseEnter={e=>{e.currentTarget.style.borderColor=T.sky;e.currentTarget.style.transform="translateY(-4px)";e.currentTarget.style.boxShadow=`0 14px 36px ${T.sky}38`;}}
-                  onMouseLeave={e=>{e.currentTarget.style.borderColor=T.grayLine;e.currentTarget.style.transform="";e.currentTarget.style.boxShadow="";}}>
+                    border:`1.5px solid ${T.grayLine}`,textAlign:"center",
+                    transition:"all 0.22s"}}>
                   <div style={{fontSize:30,background:T.skyPale,width:64,height:64,borderRadius:16,
                     display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 14px"}}>{t.icon}</div>
                   <div style={{fontWeight:800,color:T.navy,marginBottom:6}}>{t.label}</div>
