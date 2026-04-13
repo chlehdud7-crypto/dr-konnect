@@ -404,7 +404,7 @@ const LogoIcon=()=>(
 function Navbar({page,setPage,setSel}){
   const m=useIsMobile();
   const [open,setOpen]=useState(false);
-  const links=["Home","About","Hospitals","Treatments","How It Works","Contact"];
+  const links=["Home","About",/*"Hospitals",*/"Treatments","How It Works","Contact"]; {/* Hospitals temporarily hidden — restore with: "Hospitals 메뉴 복구해줘" */}
   const Logo=()=>(
     <div onClick={()=>{setPage("home");setSel(null);setOpen(false);}}
       style={{cursor:"pointer",display:"flex",alignItems:"center",gap:10}}>
